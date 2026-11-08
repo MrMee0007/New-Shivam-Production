@@ -243,6 +243,24 @@ export default function Contact() {
               </p>
             </div>
 
+            {/* Studio preview card */}
+            <div className="overflow-hidden rounded-lg border border-[#F5F0E8]/[0.07] bg-[#111111] relative group">
+              <img
+                src="https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1794174544/6M4A7648.jpg"
+                alt="New Shivam Productions candid shot"
+                className="w-full h-44 object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-black/20 to-transparent" />
+              <div className="p-5 relative">
+                <p className="text-[10px] uppercase tracking-[0.25em] text-[#D4AF6A] font-semibold" style={{ fontFamily: "Inter, sans-serif" }}>
+                  Capture What Matters
+                </p>
+                <p className="text-xs text-[#F5F0E8]/50 mt-1.5 leading-5" style={{ fontFamily: "Inter, sans-serif" }}>
+                  From intimate wedding moments to multi-camera broadcasts, every frame is crafted with heart and precision.
+                </p>
+              </div>
+            </div>
+
             {/* Socials */}
             <div className="rounded-lg border border-[#F5F0E8]/[0.07] bg-[#111111] p-7">
               <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#F5F0E8]/30" style={{ fontFamily: "Inter, sans-serif" }}>

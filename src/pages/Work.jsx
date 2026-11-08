@@ -23,7 +23,7 @@ function Reveal({ children, className = "", delay = 0 }) {
   );
 }
 
-const CATEGORIES = ["All", "Wedding", "Broadcast", "Podcast", "Commercial"];
+const CATEGORIES = ["All", "Wedding", "Candid", "Broadcast", "Podcast", "Commercial"];
 
 const CLD = (file, w = 900) =>
   `https://res.cloudinary.com/wqhpwm9y/image/upload/w_${w},q_auto,f_auto/${file}`;
@@ -41,6 +41,15 @@ const WORKS = [
   },
   {
     id: 2,
+    category: "Candid",
+    title: "Smiles & Whispers",
+    subtitle: "The Oberoi, New Delhi",
+    desc: "Unscripted, tender moments between rituals — tears of joy, stolen smiles, and raw heartfelt emotions captured without posing.",
+    img: CLD("v1794174541/6M4A7644.jpg"),
+    tag: "Candid Series",
+  },
+  {
+    id: 3,
     category: "Wedding",
     title: "Meera & Arjun",
     subtitle: "City Palace, Udaipur · Destination Wedding",
@@ -49,7 +58,16 @@ const WORKS = [
     tag: "Destination Film",
   },
   {
-    id: 3,
+    id: 4,
+    category: "Candid",
+    title: "Baraat Beats & Euphoria",
+    subtitle: "Noor Mahal, Karnal",
+    desc: "High-octane energy, dancing under fireworks, and spontaneous laughs across the celebratory night.",
+    img: CLD("v1794174546/6M4A7702.jpg"),
+    tag: "Event Energy",
+  },
+  {
+    id: 5,
     category: "Wedding",
     title: "Anjali & Vikram",
     subtitle: "Rambagh Palace, Jaipur",
@@ -58,16 +76,16 @@ const WORKS = [
     tag: "Heritage Wedding",
   },
   {
-    id: 4,
-    category: "Wedding",
-    title: "Preet & Kabir",
+    id: 6,
+    category: "Candid",
+    title: "Sacred Rituals",
     subtitle: "ITC Grand Bharat, Gurgaon",
-    desc: "A modern Punjabi wedding blending tradition with contemporary cinematic style — vibrant colors and pure emotion.",
-    img: CLD("v1794158515/2B4A4655.jpg"),
-    tag: "5 min Film",
+    desc: "Every subtle gesture of the pheras, the blessings of elders, and genuine human connection immortalized forever.",
+    img: CLD("v1794174545/6M4A7758.jpg"),
+    tag: "Ceremony Moments",
   },
   {
-    id: 5,
+    id: 7,
     category: "Broadcast",
     title: "Maruti Suzuki Annual Summit",
     subtitle: "India Expo Centre, Greater Noida",
@@ -76,7 +94,7 @@ const WORKS = [
     tag: "Live Broadcast · 6 hrs",
   },
   {
-    id: 6,
+    id: 8,
     category: "Broadcast",
     title: "Royal Celebrations Awards Night",
     subtitle: "Hyatt Regency, Delhi",
@@ -85,7 +103,7 @@ const WORKS = [
     tag: "Live Event",
   },
   {
-    id: 7,
+    id: 9,
     category: "Podcast",
     title: "The Growth Podcast",
     subtitle: "New Shivam Studio, Gurgaon",
@@ -94,7 +112,7 @@ const WORKS = [
     tag: "Weekly Production",
   },
   {
-    id: 8,
+    id: 10,
     category: "Commercial",
     title: "Himalaya Wellness",
     subtitle: "Delhi & Gurgaon Locations",
@@ -103,13 +121,22 @@ const WORKS = [
     tag: "60s Ad Film",
   },
   {
-    id: 9,
+    id: 11,
     category: "Commercial",
     title: "Samsung India — Launch",
     subtitle: "Corporate HQ, Gurugram",
     desc: "A product launch film combining drone aerials, studio close-ups, and lifestyle footage into one seamless brand story.",
     img: CLD("v1794158513/2B4A4651.jpg"),
     tag: "Brand Film",
+  },
+  {
+    id: 12,
+    category: "Candid",
+    title: "Stolen Glances",
+    subtitle: "Taj Lake Palace, Udaipur",
+    desc: "A collection of fleeting, genuine glances that tell the real story of two souls coming together.",
+    img: CLD("v1794174544/6M4A7632.jpg"),
+    tag: "Fine Art Candid",
   },
 ];
 
@@ -279,7 +306,7 @@ export default function Work() {
 
       {/* ── Parallax Quote Banner ── */}
       <ParallaxBanner
-        img="https://res.cloudinary.com/wqhpwm9y/image/upload/w_1800,q_auto,f_auto/v1794158510/2B4A4629.jpg"
+        img="https://res.cloudinary.com/wqhpwm9y/image/upload/w_1800,q_auto,f_auto/v1794174547/6M4A7534.jpg"
         quote="Behind every great shot is a team that never stops caring."
         tag="New Shivam Production House · Gurgaon, India"
       />

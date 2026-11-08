@@ -10,18 +10,18 @@ const CLD = (file, w = 600) =>
   `https://res.cloudinary.com/wqhpwm9y/image/upload/w_${w},q_auto,f_auto/${file}`;
 
 const IMAGES = [
-  { src: CLD("v1794158518/2B4A4671.jpg"), h: "h-80",  alt: "Wedding ceremony" },
-  { src: CLD("v1794158516/2B4A4663.jpg"), h: "h-52",  alt: "Wedding moments" },
-  { src: CLD("v1794158515/2B4A4657.jpg"), h: "h-64",  alt: "Bride portrait" },
-  { src: CLD("v1794158515/2B4A4655.jpg"), h: "h-72",  alt: "Couple together" },
-  { src: CLD("v1794158515/2B4A4650.jpg"), h: "h-56",  alt: "Wedding detail" },
-  { src: CLD("v1794158515/2B4A4660.jpg"), h: "h-80",  alt: "Wedding reception" },
-  { src: CLD("v1794158513/2B4A4646.jpg"), h: "h-52",  alt: "Candid moment" },
-  { src: CLD("v1794158514/2B4A4641.jpg"), h: "h-72",  alt: "Wedding celebration" },
-  { src: CLD("v1794158513/2B4A4651.jpg"), h: "h-60",  alt: "Bridal look" },
-  { src: CLD("v1794158511/2B4A4634.jpg"), h: "h-80",  alt: "Golden hour" },
-  { src: CLD("v1794158511/2B4A4674.jpg"), h: "h-52",  alt: "Wedding dance" },
-  { src: CLD("v1794158510/2B4A4633.jpg"), h: "h-64",  alt: "Film frame" },
+  { src: CLD("v1794174536/6M4A7623.jpg"), h: "h-80",  alt: "Candid moment" },
+  { src: CLD("v1794174537/6M4A7892.jpg"), h: "h-56",  alt: "Celebration" },
+  { src: CLD("v1794174541/6M4A7644.jpg"), h: "h-72",  alt: "Wedding candid" },
+  { src: CLD("v1794174540/6M4A7629.jpg"), h: "h-64",  alt: "Event energy" },
+  { src: CLD("v1794174539/6M4A7621.jpg"), h: "h-80",  alt: "Joyful moment" },
+  { src: CLD("v1794174541/6M4A7637.jpg"), h: "h-52",  alt: "Candid portrait" },
+  { src: CLD("v1794174542/6M4A7645.jpg"), h: "h-72",  alt: "Live event" },
+  { src: CLD("v1794174543/6M4A7663.jpg"), h: "h-60",  alt: "Event candid" },
+  { src: CLD("v1794174544/6M4A7632.jpg"), h: "h-80",  alt: "Couple candid" },
+  { src: CLD("v1794174544/6M4A7674.jpg"), h: "h-52",  alt: "Wedding dance" },
+  { src: CLD("v1794174544/6M4A7648.jpg"), h: "h-68",  alt: "Golden moment" },
+  { src: CLD("v1794174546/6M4A7702.jpg"), h: "h-80",  alt: "Candid joy" },
 ];
 
 // Split images into 3 columns

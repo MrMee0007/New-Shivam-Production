@@ -38,7 +38,7 @@ const MILESTONES = [
     icon: Radio,
     title: "Podcast & Audio-Visual",
     desc:  "As podcasting exploded in India, we were ready. Studio builds, multi-camera setups, acoustic treatment, and broadcast-quality audio — we helped creators and brands launch shows that actually sounded (and looked) world-class.",
-    img:  CLD("v1794169630/WhatsApp_Image_2026-10-18_at_1.42.04_PM.jpg"),
+    img:  CLD("v1794169631/WhatsApp_Image_2026-10-18_at_1.42.07_PM.jpg "),
     tag:  "Podcast Production",
   },
   {
@@ -47,7 +47,7 @@ const MILESTONES = [
     icon: Video,
     title: "Testimonials & Corporate Films",
     desc:  "Stories sell. We began producing testimonial videos and corporate brand films that converted — real people, real experiences, captured with cinematic warmth. From startups to established enterprises, our lens became a trust-building machine.",
-    img:  CLD("v1794169631/WhatsApp_Image_2026-10-18_at_1.42.07_PM.jpg"),
+    img:  CLD("v1794169632/WhatsApp_Image_2026-10-18_at_1.42.14PM.jpg "),
     tag:  "Corporate & Testimonial",
   },
   {
@@ -56,7 +56,7 @@ const MILESTONES = [
     icon: Camera,
     title: "Wedding Cinematography",
     desc:  "And then came weddings — the most personal, emotional, and irreplaceable stories of all. Today, wedding films are the heartbeat of New Shivam Productions. Every frame is a memory that will be watched for generations. This is where craft meets love.",
-    img:  CLD("v1794169632/WhatsApp_Image_2026-10-18_at_1.42.14PM.jpg"),
+    img:  CLD("v1794169630/WhatsApp_Image_2026-10-18_at_1.42.04_PM.jpg"),
     tag:  "Wedding Cinema",
   },
 ];
