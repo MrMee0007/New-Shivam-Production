@@ -4,62 +4,63 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 const TESTIMONIALS = [
   {
-    name: "Creative Director",
-    org: "LLM",
-    initials: "LLM",
+    name: "Priya & Rahul Sharma",
+    org: "Wedding Couple",
+    initials: "PR",
     quote:
-      "Brand Bros transformed our visual identity with premium storytelling. Every campaign felt cinematic, resulting in stronger audience engagement and memorable brand recall.",
+      "New Shivam captured every emotion of our wedding day so beautifully. When we watch the film, we're transported right back to those magical moments. Truly exceptional work.",
   },
   {
-    name: "Marketing Head",
-    org: "Raymond",
-    initials: "RY",
+    name: "Corporate Head",
+    org: "Maruti Suzuki India",
+    initials: "MS",
     quote:
-      "The Brand Bros team elevated our luxury positioning across digital platforms. Their production quality, creativity, and execution exceeded every expectation.",
+      "Their live broadcasting setup for our national dealer conference was flawless. Crystal-clear quality, zero technical issues, and an incredibly professional team throughout.",
   },
   {
-    name: "Founder",
-    org: "Berry Bros",
-    initials: "BB",
+    name: "Host & Producer",
+    org: "The Business Podcast",
+    initials: "BP",
     quote:
-      "From strategy to execution, Brand Bros delivered content that truly reflected our vision. Our engagement grew rapidly, and our brand presence became stronger than ever.",
+      "New Shivam transformed our podcast from a basic recording into a cinematic, professional production. Our listener engagement doubled within the first month.",
   },
   {
-    name: "Operations Manager",
-    org: "JO Motel",
-    initials: "JM",
+    name: "Marketing Director",
+    org: "Himalaya Wellness",
+    initials: "HW",
     quote:
-      "Brand Bros captured the experience of our property beautifully. Their cinematic reels increased our online visibility and helped attract more direct bookings.",
+      "The ad films they produced for our wellness campaign exceeded all expectations. Stunning visuals, compelling storytelling, and measurable results in brand recall.",
   },
   {
-    name: "Brand Manager",
-    org: "XTRAFUEL",
-    initials: "XF",
+    name: "Event Manager",
+    org: "Royal Celebrations",
+    initials: "RC",
     quote:
-      "Their high-energy creative perfectly matched our brand personality. Brand Bros consistently delivered content that drove impressive reach and customer engagement.",
+      "We've partnered with New Shivam for over 50 events. Their consistency, creativity, and professionalism make them the only production house we trust for our premium clients.",
   },
   {
-    name: "Marketing Manager",
+    name: "Deepika & Arjun Verma",
+    org: "Destination Wedding",
+    initials: "DV",
+    quote:
+      "Our Goa destination wedding film is a true masterpiece. Every candid moment, every sunset, every laugh captured so authentically. We couldn't be happier.",
+  },
+  {
+    name: "Brand Head",
     org: "Nikon India",
     initials: "NK",
     quote:
-      "Brand Bros understands visual storytelling at a different level. Every shoot was thoughtfully crafted and delivered exceptional results across our digital campaigns.",
+      "Exceptional production quality for our product launch testimonials. New Shivam understood our brand voice perfectly and delivered content that resonated deeply with our audience.",
   },
   {
-    name: "Dean of Admissions",
-    org: "GLA University",
-    initials: "GLA",
+    name: "Founder",
+    org: "TechVenture Summit",
+    initials: "TV",
     quote:
-      "Brand Bros modernized our digital communication with impactful campaigns and engaging content. Their work significantly strengthened our outreach to prospective students.",
-  },
-  {
-    name: "Founder & CEO",
-    org: "Think And Grow",
-    initials: "TG",
-    quote:
-      "Partnering with Brand Bros gave our brand a premium identity online. Their creativity, strategy, and attention to detail made a measurable difference to our growth.",
+      "Their event coverage for our annual summit was extraordinary. From keynote streams to highlight reels, every deliverable was perfectly executed and delivered on time.",
   },
 ];
+
 export default function TestimonialsSection() {
   const ref    = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
@@ -94,9 +95,11 @@ export default function TestimonialsSection() {
         >
           <p className="text-[var(--brand)] uppercase tracking-[0.3em] text-[10px] mb-5">Client Stories</p>
           <h2 className="font-heading text-5xl md:text-7xl leading-none">
-          
-            <span className="block text-[var(--brand)]">  What Clients Say About Us</span>
+            <span className="block text-[var(--brand)]">Heard From the Heart</span>
           </h2>
+          <p className="text-white/40 text-sm mt-4 max-w-md mx-auto">
+            Real words from real people whose moments we had the privilege to preserve.
+          </p>
         </motion.div>
 
         {/* Card */}

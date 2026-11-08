@@ -1,21 +1,47 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Film, LayoutGrid, BookImage, Megaphone, Camera, TrendingUp, Users, Target, Star } from "lucide-react";
+import {
+  Film, Radio, Mic, Megaphone, Camera, Video, Heart, Tv,
+} from "lucide-react";
 
 const SERVICES = [
-  { icon: Film,       title: "VIDEO CONTENT",    desc: "High-performing reels, promos and brand films that engage and convert." },
-  { icon: LayoutGrid, title: "CAROUSEL POSTS",   desc: "Informative, visually appealing carousels that educate and build authority." },
-  { icon: BookImage,  title: "STORY DESIGNS",    desc: "Creative stories that capture attention and keep your audience coming back." },
-  { icon: Megaphone,  title: "BRAND CAMPAIGNS",  desc: "Strategic campaigns that amplify reach, engagement and brand recall." },
-  { icon: Camera,     title: "PHOTOGRAPHY",      desc: "High-quality product and lifestyle photography that tells your brand story beautifully." },
-  { icon: TrendingUp, title: "AD CREATIVES",     desc: "Scroll-stopping ad creatives designed to drive clicks and deliver results." },
+  {
+    icon: Heart,
+    title: "WEDDING FILMS",
+    desc: "Cinematic wedding films that immortalize your love story with emotion, beauty, and timeless elegance.",
+  },
+  {
+    icon: Radio,
+    title: "LIVE BROADCASTING",
+    desc: "Professional multi-camera live streaming for events, launches, and ceremonies with studio-grade quality.",
+  },
+  {
+    icon: Mic,
+    title: "PODCAST PRODUCTION",
+    desc: "End-to-end podcast production — recording, editing, sound design, and multi-platform distribution.",
+  },
+  {
+    icon: Megaphone,
+    title: "AD CAMPAIGNS",
+    desc: "High-impact advertising films and digital campaigns that capture attention and drive real conversions.",
+  },
+  {
+    icon: Camera,
+    title: "TESTIMONIALS",
+    desc: "Authentic, studio-quality testimonial videos that build trust and amplify your brand's credibility.",
+  },
+  {
+    icon: Tv,
+    title: "EVENT COVERAGE",
+    desc: "Full-spectrum event coverage — corporate galas, launches, concerts, and cultural celebrations.",
+  },
 ];
 
 const STATS = [
-  { icon: Users,  num: "8",   label: "HAPPY CLIENTS"       },
-  { icon: Film,   num: "10+",  label: "PROJECTS DELIVERED"  },
-  { icon: Target, num: "80%",  label: "CLIENT RETENTION"    },
-  { icon: Star,   num: "4.3/5", label: "AVERAGE RATING"      },
+  { num: "500+", label: "Events Filmed"     },
+  { num: "12+",  label: "Years in Industry" },
+  { num: "98%",  label: "Client Retention"  },
+  { num: "4.9/5",label: "Client Rating"     },
 ];
 
 export default function ServicesSection() {
@@ -26,7 +52,7 @@ export default function ServicesSection() {
     <section id="services" className="py-28 px-6 bg-black" ref={ref}>
       <div className="max-w-7xl mx-auto">
 
-        {/* Header — pitch-deck style */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -34,12 +60,11 @@ export default function ServicesSection() {
           className="text-center mb-4"
         >
           <h2 className="font-heading text-[clamp(3.5rem,10vw,8rem)] leading-none">
-            <span className="text-[#F5C200]">  OUR WORK</span>
+            <span className="text-[#F5C200]">WHAT WE DO</span>
           </h2>
           <p className="text-white/50 text-base mt-4">
-            A glimpse of the{" "}
-            <span className="text-[#F5C200] font-semibold">brands we've</span>{" "}
-            had the privilege to work with.
+            From your first look to your final cut —{" "}
+            <span className="text-[#F5C200] font-semibold">every frame, perfected.</span>
           </p>
         </motion.div>
 
@@ -87,15 +112,10 @@ export default function ServicesSection() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="border border-white/10 bg-[#111] rounded-2xl px-6 py-5 flex flex-wrap items-center justify-around gap-6 mb-6"
         >
-          {STATS.map(({ icon: Icon, num, label }) => (
-            <div key={label} className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full border border-[#F5C200]/50 flex items-center justify-center flex-shrink-0">
-                <Icon size={16} className="text-[#F5C200]" strokeWidth={1.5} />
-              </div>
-              <div>
-                <p className="font-heading text-2xl text-[#F5C200] leading-none">{num}</p>
-                <p className="text-white/40 text-[0.68rem] uppercase tracking-[0.15em] mt-0.5">{label}</p>
-              </div>
+          {STATS.map(({ num, label }) => (
+            <div key={label} className="flex flex-col items-center gap-1">
+              <p className="font-heading text-2xl text-[#F5C200] leading-none">{num}</p>
+              <p className="text-white/40 text-[0.68rem] uppercase tracking-[0.15em] mt-0.5">{label}</p>
             </div>
           ))}
         </motion.div>
@@ -107,10 +127,10 @@ export default function ServicesSection() {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="text-center text-white/45 text-sm tracking-wide"
         >
-          <span className="text-[#F5C200] text-xl font-serif mr-2">"</span>
-          We don't just create content, we{" "}
-          <span className="text-[#F5C200] font-semibold">create impact.</span>
-          <span className="text-[#F5C200] text-xl font-serif ml-2">"</span>
+          <span className="text-[#F5C200] text-xl font-sans mr-2">"</span>
+          We don't just film moments, we{" "}
+          <span className="text-[#F5C200] font-semibold">preserve them forever.</span>
+          <span className="text-[#F5C200] text-xl font-sans ml-2">"</span>
         </motion.p>
       </div>
     </section>

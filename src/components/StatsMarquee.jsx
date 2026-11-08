@@ -2,16 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 
 const BRANDS = [
-  "Noir Roasters", "Luxe Collective", "Aura Skincare", "Veloce Motors",
-  "Pulse Festival", "Indigo Kitchen", "Aether Tech", "Ember Spirits",
-  "Solaris Wellness", "Drift Watches", "Royal Brew", "Urban Canvas",
+  "Wedding Films", "Live Broadcasting", "Corporate Events", "Brand Commercials",
+  "Podcast Production", "Testimonial Videos", "Ad Campaigns", "Event Coverage",
+  "Cinematic Shoots", "Social Media Reels", "Documentary Films", "Product Shoots",
 ];
 
 const STATS = [
-  { target: 10,   suffix: "+",  label: "Brands Launched"  },
-  { target: 105,  suffix: "+",  label: "Reels Produced"   },
-  { target: 1,  suffix: "M",  label: "Total Reach"      },
-  { target: 80,   suffix: "%",  label: "Client Retention" },
+  { target: 500,  suffix: "+",  label: "Events Covered"    },
+  { target: 12,   suffix: "+",  label: "Years Experience"  },
+  { target: 98,   suffix: "%",  label: "Client Satisfaction" },
+  { target: 1200, suffix: "+",  label: "Hours of Footage"  },
 ];
 
 /* ─── Animated counter ───────────────────────────── */
@@ -53,26 +53,30 @@ export default function StatsMarquee() {
     <section className="py-20 border-y border-white/5 bg-black">
 
       {/* Marquee */}
-      <div className="overflow-hidden border-y border-white/5 py-4 mb-16">
+      <div className="overflow-hidden border-y border-white/10 py-6 mb-16">
         <div className="flex animate-marquee-left whitespace-nowrap select-none">
           {doubled.map((brand, i) => (
             <span key={i} className="inline-flex items-center gap-0">
-              <span className="mx-6 text-[10px] uppercase tracking-[0.22em] text-white/28 font-medium">
+              <span className="mx-8 text-base md:text-xl lg:text-2xl uppercase tracking-[0.28em] text-white/50 font-bold">
                 {brand}
               </span>
-              <span className="text-[var(--brand)]/35 text-xs">✦</span>
+
+              <span className="text-[var(--brand)]/60 text-lg md:text-xl">
+                ✦
+              </span>
             </span>
           ))}
         </div>
       </div>
 
+
       {/* Animated stats grid */}
       <div className="max-w-7xl mx-auto px-6">
         <p className="text-center text-[9px] uppercase tracking-[0.28em] text-white/25 mb-2">
-          Trusted by brands across India
+          Trusted by families & brands across India
         </p>
         <h2 className="text-center font-heading text-[clamp(2rem,5vw,3.5rem)] leading-none mb-10 uppercase">
-          <span className="text-[#F5C200]">Our Numbers.</span>
+          <span className="text-[#F5C200]">The Numbers.</span>
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/4">
           {STATS.map(({ target, suffix, label }) => (

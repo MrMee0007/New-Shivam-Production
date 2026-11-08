@@ -1,43 +1,43 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import {
-  BarChart2, ClipboardList, Pen, Send, TrendingUp,
+  MessageSquare, CalendarCheck, Film, Send, TrendingUp,
   Target, Users, Award,
 } from "lucide-react";
 
-/* ── Pitch-deck style: 5 steps with dotted arrows ── */
+/* ── 5-step production workflow ── */
 const STEPS = [
   {
-    num: "01", icon: BarChart2,
-    title: "ANALYZE",
-    desc: "We analyze your business, audience and performance to find growth opportunities.",
+    num: "01", icon: MessageSquare,
+    title: "CONSULT",
+    desc: "We listen to your vision, understand your story, and craft a personalized creative brief.",
   },
   {
-    num: "02", icon: ClipboardList,
+    num: "02", icon: CalendarCheck,
     title: "PLAN",
-    desc: "We create a tailored strategy and content roadmap.",
+    desc: "We build a detailed shoot schedule, scout locations, and prepare every detail.",
   },
   {
-    num: "03", icon: Pen,
-    title: "CREATE",
-    desc: "Our team creates high-quality content that connects.",
+    num: "03", icon: Film,
+    title: "SHOOT",
+    desc: "Our expert crew captures every emotion, every moment, with cinematic precision.",
   },
   {
     num: "04", icon: Send,
-    title: "PUBLISH",
-    desc: "We schedule and publish content for maximum reach and impact.",
+    title: "EDIT",
+    desc: "We craft a stunning film with color grading, sound design, and thoughtful storytelling.",
   },
   {
     num: "05", icon: TrendingUp,
-    title: "OPTIMIZE",
-    desc: "We track performance and optimize for better results.",
+    title: "DELIVER",
+    desc: "You receive your final film — beautifully packaged and ready to share forever.",
   },
 ];
 
 const BOTTOM = [
-  { icon: Target, label: "GOAL ORIENTED",    desc: "Everything we do has purpose." },
-  { icon: Users,  label: "COLLABORATIVE",    desc: "We work with you, not just for you." },
-  { icon: Award,  label: "RESULTS FOCUSED",  desc: "We measure what truly matters." },
+  { icon: Target, label: "STORY-FIRST",    desc: "Every project begins with your story." },
+  { icon: Users,  label: "COLLABORATIVE",  desc: "We work with you, not just for you."  },
+  { icon: Award,  label: "AWARD-WORTHY",   desc: "Cinematic quality in every delivery."  },
 ];
 
 /* ── Dotted arrow connector ─────────────────────── */
@@ -58,7 +58,7 @@ export default function ProcessSection() {
     <section id="process" className="py-28 px-6 bg-black" ref={ref}>
       <div className="max-w-7xl mx-auto">
 
-        {/* Header — pitch-deck style */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -66,11 +66,11 @@ export default function ProcessSection() {
           className="text-center mb-4"
         >
           <h2 className="font-heading text-[clamp(3.5rem,10vw,8rem)] leading-none">
-            <span className="text-[#F5C200]"> OUR PROCESS</span>
+            <span className="text-[#F5C200]">OUR PROCESS</span>
           </h2>
           <p className="text-white/50 text-base mt-4 max-w-xl mx-auto">
-            A simple, clear and proven process that{" "}
-            <span className="text-[#F5C200] font-semibold">delivers results.</span>
+            From the first conversation to the final frame —{" "}
+            <span className="text-[#F5C200] font-semibold">every step crafted with care.</span>
           </p>
         </motion.div>
 
@@ -117,7 +117,7 @@ export default function ProcessSection() {
           })}
         </div>
 
-        {/* Bottom strip — pitch-deck style */}
+        {/* Bottom strip */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -130,13 +130,13 @@ export default function ProcessSection() {
               <Award size={18} className="text-[#F5C200]" strokeWidth={1.5} />
             </div>
             <div>
-              <p className="font-bold uppercase text-[0.75rem] tracking-[0.15em] text-white">Strategy. Creativity. Consistency.</p>
-              <p className="text-[#F5C200] font-bold uppercase text-[0.72rem] tracking-[0.12em]">That's How We Grow Brands.</p>
+              <p className="font-bold uppercase text-[0.75rem] tracking-[0.15em] text-white">Vision. Craft. Excellence.</p>
+              <p className="text-[#F5C200] font-bold uppercase text-[0.72rem] tracking-[0.12em]">That's How We Create Memories.</p>
             </div>
           </div>
 
           {/* Right 3 pillars */}
-          {BOTTOM.map((b, i) => {
+          {BOTTOM.map((b) => {
             const Icon = b.icon;
             return (
               <div key={b.label} className="flex items-start gap-3 flex-1 pl-0 md:pl-8 pt-4 md:pt-0 justify-center md:justify-start">

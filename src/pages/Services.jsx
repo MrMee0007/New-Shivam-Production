@@ -1,80 +1,309 @@
+
 import { useState, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  ChevronDown, ArrowRight, ArrowUpRight,
-  Film, LayoutGrid, Megaphone, Camera, TrendingUp, Users,
-  Star, Zap, Globe, Cpu, Sparkles, ShieldCheck,
+  ChevronDown,
+  ArrowRight,
+  ArrowUpRight,
+  Film,
+  TrendingUp,
+  Users,
+  Star,
+  Sparkles,
+  ShieldCheck,
 } from "lucide-react";
-import creatorImg  from "../assets/creator.png";
-import businessImg from "../assets/business.jpeg";
-import contentImg  from "../assets/content.jpeg";
-import careersImg  from "../assets/team.png";
 
-/* ── Data ────────────────────────────────────────── */
+import weddingImg from "../assets/slide5.png";
+import broadcastImg from "../assets/content.jpeg";
+import podcastImg from "../assets/business.jpeg";
+import commercialImg from "../assets/creator.png";
+
+/* ── Services Data ────────────────────────────────── */
 const SERVICES = [
   {
-    id: "creator", number: "01", icon: Star,
-    label: "Creator Growth",
-    title: "Creator Growth & Management",
-    tagline: "Audience into influence.",
-    intro: "We help creators transform their audience into influence, opportunities, and sustainable growth. From content strategy to brand partnerships, we provide end-to-end support that lets creators focus on creating while we handle the growth.",
-    image: creatorImg,
+    id: "wedding",
+    number: "01",
+    icon: Star,
+    label: "Wedding Cinema",
+    title: "Wedding Cinematography",
+    tagline: "Love stories told in light and motion.",
+    intro:
+      "Your wedding day is the most important story you'll ever live. We capture it with cinematic precision — every glance, every tear, every burst of laughter — transformed into a timeless film that you'll relive for generations. From intimate ceremonies to grand celebrations, our wedding films are works of art.",
+    image: weddingImg,
     subServices: [
-      { title: "Content Strategy & Growth",            desc: "Build a content ecosystem designed for consistent growth and audience engagement.",      items: ["Content Strategy & Planning","Monthly Content Calendars","Trend Research & Analysis","Competitor Benchmarking","Audience Growth Strategy","Platform-Specific Content Planning"] },
-      { title: "Content Production & Editing",         desc: "Create high-quality content that captures attention and strengthens your personal brand.", items: ["Short-Form Video Editing (Reels, Shorts)","Long-Form Video Editing","Thumbnail Design","Social Media Graphics","Cinematic Content Production","Professional Photoshoots"] },
-      { title: "Personal Branding",                    desc: "Establish a recognizable, credible identity that attracts both audiences and brands.",    items: ["Personal Brand Strategy","Profile & Bio Optimization","Brand Identity Development","Visual Branding Guidelines","Creator Portfolio Development","Professional Media Kit Creation"] },
-      { title: "Brand Collaborations & Sponsorships",  desc: "Connect with relevant brands and unlock new revenue through strategic partnerships.",    items: ["Brand Outreach & Networking","Sponsorship Acquisition","Campaign Negotiation","Collaboration Management","Partnership Strategy","Deliverable Coordination"] },
-      { title: "Creator Management",                   desc: "Comprehensive management services designed to help creators scale professionally.",       items: ["Brand Communication","Campaign Management","Contract Coordination","Content Scheduling","Performance Tracking","Opportunity Management"] },
-      { title: "Monetization & Revenue Growth",        desc: "Turn your influence into a sustainable business through multiple revenue streams.",       items: ["Sponsorship Strategy","Affiliate Marketing Setup","Paid Promotion Management","Digital Product Strategy","Community Monetization","Revenue Growth Consulting"] },
+      {
+        title: "Cinematic Wedding Films",
+        desc: "Full-length feature films that capture your wedding day in breathtaking cinematic quality.",
+        items: [
+          "Cinematic Highlight Film (3–8 min)",
+          "Full Ceremony Coverage",
+          "Full Reception Coverage",
+          "Same-Day Edit (SDE)",
+          "Love Story / Pre-Wedding Film",
+          "Drone Aerial Coverage",
+        ],
+      },
+      {
+        title: "Multi-Camera Production",
+        desc: "Professional multi-camera setups for complete coverage of every important moment.",
+        items: [
+          "2–4 Camera Coverage",
+          "Dedicated Camera Operators",
+          "Steadicam & Gimbal Shots",
+          "Candid & Cinematic Angles",
+          "GoPro & POV Coverage",
+          "Low-Light & Night Coverage",
+        ],
+      },
+      {
+        title: "Pre-Wedding & Portraits",
+        desc: "Artistic pre-wedding films and portrait sessions that set the mood for your big day.",
+        items: [
+          "Pre-Wedding Film (Outdoor / Studio)",
+          "Couple Portrait Session",
+          "Location Scouting",
+          "Artistic Direction & Styling",
+          "Destination Pre-Wedding Shoots",
+          "Social Media Reels",
+        ],
+      },
+      {
+        title: "Photo + Video Packages",
+        desc: "Seamless coordination of photography and videography for a cohesive wedding story.",
+        items: [
+          "Dedicated Photographer",
+          "Edited Photo Gallery (500+ shots)",
+          "Candid & Posed Photography",
+          "Print-Ready Deliverables",
+          "Online Album & Downloads",
+          "Coordinated Photo-Video Team",
+        ],
+      },
+      {
+        title: "Post-Production Excellence",
+        desc: "World-class editing, colour grading, and sound design for every wedding film.",
+        items: [
+          "Professional Video Editing",
+          "Cinematic Colour Grading",
+          "Sound Design & Music Sync",
+          "Motion Titles & Animations",
+          "4K Ultra-HD Delivery",
+          "Private Online Delivery Portal",
+        ],
+      },
+      {
+        title: "Destination Weddings",
+        desc: "Full production services for destination weddings across India and abroad.",
+        items: [
+          "Pan-India Destination Coverage",
+          "International Wedding Shoots",
+          "Advance Location Recce",
+          "Multi-Day Wedding Coverage",
+          "Royal & Heritage Venue Experience",
+          "Complete Production Logistics",
+        ],
+      },
     ],
-    closer: { heading: "Why BRAND//BROS?", body: "We don't just help creators produce content — we help them build a brand, grow an audience, secure partnerships, and create long-term opportunities. Our goal is to transform creators into influential personal brands that stand out in an increasingly competitive digital landscape." },
+    closer: {
+      heading: "Why New Shivam for Weddings?",
+      body: "With over 500 weddings captured across 12+ years, we know how to anticipate the moments that matter most. Our team blends into your celebration invisibly — only surfacing to capture the extraordinary.",
+    },
   },
   {
-    id: "business", number: "02", icon: TrendingUp,
-    label: "Business Growth",
-    title: "Business Growth & Marketing Solutions",
-    tagline: "Marketing that moves the line.",
-    intro: "We help businesses build stronger brands, attract more customers, and achieve sustainable growth through strategic marketing, content creation, and digital campaigns. Our approach combines creativity, technology, and business understanding to deliver measurable results.",
-    image: businessImg,
+    id: "broadcast",
+    number: "02",
+    icon: TrendingUp,
+    label: "Live Broadcasting",
+    title: "Live Broadcasting & Streaming",
+    tagline: "Every screen. Every viewer. Every moment.",
+    intro:
+      "We bring professional broadcast-quality live production to corporate events, award nights, sports, and large-scale gatherings. With multi-camera setups, real-time graphics, and reliable streaming infrastructure, we connect your event to audiences around the world — without missing a beat.",
+    image: broadcastImg,
     subServices: [
-      { title: "Brand Strategy & Positioning",              desc: "Build a brand that stands out, earns trust, and creates lasting customer relationships.",     items: ["Brand Strategy Development","Market Positioning","Brand Identity Consultation","Competitor Analysis","Customer Persona Development","Brand Messaging Framework"] },
-      { title: "Social Media Management",                   desc: "Create a powerful online presence that drives engagement and builds customer trust.",          items: ["Social Media Strategy","Content Planning & Scheduling","Post & Reel Creation","Community Management","Profile Optimization","Monthly Performance Reports"] },
-      { title: "Content Creation & Media Production",       desc: "Tell your brand story through impactful visual content.",                                       items: ["Professional Photography","Promotional Videos","Reels & Short-Form Content","Corporate Shoots","Event Coverage","Product Photography & Videos"] },
-      { title: "Performance Marketing",                     desc: "Reach the right audience and generate quality leads through targeted advertising.",            items: ["Meta Ads (Facebook & Instagram)","Google Ads","Lead Generation Campaigns","Remarketing Campaigns","Conversion Tracking","Campaign Optimization & Reporting"] },
-      { title: "Influencer Marketing & Brand Collaborations",desc: "Leverage creator partnerships to increase awareness, credibility, and engagement.",          items: ["Influencer Identification","Campaign Planning","Collaboration Management","Brand Partnerships","Regional Influencer Campaigns","Performance Tracking"] },
-      { title: "Website & Digital Presence",                desc: "Create digital assets that convert visitors into customers.",                                  items: ["Business Website Development","Landing Page Design","SEO Optimization","Google Business Profile Optimization","Online Reputation Management","Conversion Optimization"] },
+      {
+        title: "Multi-Camera Live Production",
+        desc: "Professional multi-camera live setups for events of any size.",
+        items: [
+          "2–8 Camera Live Setup",
+          "Live Switching & Direction",
+          "Broadcast-Grade Cameras",
+          "Steadicam & PTZ Cameras",
+          "Live Graphics & Lower Thirds",
+          "Real-Time Replay & Clips",
+        ],
+      },
+      {
+        title: "Live Streaming Platforms",
+        desc: "Reliable, high-quality streaming to all major platforms simultaneously.",
+        items: [
+          "YouTube Live Streaming",
+          "Facebook Live",
+          "Custom RTMP Streaming",
+          "Zoom / Webinar Integration",
+          "Multi-Platform Simultaneous Streams",
+          "Password-Protected Streams",
+        ],
+      },
+      {
+        title: "Audio-Visual Production",
+        desc: "Complete AV solutions for seamless event production.",
+        items: [
+          "Professional Audio Mixing",
+          "Stage & Screen Management",
+          "LED Screen Content Management",
+          "In-Ear Monitor Setup",
+          "Line Array Sound Systems",
+          "Wireless Microphone Arrays",
+        ],
+      },
+      {
+        title: "Corporate Events & Conferences",
+        desc: "Broadcast-quality coverage for corporate events and hybrid conferences.",
+        items: [
+          "Town Halls & AGMs",
+          "Product Launches",
+          "Hybrid Events (In-Person + Virtual)",
+          "Panel Discussions & Fireside Chats",
+          "Award Ceremonies",
+          "Corporate Training Streams",
+        ],
+      },
     ],
-    closer: { heading: "Build. Influence. Scale.", body: "Marketing is not about creating posts — it's about creating business growth. Our team combines branding, content, advertising, and strategic execution to help businesses attract attention, generate leads, and build long-term market presence." },
+    closer: {
+      heading: "Broadcast that performs.",
+      body: "From 50-person boardrooms to 15,000-viewer livestreams, our broadcast team delivers rock-solid reliability, stunning picture quality, and seamless production — every time.",
+    },
   },
   {
-    id: "content", number: "03", icon: Film,
-    label: "Content Creation",
-    title: "Content Creation Services",
-    tagline: "Attention, earned by craft.",
-    intro: "In today's digital world, attention is earned through compelling content. We create high-quality visual and digital content that helps brands, businesses, and creators capture attention, build trust, and engage their audience effectively.",
-    image: contentImg,
+    id: "podcast",
+    number: "03",
+    icon: Film,
+    label: "Podcast Production",
+    title: "Podcast Studio Production",
+    tagline: "Your voice, amplified beautifully.",
+    intro:
+      "We set up and produce professional podcast studios that make your content sound and look incredible. From branded studio design to multi-camera video podcasts and full post-production, we handle everything so you can focus on the conversation.",
+    image: podcastImg,
     subServices: [
-      { title: "Short-Form Video Content",    desc: "Engaging videos designed for maximum reach across modern social platforms.",                    items: ["Instagram Reels","YouTube Shorts","TikTok Videos","Promotional Reels","Trend-Based Content","Product Showcase Videos"] },
-      { title: "Professional Photography",    desc: "Showcase your products, services, and brand with premium visual content.",                     items: ["Product Photography","Food Photography","Fashion & Lifestyle Shoots","Corporate Photography","Hospitality & Resort Photography","Event Photography"] },
-      { title: "Cinematic Video Production",  desc: "Tell your brand story through professionally crafted cinematic content.",                      items: ["Brand Films","Corporate Videos","Promotional Campaigns","Business Showcase Videos","Resort & Property Walkthroughs","Testimonial Videos"] },
-      { title: "Event Coverage",              desc: "Capture and amplify your events through professional media production.",                       items: ["Event Photography","Event Videography","Same-Day Edits","Highlight Reels","Social Media Event Coverage","After-Movie Production"] },
-      { title: "Social Media Content",        desc: "Consistent content designed to strengthen your online presence.",                             items: ["Creative Post Designs","Carousel Content","Story Creatives","Motion Graphics","Social Media Banners","Content Calendars"] },
-      { title: "Editing & Post-Production",   desc: "Transform raw footage into polished, professional content.",                                  items: ["Video Editing","Color Grading","Sound Design","Motion Graphics","Thumbnail Design","Content Optimization"] },
+      {
+        title: "Studio Setup & Design",
+        desc: "Custom podcast studio environments built for your brand identity.",
+        items: [
+          "Branded Studio Design",
+          "Acoustic Treatment",
+          "Professional Lighting Setup",
+          "Camera & Lens Selection",
+          "Teleprompter & Monitor Setup",
+          "Green Screen / Backdrop Options",
+        ],
+      },
+      {
+        title: "Video Podcast Production",
+        desc: "Multi-camera video podcast production with broadcast-quality output.",
+        items: [
+          "Multi-Camera Video Recording",
+          "Live-Switched Director Feed",
+          "Guest Camera Kits",
+          "Remote Guest Integration",
+          "Real-Time Monitoring",
+          "Full 4K Recording",
+        ],
+      },
+      {
+        title: "Audio Engineering",
+        desc: "Professional-grade audio recording and mastering for every episode.",
+        items: [
+          "Studio-Grade Microphones",
+          "Professional Audio Interface",
+          "Live Audio Mixing",
+          "Noise Removal & Cleanup",
+          "Mastering & Loudness Normalisation",
+          "Multi-Track Recording",
+        ],
+      },
+      {
+        title: "Post-Production & Distribution",
+        desc: "Full editing, branding, and distribution support for every episode.",
+        items: [
+          "Episode Editing & Cuts",
+          "Animated Intro / Outro",
+          "Chapter Markers & Timestamps",
+          "Show Notes & Transcripts",
+          "Platform Upload (Spotify, Apple, YouTube)",
+          "Social Media Clip Cuts",
+        ],
+      },
     ],
-    closer: { heading: "Content That Drives Results", body: "We don't create content just to look good — we create content with purpose. Every video, photograph, design, and campaign is crafted to help brands attract attention, engage audiences, and achieve meaningful business growth." },
+    closer: {
+      heading: "Studio quality. Every episode.",
+      body: "Whether you're launching your first podcast or scaling to daily episodes, our team delivers the studio setup, production quality, and post-production support that makes you sound and look world-class.",
+    },
   },
   {
-    id: "careers", number: "04", icon: Users,
-    label: "Join Us",
-    title: "Careers at BRAND//BROS",
-    tagline: "Build the studio with us.",
-    intro: "We're building a home for future interns, creators, editors, photographers, and marketers who want to do their best work. If you care about craft and momentum, we want to hear from you.",
-    image: careersImg,
+    id: "commercial",
+    number: "04",
+    icon: Users,
+    label: "Commercial Films",
+    title: "Commercial & Ad Film Production",
+    tagline: "Ads that sell. Films that inspire.",
+    intro:
+      "We produce commercial films, ad campaigns, brand documentaries, and testimonial videos that do what great advertising is meant to do — build trust, capture attention, and drive real results. From concept to delivery, our commercial production team handles every detail.",
+    image: commercialImg,
     subServices: [
-      { title: "Who We're Looking For", desc: "Open roles across the studio, year-round.", items: ["Interns (marketing, production, social)","Creators & On-Camera Talent","Video Editors & Motion Designers","Photographers & Cinematographers","Performance Marketers","Brand & Content Strategists"] },
+      {
+        title: "Brand & Ad Films",
+        desc: "High-impact brand films and advertisements for TV, digital, and social media.",
+        items: [
+          "30s / 60s / 90s Ad Films",
+          "Brand Manifesto Films",
+          "Product Launch Videos",
+          "Campaign Series Production",
+          "Social Media Ad Creatives",
+          "YouTube Pre-Roll Ads",
+        ],
+      },
+      {
+        title: "Testimonial Videos",
+        desc: "Authentic customer and client testimonial videos that build brand credibility.",
+        items: [
+          "Customer Story Films",
+          "Client Testimonials",
+          "Doctor / Expert Endorsements",
+          "Before & After Case Studies",
+          "Scripted & Unscripted Formats",
+          "Studio & On-Location Shoots",
+        ],
+      },
+      {
+        title: "Corporate Documentaries",
+        desc: "Long-form corporate films that tell your brand's story with depth and authenticity.",
+        items: [
+          "Company Story / Legacy Films",
+          "CSR & Impact Films",
+          "Employee Culture Videos",
+          "Factory & Process Films",
+          "Investor & Pitch Videos",
+          "Annual Report Films",
+        ],
+      },
+      {
+        title: "Event Coverage & After-Movies",
+        desc: "Cinematic event coverage and after-movies that capture the energy of your events.",
+        items: [
+          "Corporate Event Films",
+          "Product Launch Coverage",
+          "Conference & Summit Films",
+          "Sports & Entertainment Events",
+          "Same-Day Edit Deliverables",
+          "Social Media Highlight Reels",
+        ],
+      },
     ],
-    closer: { heading: "Let's talk.", body: "Send your portfolio, reel, or a short note about what you want to build. We read every submission. Drop us a line at anshgarg7640@gmail.com" },
+    closer: {
+      heading: "Content that converts.",
+      body: "We don't just create visually stunning content — we create purposeful commercial films built to drive awareness, trust, and sales for your brand. Every shot is strategic. Every story is intentional.",
+    },
   },
 ];
 
@@ -84,26 +313,40 @@ function SubCard({ sub, index, inView }) {
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay: index * 0.06, ease: [0.2, 0, 0, 1] }}
+      transition={{
+        duration: 0.55,
+        delay: index * 0.06,
+        ease: [0.2, 0, 0, 1],
+      }}
       whileHover={{ y: -6, scale: 1.01 }}
       className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(17,17,17,0.96),rgba(10,10,10,0.96))] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.35)] transition-all duration-400"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,194,0,0.15),transparent_38%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
       <div className="relative z-10">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="font-heading text-[#F5C200] text-base tracking-[0.2em]">
+        <div className="mb-4 flex items-center gap-3">
+          <span className="font-heading text-base tracking-[0.2em] text-[#F5C200]">
             {String(index + 1).padStart(2, "0")}
           </span>
-          <div className="flex-1 h-px bg-white/8 group-hover:bg-[#F5C200]/30 transition-colors duration-300" />
+
+          <div className="h-px flex-1 bg-white/10 transition-colors duration-300 group-hover:bg-[#F5C200]/30" />
         </div>
-        <h3 className="font-sans font-semibold text-white text-sm mb-2 group-hover:text-[#F5C200] transition-colors duration-300">
+
+        <h3 className="mb-2 font-sans text-sm font-semibold text-white transition-colors duration-300 group-hover:text-[#F5C200]">
           {sub.title}
         </h3>
-        <p className="text-white/40 text-xs leading-relaxed mb-4">{sub.desc}</p>
+
+        <p className="mb-4 text-xs leading-relaxed text-white/40">
+          {sub.desc}
+        </p>
+
         <ul className="space-y-1.5">
           {sub.items.map((item) => (
-            <li key={item} className="flex items-start gap-2 text-xs text-white/55">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#F5C200] flex-shrink-0 mt-1.5 shadow-[0_0_16px_rgba(245,194,0,0.7)]" />
+            <li
+              key={item}
+              className="flex items-start gap-2 text-xs text-white/55"
+            >
+              <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#F5C200] shadow-[0_0_16px_rgba(245,194,0,0.7)]" />
               {item}
             </li>
           ))}
@@ -113,49 +356,80 @@ function SubCard({ sub, index, inView }) {
   );
 }
 
-/* ── Accordion item ───────────────────────────────── */
-function ServiceItem({ s, isOpen, onToggle }) {
+/* ── Service panel ───────────────────────────────── */
+function ServiceItem({ s, isOpen, onToggle, index }) {
   const bodyRef = useRef(null);
-  const inView  = useInView(bodyRef, { once: true, margin: "-40px" });
-  const Icon    = s.icon;
-  const subGridClass =
-    s.subServices.length <= 1
-      ? "grid grid-cols-1 gap-4 mb-0"
-      : s.subServices.length <= 2
-        ? "grid sm:grid-cols-2 gap-4 mb-4"
-        : "grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6";
+  const inView = useInView(bodyRef, {
+    once: true,
+    margin: "-40px",
+  });
+
+  const Icon = s.icon;
 
   return (
-    <article className="relative border-b border-white/8 last:border-b-0 overflow-hidden">
-      <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-[#F5C200]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    <motion.article
+      layout
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.05,
+        ease: [0.2, 0, 0, 1],
+      }}
+      className={`group relative overflow-hidden rounded-2xl border transition-all duration-500 ${
+        isOpen
+          ? "border-[#F5C200]/40 bg-[#0c0c0c] shadow-[0_24px_90px_rgba(245,194,0,0.07)]"
+          : "border-white/10 bg-white/[0.02] hover:border-[#F5C200]/25 hover:bg-white/[0.035]"
+      }`}
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,194,0,0.09),transparent_38%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
       <button
+        type="button"
         onClick={onToggle}
-        className="group relative flex w-full items-center justify-between gap-6 py-8 md:py-10 text-left transition-colors duration-300"
         aria-expanded={isOpen}
+        className="relative z-10 grid w-full grid-cols-[auto_1fr_auto] items-center gap-4 p-5 text-left sm:gap-6 sm:p-7 md:p-8"
       >
-        <div className="flex items-center gap-6 md:gap-10">
-          <span className="font-heading text-3xl md:text-4xl text-[#F5C200]/40 group-hover:text-[#F5C200] transition-colors duration-300 w-14 flex-shrink-0">
-            {s.number}
-          </span>
-          <motion.div
-            whileHover={{ rotate: 8, scale: 1.06 }}
-            className="hidden sm:flex w-12 h-12 rounded-full border border-white/10 bg-white/[0.02] group-hover:border-[#F5C200]/50 items-center justify-center flex-shrink-0 shadow-[0_0_30px_rgba(245,194,0,0.08)] transition-all duration-300"
-          >
-            <Icon size={18} className="text-white/40 group-hover:text-[#F5C200] transition-colors duration-300" strokeWidth={1.5} />
-          </motion.div>
-          <div>
-            <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl leading-tight text-white group-hover:text-[#F5C200] transition-colors duration-300">
-              {s.title}
-            </h2>
-            <p className="text-white/35 text-sm mt-1 italic">{s.tagline}</p>
-          </div>
-        </div>
-        <div className={`w-10 h-10 rounded-full border border-white/10 group-hover:border-[#F5C200] flex items-center justify-center flex-shrink-0 transition-all duration-400 ${isOpen ? "bg-[#F5C200] border-[#F5C200] shadow-[0_0_30px_rgba(245,194,0,0.5)]" : ""}`}>
-          <ChevronDown
-            size={18}
-            className={`transition-transform duration-500 ${isOpen ? "rotate-180 text-black" : "text-white/40 group-hover:text-[#F5C200]"}`}
+        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-black/50 transition-all duration-300 group-hover:border-[#F5C200]/40 sm:h-14 sm:w-14">
+          <Icon
+            size={20}
+            strokeWidth={1.5}
+            className="text-[#F5C200]"
           />
         </div>
+
+        <div className="min-w-0">
+          <div className="mb-2 flex flex-wrap items-center gap-3">
+            <span className="font-heading text-xs tracking-[0.25em] text-[#F5C200]">
+              {s.number}
+            </span>
+
+            <span className="h-px w-7 bg-[#F5C200]/40" />
+
+            <span className="text-[9px] uppercase tracking-[0.22em] text-white/35">
+              {s.label}
+            </span>
+          </div>
+
+          <h2 className="font-heading text-xl leading-tight text-white transition-colors duration-300 group-hover:text-[#F5C200] sm:text-2xl md:text-3xl">
+            {s.title}
+          </h2>
+
+          <p className="mt-1 text-xs italic text-white/40 sm:text-sm">
+            {s.tagline}
+          </p>
+        </div>
+
+        <span
+          className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border transition-all duration-300 sm:h-11 sm:w-11 ${
+            isOpen
+              ? "rotate-180 border-[#F5C200] bg-[#F5C200] text-black"
+              : "border-white/10 text-white/50 group-hover:border-[#F5C200]/50 group-hover:text-[#F5C200]"
+          }`}
+        >
+          <ChevronDown size={18} />
+        </span>
       </button>
 
       <AnimatePresence initial={false}>
@@ -164,69 +438,118 @@ function ServiceItem({ s, isOpen, onToggle }) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.55, ease: [0.2, 0, 0, 1] }}
+            transition={{
+              duration: 0.45,
+              ease: [0.2, 0, 0, 1],
+            }}
             className="overflow-hidden"
-            ref={bodyRef}
           >
-            <div className="pb-12">
-              <div className="grid md:grid-cols-[1.5fr_1fr] gap-6 mb-6 items-stretch">
+            <div
+              ref={bodyRef}
+              className="relative z-10 px-5 pb-6 sm:px-7 sm:pb-8 md:px-8 md:pb-9"
+            >
+              <div className="mb-7 grid items-stretch gap-5 border-t border-white/10 pt-6 md:grid-cols-[1.15fr_0.85fr] md:gap-8">
                 <motion.div
-                  initial={{ opacity: 0, x: -18 }}
+                  initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.45 }}
+                  transition={{ duration: 0.4 }}
                   className="flex flex-col justify-center"
                 >
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#F5C200]/20 bg-[#F5C200]/5 px-3 py-1.5 mb-4 w-fit">
-                    <Sparkles size={12} className="text-[#F5C200]" />
-                    <span className="text-[9px] uppercase tracking-[0.2em] text-[#F5C200]">Signature Systems</span>
+                  <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-[#F5C200]/20 bg-[#F5C200]/5 px-3 py-1.5">
+                    <Sparkles
+                      size={12}
+                      className="text-[#F5C200]"
+                    />
+
+                    <span className="text-[9px] uppercase tracking-[0.2em] text-[#F5C200]">
+                      Signature Systems
+                    </span>
                   </div>
-                  <p className="text-white/55 text-base leading-relaxed">{s.intro}</p>
+
+                  <p className="max-w-2xl text-sm leading-relaxed text-white/55 sm:text-base">
+                    {s.intro}
+                  </p>
                 </motion.div>
+
                 <motion.div
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: 12 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.08 }}
-                  className="relative overflow-hidden rounded-2xl border border-white/8 aspect-[4/3] min-h-[220px]"
+                  transition={{ duration: 0.45, delay: 0.05 }}
+                  className="relative min-h-[190px] overflow-hidden rounded-xl border border-white/10 bg-white/5 md:min-h-[230px]"
                 >
                   <img
                     src={s.image}
                     alt={s.title}
                     loading="lazy"
-                    className="w-full h-full object-cover scale-105 transition duration-700 group-hover:scale-110"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-transparent to-transparent" />
+
+                  <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/15 to-transparent" />
+
                   <div className="absolute inset-x-0 bottom-0 h-0.5 bg-[#F5C200]" />
+
+                  <span className="absolute bottom-4 left-4 text-[9px] uppercase tracking-[0.24em] text-white/75">
+                    {s.label}
+                  </span>
                 </motion.div>
               </div>
 
-              <div className={subGridClass}>
+              <div
+                className={`grid gap-4 ${
+                  s.subServices.length <= 1
+                    ? "grid-cols-1"
+                    : s.subServices.length <= 2
+                      ? "sm:grid-cols-2"
+                      : "sm:grid-cols-2 xl:grid-cols-3"
+                }`}
+              >
                 {s.subServices.map((sub, i) => (
-                  <SubCard key={sub.title} sub={sub} index={i} inView={inView} />
+                  <SubCard
+                    key={sub.title}
+                    sub={sub}
+                    index={i}
+                    inView={inView}
+                  />
                 ))}
               </div>
 
               {s.closer && (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  className="relative overflow-hidden border border-[#F5C200]/20 bg-[linear-gradient(135deg,rgba(245,194,0,0.08),rgba(17,17,17,0.96),rgba(245,194,0,0.05))] rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-[0_0_50px_rgba(245,194,0,0.08)]"
+                  transition={{ duration: 0.45, delay: 0.15 }}
+                  className="relative mt-5 flex flex-col items-start justify-between gap-5 overflow-hidden rounded-2xl border border-[#F5C200]/20 bg-[linear-gradient(135deg,rgba(245,194,0,0.08),rgba(17,17,17,0.96),rgba(245,194,0,0.035))] p-6 sm:p-8 md:flex-row md:items-center"
                 >
-                  <div className="absolute -right-10 -top-8 h-28 w-28 rounded-full bg-[#F5C200]/10 blur-3xl" />
-                  <div className="max-w-2xl relative z-10">
-                    <div className="flex items-center gap-2 mb-4 text-[#F5C200]">
-                      <ShieldCheck size={16} />
-                      <span className="text-[9px] uppercase tracking-[0.2em]">Built to perform</span>
+                  <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-[#F5C200]/10 blur-3xl" />
+
+                  <div className="relative z-10 max-w-2xl">
+                    <div className="mb-3 flex items-center gap-2 text-[#F5C200]">
+                      <ShieldCheck size={15} />
+
+                      <span className="text-[9px] uppercase tracking-[0.2em]">
+                        Built to perform
+                      </span>
                     </div>
-                    <h3 className="font-heading text-2xl md:text-3xl text-white mb-3">{s.closer.heading}</h3>
-                    <p className="text-white/45 text-sm leading-relaxed">{s.closer.body}</p>
+
+                    <h3 className="mb-2 font-heading text-2xl text-white sm:text-3xl">
+                      {s.closer.heading}
+                    </h3>
+
+                    <p className="text-sm leading-relaxed text-white/45">
+                      {s.closer.body}
+                    </p>
                   </div>
+
                   <Link
                     to="/contact"
-                    className="group relative z-10 inline-flex items-center gap-2 bg-[#F5C200] text-black px-7 py-4 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-[#FFD740] hover:-translate-y-0.5 transition-all duration-300 flex-shrink-0"
+                    className="group/cta relative z-10 inline-flex flex-shrink-0 items-center gap-2 rounded-lg bg-[#F5C200] px-6 py-3.5 text-[10px] font-bold uppercase tracking-widest text-black transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFD740]"
                   >
                     Start a Project
-                    <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+
+                    <ArrowUpRight
+                      size={14}
+                      className="transition-transform group-hover/cta:-translate-y-0.5 group-hover/cta:translate-x-0.5"
+                    />
                   </Link>
                 </motion.div>
               )}
@@ -234,71 +557,100 @@ function ServiceItem({ s, isOpen, onToggle }) {
           </motion.div>
         )}
       </AnimatePresence>
-    </article>
+    </motion.article>
   );
 }
 
-/* ── Page ─────────────────────────────────────────── */
+/* ── Services Page ────────────────────────────────── */
 export default function ServicesPage() {
-  const [activeId, setActiveId] = useState("creator");
-  const heroRef    = useRef(null);
-  const heroInView = useInView(heroRef, { once: true });
+  const [activeId, setActiveId] = useState("wedding");
 
-  const toggle = (id) => setActiveId((prev) => (prev === id ? null : id));
+  const heroRef = useRef(null);
+  const heroInView = useInView(heroRef, {
+    once: true,
+  });
+
+  const toggle = (id) => {
+    setActiveId((prev) => (prev === id ? null : id));
+  };
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
-      <section className="relative pt-40 pb-24 px-6 overflow-hidden" ref={heroRef}>
-        <div className="absolute -top-40 left-0 w-[600px] h-[600px] bg-[#F5C200]/8 rounded-full blur-[160px] pointer-events-none" />
-        <div className="absolute top-10 right-0 w-[380px] h-[380px] bg-[#F5C200]/5 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(245,194,0,0.08),transparent_30%)] pointer-events-none" />
+    <main className="min-h-screen overflow-x-hidden bg-black text-white">
+      {/* ── Hero Section ── */}
+      <section
+        ref={heroRef}
+        className="relative overflow-hidden px-6 pb-20 pt-36 sm:pb-24 sm:pt-40"
+      >
+        <div className="pointer-events-none absolute -left-40 -top-32 h-[460px] w-[460px] rounded-full bg-[#F5C200]/8 blur-[150px] sm:h-[600px] sm:w-[600px]" />
 
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="pointer-events-none absolute -right-24 top-20 h-[320px] w-[320px] rounded-full bg-[#F5C200]/5 blur-[130px]" />
+
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(245,194,0,0.07),transparent_34%)]" />
+
+        <div className="relative z-10 mx-auto max-w-7xl">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 border border-[#F5C200]/20 rounded-full px-4 py-2 bg-[#F5C200]/5 mb-8 shadow-[0_0_30px_rgba(245,194,0,0.08)]"
+            transition={{ duration: 0.55 }}
+            className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-[#F5C200]/20 bg-[#F5C200]/5 px-4 py-2 shadow-[0_0_30px_rgba(245,194,0,0.08)]"
           >
-            <span className="size-1.5 rounded-full bg-[#F5C200] animate-pulse" />
-            <span className="text-[9px] uppercase tracking-[0.35em] text-[#F5C200]">// What We Do</span>
+            <span className="size-1.5 animate-pulse rounded-full bg-[#F5C200]" />
+
+            <span className="text-[9px] uppercase tracking-[0.35em] text-[#F5C200]">
+              // What We Do
+            </span>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 34 }}
             animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.85, delay: 0.1, ease: [0.2, 0, 0, 1] }}
-            className="font-heading text-[clamp(3.5rem,11vw,9rem)] leading-[0.87] uppercase mb-6"
+            transition={{
+              duration: 0.8,
+              delay: 0.08,
+              ease: [0.2, 0, 0, 1],
+            }}
+            className="font-heading mb-6 text-[clamp(3.5rem,11vw,9rem)] uppercase leading-[0.87]"
           >
             OUR <span className="text-[#F5C200]">SERVICES</span>
           </motion.h1>
 
-          <div className="flex justify-start mb-8">
-            <div className="w-16 h-0.5 bg-[#F5C200] shadow-[0_0_30px_rgba(245,194,0,0.7)]" />
-          </div>
+          <div className="mb-8 h-0.5 w-16 bg-[#F5C200] shadow-[0_0_30px_rgba(245,194,0,0.7)]" />
 
-          <div className="grid md:grid-cols-2 gap-10 items-end">
+          <div className="grid items-end gap-10 md:grid-cols-[1fr_auto]">
             <motion.p
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.25 }}
-              className="text-white/50 text-base leading-relaxed max-w-lg"
+              transition={{ duration: 0.65, delay: 0.2 }}
+              className="max-w-lg text-sm leading-relaxed text-white/50 sm:text-base"
             >
-              Tap any practice to expand it. We've built specialised service stacks
-              across creator growth, business marketing, content production, and
-              full-time opportunities — all under one roof.
+              Tap any service to explore it. We've built specialised production
+              systems across wedding cinema, live broadcasting, podcast
+              production, and commercial filmmaking — all from one studio.
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={heroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="flex flex-wrap gap-8"
+              transition={{ duration: 0.65, delay: 0.3 }}
+              className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-2"
             >
-              {[["10+","Brands"],["105+","Projects"],["80%","Retention"],["4.3/5","Rating"]].map(([num, label]) => (
-                <div key={label} className="min-w-[90px] rounded-2xl border border-white/8 bg-white/[0.02] px-4 py-3 backdrop-blur-sm">
-                  <p className="font-heading text-3xl text-[#F5C200]">{num}</p>
-                  <p className="text-[9px] uppercase tracking-[0.2em] text-white/30 mt-1">{label}</p>
+              {[
+                ["500+", "Events"],
+                ["12+", "Years"],
+                ["98%", "Satisfaction"],
+                ["4.9/5", "Rating"],
+              ].map(([num, label]) => (
+                <div
+                  key={label}
+                  className="min-w-[105px] rounded-xl border border-white/10 bg-white/[0.025] px-4 py-3 backdrop-blur-sm transition-colors duration-300 hover:border-[#F5C200]/25"
+                >
+                  <p className="font-heading text-2xl text-[#F5C200] sm:text-3xl">
+                    {num}
+                  </p>
+
+                  <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-white/35">
+                    {label}
+                  </p>
                 </div>
               ))}
             </motion.div>
@@ -306,36 +658,65 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <div className="border-y border-white/8 bg-black py-5 px-6">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-center gap-8 md:gap-14">
-          {[
-            { icon: Film,       label: "Video Content"   },
-            { icon: LayoutGrid, label: "Carousel Posts"  },
-            { icon: Camera,     label: "Photography"     },
-            { icon: Megaphone,  label: "Brand Campaigns" },
-            { icon: TrendingUp, label: "Meta Ads"        },
-            { icon: Globe,      label: "Social Media"    },
-            { icon: Cpu,        label: "Strategy"        },
-            { icon: Zap,        label: "Performance"     },
-          ].map(({ icon: Icon, label }) => (
-            <motion.div
-              key={label}
-              whileHover={{ y: -2 }}
-              className="flex items-center gap-2 text-white/30 hover:text-[#F5C200] transition-colors duration-300 cursor-default"
+      {/* ── Bold Animated Services Strip ── */}
+      <section
+        aria-label="Our creative approach"
+        className="relative w-full overflow-hidden border-y border-white/10 py-10 sm:py-14 md:py-16"
+      >
+        <motion.div
+          className="flex w-max"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            duration: 20,
+            ease: "linear",
+            repeat: Infinity,
+          }}
+        >
+          {[0, 1].map((group) => (
+            <div
+              key={group}
+              className="flex shrink-0 items-center gap-8 pr-8 sm:gap-12 sm:pr-12 md:gap-16 md:pr-16"
             >
-              <Icon size={14} strokeWidth={1.5} />
-              <span className="text-[9px] uppercase tracking-[0.18em] whitespace-nowrap">{label}</span>
-            </motion.div>
+              {["FILM.", "BROADCAST.", "CREATE.", "INSPIRE."].map(
+                (word) => (
+                  <span
+                    key={word}
+                    className="whitespace-nowrap font-heading text-5xl font-black uppercase leading-none tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl"
+                  >
+                    {word}
+                  </span>
+                )
+              )}
+            </div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </section>
 
-      <section className="max-w-7xl mx-auto px-6 py-16 pb-32">
-        <div className="border-t border-white/8">
-          {SERVICES.map((s) => (
+      {/* ── Service Cards ── */}
+      <section className="mx-auto max-w-7xl px-6 py-14 pb-24 sm:py-16 sm:pb-28">
+        <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="mb-3 text-[9px] uppercase tracking-[0.3em] text-[#F5C200]">
+              [ Explore our practices ]
+            </p>
+
+            <h2 className="font-heading text-3xl leading-tight text-white sm:text-4xl md:text-5xl">
+              One studio.{" "}
+              <span className="text-[#F5C200]">Every format.</span>
+            </h2>
+          </div>
+
+          <p className="max-w-sm text-xs leading-relaxed text-white/35 sm:text-right sm:text-sm">
+            Select a service to explore the systems, deliverables, and expertise behind it.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          {SERVICES.map((s, index) => (
             <ServiceItem
               key={s.id}
               s={s}
+              index={index}
               isOpen={activeId === s.id}
               onToggle={() => toggle(s.id)}
             />
@@ -343,33 +724,41 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="bg-black border-t border-white/8 py-16 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+      {/* ── Final CTA ── */}
+      <section className="border-t border-white/10 bg-[linear-gradient(180deg,#050505,#0a0a0a)] px-6 py-16 sm:py-20">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div>
-            <p className="font-heading text-3xl md:text-4xl text-white">
-              Ready to <span className="text-[#F5C200]">start</span> something?
+            <p className="font-heading text-3xl text-white sm:text-4xl">
+              Ready to <span className="text-[#F5C200]">start</span> production?
             </p>
-            <p className="text-white/40 text-sm mt-2 max-w-md leading-relaxed">
-              Strategy. Content. Distribution. Growth — all from one studio.
+
+            <p className="mt-2 max-w-md text-sm leading-relaxed text-white/40">
+              Wedding films. Live events. Podcasts. Commercials. All from one studio.
             </p>
           </div>
+
           <div className="flex flex-wrap gap-3">
             <Link
               to="/contact"
-              className="group inline-flex items-center gap-2 bg-[#F5C200] text-black px-7 py-4 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:bg-[#FFD740] hover:-translate-y-0.5 transition-all duration-300 shadow-[0_0_30px_rgba(245,194,0,0.25)]"
+              className="group inline-flex items-center gap-2 rounded-lg bg-[#F5C200] px-7 py-4 text-[10px] font-bold uppercase tracking-widest text-black shadow-[0_0_30px_rgba(245,194,0,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFD740]"
             >
-              Book a Discovery Call
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              Book a Consultation
+
+              <ArrowRight
+                size={14}
+                className="transition-transform group-hover:translate-x-1"
+              />
             </Link>
+
             <a
-              href="mailto:anshgarg7640@gmail.com"
-              className="inline-flex items-center gap-2 border border-white/12 px-7 py-4 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:border-[#F5C200]/40 hover:text-[#F5C200] transition-all duration-300"
+              href="mailto:newshivamproductions@gmail.com"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/15 px-7 py-4 text-[10px] font-bold uppercase tracking-widest text-white/70 transition-all duration-300 hover:border-[#F5C200]/40 hover:text-[#F5C200]"
             >
-              brandbros1711@gmail.com
+              newshivamproductions@gmail.com
             </a>
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }

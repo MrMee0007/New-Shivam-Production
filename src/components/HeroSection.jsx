@@ -1,471 +1,389 @@
+
 import { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+} from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Volume2,
+} from "lucide-react";
+import video from "../assets/production-showreel.mp4";
 
-// import slide1 from "../assets/slide1.png";
-// import slide2 from "../assets/slide2.png";
-// import slide3 from "../assets/slide3.png";
-// import slide4 from "../assets/slide4.png";
-// import slide5 from "../assets/slide5.png";
+const GOLD = "#F5C200";
 
-/* ── Slide data ──────────────────────────────────── */
+const SHOWREEL = {video};
+
 const SLIDES = [
   {
-    id: 1,
-    img: "https://res.cloudinary.com/n8tbvqpb/image/upload/v1792008630/Screenshot_2026-10-15_012621.webp",
-    category: "Brand Film",
-    title: "The Sensory\nUniverse",
-    tag: "#BrandStory",
-    color: "#D4A034",
+    eyebrow: "CINEMATIC WEDDING FILMS",
+    title: ["YOUR LOVE.", "OUR LENS."],
+    description:
+      "We craft breathtaking wedding films that capture every emotion, every glance, and every moment you'll treasure for a lifetime.",
+    category: "WEDDING CINEMATOGRAPHY",
+    image:
+      "https://res.cloudinary.com/n8tbvqpb/image/upload/v1792008630/Screenshot_2026-10-15_012621.webp",
   },
   {
-    id: 2,
-    img: "https://res.cloudinary.com/n8tbvqpb/image/upload/v1792008629/Img20.webp",
-    category: "Fashion Editorial",
-    title: "Modern\nGenre",
-    tag: "#FashionFilm",
-    color: "#F5C200",
+    eyebrow: "LIVE BROADCASTING & EVENTS",
+    title: ["LIVE. BOLD.", "UNFORGETTABLE."],
+    description:
+      "Professional multi-camera live broadcasting for corporate events, launches, and ceremonies — connecting you to audiences everywhere.",
+    category: "LIVE BROADCASTING",
+    image:
+      "https://res.cloudinary.com/n8tbvqpb/image/upload/v1792008629/Img20.webp",
   },
   {
-    id: 3,
-    img: "https://res.cloudinary.com/n8tbvqpb/image/upload/v1792008629/Img14.webp",
-    category: "F&B Campaign",
-    title: "Glimpse in\nthe Dark",
-    tag: "#FoodPhotography",
-    color: "#E8A820",
-  },
-  {
-    id: 4,
-    img: "https://res.cloudinary.com/n8tbvqpb/image/upload/v1792008630/Screenshot_2026-10-15_012235.webp ",
-    category: "Production",
-    title: "Behind \nCamera",
-    tag: "#StudioLife",
-    color: "#F5C200",
-  },
-  {
-    id: 5,
-    img: "https://res.cloudinary.com/n8tbvqpb/image/upload/v1792008629/Img5.webp",
-    category: "Creator Growth",
-    title: "Your Story,\nAmplified",
-    tag: "#CreatorEconomy",
-    color: "#D4A034",
+    eyebrow: "BRAND & COMMERCIAL PRODUCTION",
+    title: ["STORIES THAT", "SELL."],
+    description:
+      "From podcast studios to ad campaigns — we produce content that builds brands, engages audiences and drives real results.",
+    category: "COMMERCIAL PRODUCTION",
+    image:
+      "https://res.cloudinary.com/n8tbvqpb/image/upload/v1792008630/Screenshot_2026-10-15_012235.webp",
   },
 ];
 
-/* ── Animated counter ────────────────────────────── */
-function Count({ to, suffix }) {
-  const [n, setN] = useState(0);
-  const ref = useRef(null);
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return;
-      const dur = 1400, t0 = performance.now();
-      const tick = t => {
-        const p = Math.min((t - t0) / dur, 1);
-        setN(Math.round((1 - (1 - p) ** 3) * to));
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick); obs.disconnect();
-    }, { threshold: 0.5 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, [to]);
-  return <span ref={ref}>{n}{suffix}</span>;
-}
+const ease = [0.22, 1, 0.36, 1];
 
-/* ── Main Hero ───────────────────────────────────── */
 export default function HeroSection() {
   const [current, setCurrent] = useState(0);
-  const [prev, setPrev]       = useState(null);
-  const [dir, setDir]         = useState(1);       // 1 = next, -1 = prev
-  const [paused, setPaused]   = useState(false);
-  const [progress, setProgress] = useState(0);
-  const intervalRef = useRef(null);
-  const progRef     = useRef(null);
-  const sectionRef  = useRef(null);
+  const [paused, setPaused] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const [muted, setMuted] = useState(true);
 
-  const DURATION = 5500;
-
-  /* Scroll parallax */
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
-  const imgY   = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
-  const fadeUp = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-
-  /* Navigate */
-  const goTo = useCallback((idx, direction) => {
-    setPrev(current);
-    setDir(direction);
-    setCurrent(idx);
-    setProgress(0);
-  }, [current]);
-
-  const next = useCallback(() => goTo((current + 1) % SLIDES.length,  1), [current, goTo]);
-  const prev_ = useCallback(() => goTo((current - 1 + SLIDES.length) % SLIDES.length, -1), [current, goTo]);
-
-  /* Auto-play with smooth progress */
-  useEffect(() => {
-    if (paused) { clearInterval(intervalRef.current); return; }
-    setProgress(0);
-    const start = performance.now();
-    const tick  = t => {
-      const p = ((t - start) % DURATION) / DURATION * 100;
-      setProgress(p);
-      progRef.current = requestAnimationFrame(tick);
-    };
-    progRef.current = requestAnimationFrame(tick);
-    intervalRef.current = setInterval(next, DURATION);
-    return () => {
-      clearInterval(intervalRef.current);
-      cancelAnimationFrame(progRef.current);
-    };
-  }, [current, paused, next]);
+  const videoRef = useRef(null);
+  const reduceMotion = useReducedMotion();
 
   const slide = SLIDES[current];
 
-  /* Slide variants */
-  const imgVariants = {
-    enter:  (d) => ({ x: d > 0 ? "100%"  : "-100%", scale: 1.08 }),
-    center: { x: "0%", scale: 1.04, transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] } },
-    exit:   (d) => ({ x: d > 0 ? "-12%"  : "12%",  scale: 1, opacity: 0.2, transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] } }),
+  const goTo = useCallback((index) => {
+    setCurrent((index + SLIDES.length) % SLIDES.length);
+  }, []);
+
+  const next = useCallback(() => {
+    setCurrent((index) => (index + 1) % SLIDES.length);
+  }, []);
+
+  const previous = useCallback(() => {
+    setCurrent((index) => (index - 1 + SLIDES.length) % SLIDES.length);
+  }, []);
+
+  useEffect(() => {
+    if (paused || reduceMotion) return;
+
+    const timer = setInterval(next, 7000);
+    return () => clearInterval(timer);
+  }, [next, paused, reduceMotion]);
+
+  const toggleSound = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const nextMuted = !muted;
+    video.muted = nextMuted;
+    setMuted(nextMuted);
+
+    if (nextMuted) {
+      video.play().catch(() => {});
+    }
   };
 
-  const contentVariants = {
-    enter:  { opacity: 0, y: 40 },
-    center: { opacity: 1, y: 0,  transition: { duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] } },
-    exit:   { opacity: 0, y: -20, transition: { duration: 0.35 } },
+  const openShowreel = () => {
+    // Connect this to your dedicated showreel page or modal.
+    window.location.href = "/work";
   };
 
   return (
     <section
-      ref={sectionRef}
-      className="relative -mt-0 w-full overflow-hidden bg-black"
-      style={{ height: "100dvh", minHeight: "100vh" }}
+      className="relative isolate w-full overflow-hidden bg-[#080808] text-white"
+      style={{ height: "100svh", minHeight: "650px" }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      aria-label="Film production studio introduction"
     >
-      {/* ══════ SLIDE IMAGES ══════════════════════ */}
-      <AnimatePresence custom={dir} initial={false}>
-        <motion.div
-          key={`img-${current}`}
-          custom={dir}
-          variants={imgVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          className="absolute inset-0"
-          style={{ y: imgY }}
+      {/* CINEMATIC BACKGROUND */}
+
+      <div className="absolute inset-0 -z-20 overflow-hidden">
+        {/* Static image fallback */}
+
+        <AnimatePresence initial={false}>
+          {!videoReady && (
+            <motion.img
+              key={slide.image}
+              src={slide.image}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full object-cover"
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.2 }}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Replace with your own licensed showreel footage */}
+
+        <video
+          ref={videoRef}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
+            videoReady ? "opacity-100" : "opacity-0"
+          }`}
+          src={video}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={SLIDES[0].image}
+          onCanPlay={() => setVideoReady(true)}
+          onError={() => setVideoReady(false)}
+        />
+
+        {/* Cinematic color grading */}
+
+        <div className="absolute inset-0 bg-black/25" />
+
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-black/10" />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/35" />
+
+        <div
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E\")",
+          }}
+        />
+      </div>
+
+      {/* EDITORIAL FRAME */}
+
+      <div className="pointer-events-none absolute inset-4 z-10 border border-white/[0.12] md:inset-7" />
+
+      <div className="absolute right-7 top-1/2 z-10 hidden -translate-y-1/2 select-none lg:block">
+        <span
+          className="font-heading text-[clamp(8rem,16vw,17rem)] leading-none"
+          style={{
+            color: "transparent",
+            WebkitTextStroke: "2px rgba(255,255,255,0.22)",
+          }}
         >
-          {/* <img
-            src={slide.img}
-            alt={slide.title}
-            className="w-full h-full object-cover"
-            draggable={false}
-          /> */}
+          0{current + 1}
+        </span>
+      </div>
 
-          <img
-  src={slide.img}
-  alt={slide.title}
-  className="w-full h-full object-cover"
-  loading="lazy"
-/>
+      {/* TOP STUDIO IDENTIFICATION */}
 
-          {/* Multi-layer overlay for perfect text legibility */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/55 to-black/20" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-transparent to-black/40" />
-          {/* Color tint matching slide */}
-          <div
-            className="absolute inset-0 mix-blend-multiply opacity-20"
-            style={{ background: `radial-gradient(ellipse 60% 60% at 70% 40%, ${slide.color}44, transparent)` }}
+      <header className="absolute inset-x-0 top-0 z-20 flex items-center justify-between px-8 pt-10 md:px-16 md:pt-12">
+        <Link
+          to="/"
+          className="group flex flex-col leading-none"
+          aria-label="Brand home"
+        >
+
+          <span className="mt-20 text-[8px] tracking-[0.28em] text-white/55">
+            FILM & CREATIVE PRODUCTION
+          </span>
+        </Link>
+
+        <div className="hidden items-center gap-3 sm:flex">
+          <span className="relative flex h-2 w-2">
+            <span
+              className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60 mt-5"
+              style={{ background: GOLD }}
+            />
+            <span
+              className="relative inline-flex h-2 w-2 rounded-full mt-5"
+              style={{ background: GOLD }}
+            />
+          </span>
+          <span className="text-[9px] uppercase tracking-[0.25em] text-white/65 mt-10">
+            Independent Production Studio
+          </span>
+        </div>
+
+        <button
+          type="button"
+          onClick={toggleSound}
+          className="flex mt-15 h-10 w-10 items-center justify-center border border-white/20 bg-black/20 transition-colors hover:border-[#F5C200]"
+          aria-label={muted ? "Unmute showreel" : "Mute showreel"}
+        >
+          <Volume2
+            size={16}
+            className={muted ? "text-white/55" : "text-[#F5C200]"}
           />
-        </motion.div>
-      </AnimatePresence>
+        </button>
+      </header>
 
-      {/* ══════ DIAGONAL CORNER ACCENTS ══════════ */}
-      <div className="absolute top-0 right-0 w-40 h-full diag-stripes opacity-5 pointer-events-none" />
+      {/* MAIN STORY */}
 
-      {/* ══════ SLIDE NUMBER (BIG BG) ════════════ */}
-      <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none select-none hidden xl:block">
+      <div className="absolute inset-0 z-10 flex items-center px-9 pb-10 pt-32 md:px-16">
         <AnimatePresence mode="wait">
-          <motion.span
+          <motion.div
             key={current}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-            className="font-heading text-[10rem] leading-none"
-            style={{ color: "transparent", WebkitTextStroke: `3px rgba(245,194,0,1.08)` }}
+            initial={
+              reduceMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: 35, filter: "blur(8px)" }
+            }
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={
+              reduceMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: -18, filter: "blur(4px)" }
+            }
+            transition={{ duration: 0.75, ease }}
+            className="w-full max-w-5xl"
           >
-            {String(current + 1).padStart(2, "0")}
-          </motion.span>
+            <div className="mb-6 flex items-center gap-3 md:mb-8">
+              <span
+                className="h-px w-9"
+                style={{ background: GOLD }}
+              />
+              <span
+                className="text-[9px] font-medium uppercase tracking-[0.35em] md:text-[10px]"
+                style={{ color: GOLD }}
+              >
+                {slide.eyebrow}
+              </span>
+            </div>
+
+            <h1
+              className="font-heading font-medium uppercase tracking-[-0.055em]"
+              style={{
+                fontSize: "clamp(3.3rem, 9.2vw, 9rem)",
+                lineHeight: 0.88,
+              }}
+            >
+              <span className="block">{slide.title[0]}</span>
+              <span
+                className="mt-2 block"
+                style={{ color: GOLD }}
+              >
+                {slide.title[1]}
+              </span>
+            </h1>
+
+            <p className="mt-7 max-w-lg text-sm leading-7 text-white/70 md:mt-9 md:text-base md:leading-8">
+              {slide.description}
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3 md:mt-10">
+              <button
+                type="button"
+                onClick={openShowreel}
+                className="group inline-flex min-h-12 items-center gap-4 px-5 text-[9px] font-bold uppercase tracking-[0.22em] text-black transition-all hover:bg-white md:px-7"
+                style={{ background: GOLD }}
+              >
+                <span className="flex h-7 w-7 items-center justify-center rounded-full border border-black/20">
+                  <Play size={12} fill="currentColor" />
+                </span>
+                Explore Our Films
+                <ArrowRight
+                  size={14}
+                  className="transition-transform group-hover:translate-x-1"
+                />
+              </button>
+
+              <Link
+                to="/contact"
+                className="group inline-flex min-h-12 items-center gap-3 border border-white/30 bg-black/15 px-5 text-[9px] font-bold uppercase tracking-[0.22em] backdrop-blur-sm transition-colors hover:border-[#F5C200] hover:text-[#F5C200] md:px-7"
+              >
+                Discuss a Production
+                <ArrowUpRight
+                  size={14}
+                  className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </Link>
+            </div>
+          </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* ══════ FLOATING ACTION BADGE: VIEW OUR PORTFOLIO ═════ */}
-      <motion.div
-        initial={{ opacity: 0, x: 25, scale: 0.9 }}
-        animate={{
-          opacity: 1,
-          x: 0,
-          scale: 1,
-          y: [0, -6, 0],
-        }}
-        transition={{
-          opacity: { duration: 0.7, delay: 0.3 },
-          x: { duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] },
-          y: { duration: 3.6, repeat: Infinity, ease: "easeInOut" },
-        }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="absolute right-6 sm:right-8 md:right-14 bottom-24 sm:bottom-26 md:bottom-28 z-30"
-      >
-        <Link
-          to="/work"
-          className="group relative flex items-center gap-3 md:gap-3.5 pl-3.5 md:pl-4 pr-2 md:pr-2.5 py-2 md:py-2.5 rounded-full bg-black/65 backdrop-blur-xl border border-[#F5C200]/30 hover:border-[#F5C200] transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_20px_rgba(245,194,0,0.18)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.9),0_0_35px_rgba(245,194,0,0.45)] overflow-hidden cursor-pointer"
-          aria-label="View our portfolio"
-        >
-          {/* Shimmer sweep on hover */}
-          <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 pointer-events-none" />
+      {/* BOTTOM FILM NAVIGATION */}
 
-          {/* Glowing pulse indicator dot */}
-          <div className="relative flex items-center justify-center size-2.5 flex-shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F5C200] opacity-75" />
-            <span className="relative inline-flex rounded-full size-2 bg-[#F5C200]" />
-          </div>
-
-          {/* Badge text */}
-          <div className="flex flex-col text-left pr-1 select-none">
-            <span className="text-[7.5px] uppercase tracking-[0.28em] text-[#F5C200]/75 font-medium leading-none mb-1">
-              Selected Works
-            </span>
-            <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-white group-hover:text-[#F5C200] transition-colors leading-none">
-              View Our Portfolio
-            </span>
-          </div>
-
-          {/* Action arrow button */}
-          <div className="size-7 md:size-8 rounded-full bg-[#F5C200] text-black flex items-center justify-center group-hover:bg-white group-hover:rotate-45 transition-all duration-300 shadow-[0_0_15px_rgba(245,194,0,0.35)] flex-shrink-0">
-            <ArrowUpRight size={14} strokeWidth={2.4} />
-          </div>
-        </Link>
-      </motion.div>
-
-      {/* ══════ MAIN CONTENT ═════════════════════ */}
-      <motion.div
-        style={{ opacity: fadeUp }}
-        className="absolute inset-0 flex flex-col justify-between z-10"
-      >
-        {/* ── TOP BAR — category pill only (logo is in Navbar) ─── */}
-        <div className="flex items-center justify-end px-8 md:px-14 pt-28 pb-6">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`cat-${current}`}
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              className="flex items-center gap-2.5 border border-[#F5C200]/20 bg-black/30 backdrop-blur-sm rounded-full px-4 py-2"
+      <footer className="absolute inset-x-0 bottom-0 z-20 border-t border-white/15 bg-black/35 px-8 py-5 backdrop-blur-md md:px-16 md:py-3">
+        <div className="flex items-center justify-between gap-5">
+          <div className="hidden min-w-0 flex-1 sm:block">
+            <p className="text-[8px] uppercase tracking-[0.3em] text-white/35">
+              Currently exploring
+            </p>
+            <p
+              className="mt-2 truncate text-[10px] uppercase tracking-[0.2em]"
+              style={{ color: GOLD }}
             >
-              <span className="size-1.5 rounded-full bg-[#F5C200] animate-pulse" />
-              <span className="text-[8.5px] uppercase tracking-[0.35em] text-[#F5C200]/80">
-                {slide.category}
-              </span>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* ── SLIDE CONTENT ────────────────────── */}
-        <div className="flex-1 flex items-end px-8 md:px-14 pb-8">
-          <AnimatePresence mode="wait" custom={dir}>
-            <motion.div
-              key={`content-${current}`}
-              custom={dir}
-              variants={contentVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="w-full max-w-3xl"
-            >
-              {/* Tag */}
-              <p className="text-[8.5px] uppercase tracking-[0.38em] text-[#F5C200]/60 mb-3">
-                {slide.tag}
-              </p>
-
-              {/* Main title — HUGE */}
-              <h1
-                className="font-heading text-white leading-none mb-5 uppercase"
-                style={{ fontSize: "clamp(3.2rem, 9vw, 8.5rem)", lineHeight: 0.87 }}
-              >
-                {slide.title.split("\n").map((line, i) => (
-                  <span key={i} className="block">
-                    {i === 1
-                      ? <span className="text-[#F5C200]">{line}</span>
-                      : line
-                    }
-                  </span>
-                ))}
-              </h1>
-
-              {/* Client + Metric row */}
-              <div className="flex flex-wrap items-center gap-5 mb-7">
-                <span className="text-white/40 text-xs tracking-wider">{slide.client}</span>
-                <span className="w-px h-3 bg-white/20" />
-                <span
-                  className="font-heading text-sm tracking-[0.12em]"
-                  style={{ color: slide.color }}
-                >
-                  {slide.metric}
-                </span>
-              </div>
-
-              {/* CTAs */}
-              <div className="flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-3 w-fit">
-                <Link
-                  to="/work"
-                  className="group relative inline-flex items-center justify-center gap-2 bg-[#F5C200] text-black px-6 sm:px-7 py-3 sm:py-3.5 text-[9px] font-bold uppercase tracking-[0.35em] overflow-hidden hover:-translate-y-px transition-all duration-300 shadow-[0_0_30px_rgba(245,194,0,0.3)] w-fit"
-                >
-                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-500" />
-                  View Our Work
-                  <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center justify-center gap-2 border border-white/18 backdrop-blur-sm bg-white/5 px-6 sm:px-7 py-3 sm:py-3.5 text-[9px] font-bold uppercase tracking-[0.35em] text-white hover:border-[#F5C200]/50 hover:bg-[#F5C200]/8 hover:text-[#F5C200] transition-all duration-300 w-fit"
-                >
-                  Start a Project
-                  <ArrowUpRight size={12} />
-                </Link>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* ── BOTTOM BAR ───────────────────────── */}
-        <div className="px-8 md:px-14 py-5 flex items-center gap-6 border-t border-white/8 bg-black/30 backdrop-blur-md">
-
-          {/* Slide counter */}
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={current}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.3 }}
-                className="font-heading text-[#F5C200] text-lg leading-none"
-              >
-                {String(current + 1).padStart(2, "0")}
-              </motion.span>
-            </AnimatePresence>
-            <span className="text-white/20 font-heading text-sm">/ {String(SLIDES.length).padStart(2, "0")}</span>
+              {slide.category}
+            </p>
           </div>
 
-          {/* Progress bar */}
-          <div className="flex-1 flex items-center gap-1.5">
-            {SLIDES.map((s, i) => (
-              <button
-                key={s.id}
-                onClick={() => goTo(i, i > current ? 1 : -1)}
-                className="relative flex-1 h-0.5 bg-white/10 overflow-hidden rounded-full cursor-pointer hover:bg-white/20 transition-colors"
-                aria-label={`Go to slide ${i + 1}`}
-              >
-                {i === current && (
-                  <motion.div
-                    className="absolute left-0 top-0 h-full bg-[#F5C200] rounded-full"
-                    style={{ width: `${progress}%` }}
-                  />
-                )}
-                {i < current && (
-                  <div className="absolute left-0 top-0 h-full w-full bg-[#F5C200]/40 rounded-full" />
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Stats strip (desktop) */}
-          <div className="hidden lg:flex items-center gap-6 flex-shrink-0">
-            {[
-              { to: 10, suffix: "+", label: "Brands" },
-              { to: 105, suffix: "+", label: "Reels" },
-              { to: 1, suffix: "M", label: "Reach" },
-            ].map(({ to, suffix, label }) => (
-              <div key={label} className="text-center">
-                <p className="font-heading text-base leading-none text-[#F5C200]">
-                  <Count to={to} suffix={suffix} />
-                </p>
-                <p className="text-[7px] uppercase tracking-[0.2em] text-white/25 mt-0.5">{label}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Nav arrows */}
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <button
-              onClick={prev_}
-              className="group w-10 h-10 border border-white/12 flex items-center justify-center hover:border-[#F5C200] hover:bg-[#F5C200] transition-all duration-300"
-              aria-label="Previous slide"
-            >
-              <ChevronLeft size={16} className="text-white/50 group-hover:text-black transition-colors" />
-            </button>
-            <button
-              onClick={next}
-              className="group w-10 h-10 border border-white/12 flex items-center justify-center hover:border-[#F5C200] hover:bg-[#F5C200] transition-all duration-300"
-              aria-label="Next slide"
-            >
-              <ChevronRight size={16} className="text-white/50 group-hover:text-black transition-colors" />
-            </button>
-          </div>
-
-          {/* Tagline (desktop) */}
-          <span className="hidden xl:block text-[7.5px] uppercase tracking-[0.35em] text-white/18 flex-shrink-0">
-            Create. Edit. Inspire.
-          </span>
-        </div>
-      </motion.div>
-
-      {/* ══════ SIDE DOT NAV ═════════════════════ */}
-      <div className="absolute right-6 top-1/2 -translate-y-1/2 z-20 flex-col gap-2 hidden md:flex">
-        {SLIDES.map((s, i) => (
-          <button
-            key={s.id}
-            onClick={() => goTo(i, i > current ? 1 : -1)}
-            aria-label={`Slide ${i + 1}`}
-            className="group flex items-center gap-2"
-          >
+          <div className="flex items-center gap-4">
             <span
-              className="transition-all duration-400 rounded-full"
-              style={{
-                width:  i === current ? "24px" : "6px",
-                height: "6px",
-                background: i === current ? "#F5C200" : "rgba(255,255,255,0.2)",
-              }}
-            />
-          </button>
-        ))}
-      </div>
+              className="font-heading text-lg"
+              style={{ color: GOLD }}
+            >
+              0{current + 1}
+            </span>
 
-      {/* ══════ VERTICAL SCROLL HINT ═════════════ */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.6 }}
-        className="absolute left-8 bottom-24 z-20 hidden md:flex flex-col items-center gap-2"
-      >
-        <div className="relative h-14 w-px overflow-hidden">
-          <div className="absolute inset-0 bg-white/8" />
-          <motion.div
-            animate={{ y: ["0%", "100%"] }}
-            transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-transparent via-[#F5C200] to-transparent"
-          />
+            <div className="flex w-24 gap-1.5 md:w-40">
+              {SLIDES.map((item, index) => (
+                <button
+                  type="button"
+                  key={item.category}
+                  onClick={() => goTo(index)}
+                  aria-label={`View ${item.category}`}
+                  aria-current={current === index ? "true" : undefined}
+                  className="group relative h-8 flex-1"
+                >
+                  <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-white/25" />
+                  <motion.span
+                    className="absolute inset-x-0 top-1/2 h-[2px] -translate-y-1/2 origin-left"
+                    style={{
+                      background: GOLD,
+                      scaleX: current === index ? 1 : 0,
+                    }}
+                    animate={{
+                      scaleX: current === index ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </button>
+              ))}
+            </div>
+
+            <span className="text-xs text-white/35">
+              / 0{SLIDES.length}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={previous}
+              className="flex h-10 w-10 items-center justify-center border border-white/20 transition-colors hover:border-[#F5C200] hover:bg-[#F5C200] hover:text-black"
+              aria-label="Previous story"
+            >
+              <ChevronLeft size={17} />
+            </button>
+
+            <button
+              type="button"
+              onClick={next}
+              className="flex h-10 w-10 items-center justify-center border border-white/20 transition-colors hover:border-[#F5C200] hover:bg-[#F5C200] hover:text-black"
+              aria-label="Next story"
+            >
+              <ChevronRight size={17} />
+            </button>
+          </div>
         </div>
-        <span
-          className="text-[7px] uppercase tracking-[0.4em] text-white/20"
-          style={{ writingMode: "vertical-lr", transform: "rotate(180deg)" }}
-        >
-          Scroll
-        </span>
-      </motion.div>
+      </footer>
     </section>
   );
 }

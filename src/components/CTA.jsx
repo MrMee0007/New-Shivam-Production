@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight, Phone, Mail, Globe, Target, Lightbulb, TrendingUp, Star } from "lucide-react";
-
-/* Matches pitch deck "THANK YOU. LET'S BUILD SOMETHING GREAT." slide */
+import { ArrowRight, Phone, Mail, Globe, Heart, Camera, Mic, Tv } from "lucide-react";
 
 const GROW_CARDS = [
-  { icon: Target,     title: "CLEAR STRATEGY",     desc: "Purposeful content that drives results."      },
-  { icon: Lightbulb,  title: "CREATIVE EXCELLENCE", desc: "Ideas that stand out and stay remembered."    },
-  { icon: TrendingUp, title: "MEASURABLE GROWTH",   desc: "Tracking what matters. Delivering what works."},
-  { icon: Star,       title: "LONG TERM PARTNER",   desc: "Your growth is our priority."                 },
+  { icon: Heart,   title: "WEDDING FILMS",     desc: "Timeless films of your most precious day."           },
+  { icon: Camera,  title: "LIVE EVENTS",        desc: "Broadcast your moments to the world in real-time."  },
+  { icon: Mic,     title: "PODCAST STUDIO",     desc: "Professional audio-visual podcast production."       },
+  { icon: Tv,      title: "BRAND COMMERCIALS",  desc: "Cinematic ads that make your brand unforgettable."  },
 ];
 
 const CTA = () => {
@@ -28,26 +26,28 @@ const CTA = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
-          {/* ── LEFT: Thank you + contact info ── */}
+          {/* ── LEFT: Headline + contact info ── */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, ease: [0.2, 0, 0, 1] }}
           >
             <h2 className="font-heading text-[clamp(2.8rem,7vw,5.5rem)] leading-[0.9] uppercase mb-2">
-              <span className="text-[#F5C200]"><span>Thank You. <br /> Let's Build</span>
-              <br />
-              Something{" "} Great.</span>
+              <span className="text-[#F5C200]">
+                <span>Your Story.<br />Our Lens.</span>
+                <br />
+                Let's Create<br />Together.
+              </span>
             </h2>
 
             {/* Gold separator */}
             <div className="w-12 h-0.5 bg-[#F5C200] my-6" />
 
             <p className="text-white/50 text-sm leading-relaxed mb-2">
-              Ready to grow your brand with content that connects and converts?
+              Ready to capture your most important moments with cinematic excellence?
             </p>
             <p className="text-[#F5C200] font-bold uppercase tracking-[0.12em] text-sm mb-8">
-              We're Just a Message Away.
+              Let's Start the Conversation.
             </p>
 
             {/* Contact details */}
@@ -59,7 +59,7 @@ const CTA = () => {
                 <div>
                   <p className="text-white font-semibold text-sm">+91 88875 86830</p>
                   <p className="text-white font-semibold text-sm">+91 72488 48020</p>
-                  <p className="text-white/35 text-xs mt-1">Let's talk about your goals.</p>
+                  <p className="text-white/35 text-xs mt-1">Available Mon–Sat, 10 AM – 7 PM</p>
                 </div>
               </div>
 
@@ -68,10 +68,10 @@ const CTA = () => {
                   <Mail size={14} className="text-[#F5C200]" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <a href="mailto:brandbros1711@gmail.com" className="text-white font-semibold text-sm hover:text-[#F5C200] transition-colors">
-                    brandbros1711@gmail.com
+                  <a href="mailto:newshivamproductions@gmail.com" className="text-white font-semibold text-sm hover:text-[#F5C200] transition-colors">
+                    newshivamproductions@gmail.com
                   </a>
-                  <p className="text-white/35 text-xs mt-1">Drop us an email anytime.</p>
+                  <p className="text-white/35 text-xs mt-1">We respond within 24 hours.</p>
                 </div>
               </div>
 
@@ -80,23 +80,23 @@ const CTA = () => {
                   <Globe size={14} className="text-[#F5C200]" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <p className="text-white font-semibold text-sm">DM us to explore our work and more.</p>
+                  <p className="text-white font-semibold text-sm">Follow our journey on social media.</p>
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* ── RIGHT: Let's Grow Together ── */}
+          {/* ── RIGHT: Our Services ── */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.2, 0, 0, 1] }}
           >
-            {/* Rocket + heading */}
+            {/* Heading */}
             <div className="flex items-center gap-4 mb-2">
-              <span className="text-4xl select-none">🚀</span>
+              <span className="text-4xl select-none">🎬</span>
               <h3 className="font-heading text-[clamp(1.8rem,4vw,2.8rem)] leading-none uppercase">
-               <span className="text-[#F5C200]"> Let's Grow  Together.</span>
+                <span className="text-[#F5C200]">Book Your Session.</span>
               </h3>
             </div>
             <div className="w-10 h-0.5 bg-[#F5C200] mb-8 ml-16" />
@@ -137,8 +137,8 @@ const CTA = () => {
                 <ArrowRight size={18} className="text-black" />
               </Link>
               <p className="font-bold uppercase text-[0.72rem] tracking-[0.1em] text-white leading-snug">
-                The next chapter of your brand's growth{" "}
-                <span className="text-[#F5C200]">starts now.</span>
+                Every great story begins with a{" "}
+                <span className="text-[#F5C200]">single frame.</span>
               </p>
             </motion.div>
 
@@ -147,7 +147,7 @@ const CTA = () => {
               className="text-center text-white/25 text-sm mt-6 italic"
               style={{ fontFamily: "'Caveat', cursive" }}
             >
-              See you on the other side of success!
+              Your memories deserve to be extraordinary.
             </p>
           </motion.div>
         </div>

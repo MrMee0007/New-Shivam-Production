@@ -1,645 +1,318 @@
-import {
-  useState,
-  useMemo,
-  useCallback,
-  useEffect,
-  memo,
-  useRef,
-} from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
-import { Play, X } from "lucide-react";
-import { useSEO } from "../hooks/useSEO";
+import { useState, useRef } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { Play, ArrowUpRight } from "lucide-react";
+import FilmStrip       from "../components/FilmStrip";
+import CameraFilmStrip from "../components/CameraFilmStrip";
+import MasonryGallery  from "../components/MasonryGallery";
+import ParallaxBanner  from "../components/ParallaxBanner";
+import VenueGallery    from "../components/VenueGallery";
 
-/* ─── Categories ──────────────────────────────────── */
-const CATEGORIES = ["All", "Real State", "Food & Bevarages", "Hotels & Resorts","Promotion", "Product Shoot", "Clothing & Fashion"];
+function Reveal({ children, className = "", delay = 0 }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0, y: 24 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
-const METRICS = [
-  "18%+ Engagement",
-  "24%+ Reach",
-  "31%+ Saved Posts",
-  "36%+ Conversion",
-  "14%+ CTR",
-  "21%+ Watch Time",
-  "29%+ Clicks",
-  "42%+ Leads",
-  "16%+ Follower Growth",
-  "33%+ Retention",
-  "27%+ Story Taps",
-  "39%+ Revenue Lift",
-];
+const CATEGORIES = ["All", "Wedding", "Broadcast", "Podcast", "Commercial"];
 
-const getWorkMetric = (id) => METRICS[(id - 1) % METRICS.length];
+const CLD = (file, w = 900) =>
+  `https://res.cloudinary.com/wqhpwm9y/image/upload/w_${w},q_auto,f_auto/${file}`;
 
-/* ─── Portfolio data ─────────────────────────────── */
 const WORKS = [
   {
     id: 1,
-    tag: "ALL",
-    client: "DETALIENS",
-    title: "Urban Pulse",
-    metric: "33%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786439355/jawa_1.mp4",
+    category: "Wedding",
+    title: "Priya & Rohan",
+    subtitle: "Leela Palace, Gurgaon · 3-Day Celebration",
+    desc: "A three-day royal wedding captured in one breathtaking cinematic film — full ceremony, reception, and candid moments woven into a timeless story.",
+    img: CLD("v1794158518/2B4A4671.jpg"),
+    tag: "7 min Film",
+    featured: true,
   },
   {
     id: 2,
-    tag: "Clothing & Fashion",
-    client: "RAYMOND",
-    title: "Fashion in Motion",
-    metric: "28%+ Conversion",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786439355/raymond_1_re_1.mp4",
+    category: "Wedding",
+    title: "Meera & Arjun",
+    subtitle: "City Palace, Udaipur · Destination Wedding",
+    desc: "Three days of Rajputana grandeur — temples, ghats, and golden hour moments — all captured on film.",
+    img: CLD("v1794158516/2B4A4663.jpg"),
+    tag: "Destination Film",
   },
   {
     id: 3,
-    tag: "Hotels & Resorts",
-    client: "JO MOTEL",
-    title: "Sunset Stay",
-    metric: "33%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786439353/v6_1.mp4",
+    category: "Wedding",
+    title: "Anjali & Vikram",
+    subtitle: "Rambagh Palace, Jaipur",
+    desc: "An intimate 2-day wedding at a heritage palace — intimate moments, grand architecture, and golden light throughout.",
+    img: CLD("v1794158515/2B4A4657.jpg"),
+    tag: "Heritage Wedding",
   },
   {
     id: 4,
-    tag: "Hotels & Resorts",
-    client: "JO MOTEL",
-    title: "Luxury Check-In",
-    metric: "38%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786439351/v12_1.mp4",
+    category: "Wedding",
+    title: "Preet & Kabir",
+    subtitle: "ITC Grand Bharat, Gurgaon",
+    desc: "A modern Punjabi wedding blending tradition with contemporary cinematic style — vibrant colors and pure emotion.",
+    img: CLD("v1794158515/2B4A4655.jpg"),
+    tag: "5 min Film",
   },
   {
     id: 5,
-    tag: "Food & Bevarages",
-    client: "BERRY BROS",
-    title: "Seasonal Glow",
-    metric: "14%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786439350/jujutsu_reel_p3.mp4",
+    category: "Broadcast",
+    title: "Maruti Suzuki Annual Summit",
+    subtitle: "India Expo Centre, Greater Noida",
+    desc: "15,000+ live viewers. 8-camera production. Zero downtime across a 6-hour flagship corporate event.",
+    img: CLD("v1794158515/2B4A4650.jpg"),
+    tag: "Live Broadcast · 6 hrs",
   },
   {
     id: 6,
-    tag: "All",
-    client: "PARTY",
-    title: "After Dark",
-    metric: "26%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786439349/EDIT-ICT.mp4",
+    category: "Broadcast",
+    title: "Royal Celebrations Awards Night",
+    subtitle: "Hyatt Regency, Delhi",
+    desc: "Full red-carpet coverage, live switching across 6 cameras, and a same-day highlight reel delivered by midnight.",
+    img: CLD("v1794158515/2B4A4660.jpg"),
+    tag: "Live Event",
   },
   {
     id: 7,
-    tag: "Clothing & Fashion",
-    client: "LLM",
-    title: "Tailored Momentum",
-    metric: "15%+ Conversion",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786439346/llm_3_1.mp4",
+    category: "Podcast",
+    title: "The Growth Podcast",
+    subtitle: "New Shivam Studio, Gurgaon",
+    desc: "A branded 4-camera video podcast studio built from scratch — acoustic treatment, lighting, and weekly production support.",
+    img: CLD("v1794158513/2B4A4646.jpg"),
+    tag: "Weekly Production",
   },
   {
     id: 8,
-    tag: "Promotion",
-    client: "XTRAFUEL",
-    title: "Fuel the Rush",
-    metric: "24%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786439332/V4_EXTRAFUEL-1.mp4",
+    category: "Commercial",
+    title: "Himalaya Wellness",
+    subtitle: "Delhi & Gurgaon Locations",
+    desc: "A 60-second ad film that generated 2M+ views and drove measurable product sales in the first week.",
+    img: CLD("v1794158514/2B4A4641.jpg"),
+    tag: "60s Ad Film",
   },
   {
     id: 9,
-    tag: "Food & Bevarages",
-    client: "BERRY BROS",
-    title: "Flavour Fiesta",
-    metric: "17%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786439331/V_Event.mp4",
-  },
-  {
-    id: 10,
-    tag: "All",
-    client: "PARTY",
-    title: "Joy in Every Frame",
-    metric: "43%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786439313/1785486516433.publer.com.mp4",
-  },
-  {
-    id: 11,
-    tag: "All",
-    client: "DETALIENS",
-    title: "Street Sprint",
-    metric: "37%+ Conversion",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786439326/bullet.mp4",
-  },
-  {
-    id: 12,
-    tag: "Clothing & Fashion",
-    client: "LLM",
-    title: "Sharp & Formal",
-    metric: "51%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786439327/LLM_formal_1.mp4",
-  },
-  {
-    id: 13,
-    tag: "Food & Bevarages",
-    client: "BERRY BROS",
-    title: "Berry Burst",
-    metric: "22%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786446285/berrybros_v14_p3_1.mp4",
-  },
-  {
-    id: 14,
-    tag: "Food & Bevarages",
-    client: "BERRY BROS",
-    title: "Savor the Sweet Spot",
-    metric: "16%+ Conversion",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786446591/dessert_1.mp4",
-  },
-  {
-    id: 15,
-    tag: "Clothing & Fashion",
-    client: "LLM",
-    title: "Runway Reimagined",
-    metric: "19%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786616117/LLM_6_1.mp4",
-  },
-  {
-    id: 16,
-    tag: "Clothing & Fashion",
-    client: "RAYMOND",
-    title: "The Second Cut",
-    metric: "11% Conversion",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786616212/raymond_2_re_1.mp4",
-  },
-  {
-    id: 17,
-    tag: "Food & Bevarages",
-    client: "LLM",
-    title: "Night Market Vibes",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1791293935/berrybros_v2_p2.mp4",
-  },
-  {
-    id: 18,
-    tag: "Clothing & Fashion",
-    client: "LLM",
-    title: "Power in Style",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1786616106/llm_female_formal_1.mp4",
-  },
-  {
-    id: 19,
-    tag: "Promotion",
-    client: "XTRAFUEL",
-    title: "High Octane",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1791294605/xtrafuel_v5_p2.mp4",
-  },
-  {
-    id: 20,
-    tag: "Real State",
-    client: "Think n Grow",
-    title: "Foundations of Growth",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1791294584/TnG_v2_P3.mp4",
-  },
-  {
-    id: 21,
-    tag: "Food & Bevarages",
-    client: "Berry Bros",
-    title: "Bites with Character",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1791294575/berrybros_v10_p3_2.mp4",
-  },
-  {
-    id: 22,
-    tag: "Promotion",
-    client: "XTRAFUEL",
-    title: "Bold Moves",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1791294574/vyapar_sample_edit.mp4",
-  },
-  {
-    id: 23,
-    tag: "Food & Bevarages",
-    client: "Berry Bros",
-    title: "Berry Afterhours",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1791293952/berrybros_v5_p2.mp4",
-  },
-  {
-    id: 24,
-    tag: "Promotion",
-    client: "XTRAFUEL",
-    title: "Fueling the Future",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1791294195/xtrafuel_v6_p1.mp4",
-  },
-  {
-    id: 25,
-    tag: "Food & Bevarages",
-    client: "Waffle World",
-    title: "Waffle Story",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1791294097/waffle_sample.mp4",
-  },
-  {
-    id: 26,
-    tag: "Food & Bevarages",
-    client: "Berry Bros",
-    title: "Berry Circuit",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/h8jkoa7d/video/upload/v1791293945/berrybros_v8_p1.mp4",
-  },
-    {
-    id: 27,
-    tag: "Promotion",
-    client: "8 Ball Pool",
-    title: "Pocket Power",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791369236/Sample_v1.mp4",
-  },
-    {
-    id: 28,
-    tag: "Food & Bevarages",
-    client: "Berry Bros",
-    title: "Fresh Berry Story",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791369241/berrybros_v1_p2.mp4",
-  },
-    {
-    id: 29,
-    tag: "Food & Bevarages",
-    client: "Berry Bros",
-    title: "Crisp & Bold",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791369282/berrybros_v16_p1.mp4",
-  },
-    {
-    id: 30,
-    tag: "Food & Bevarages",
-    client: "Berry Bros",
-    title: "Berry Rush",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791369281/berrybros_v4_p1.mp4",
-  },
-    {
-    id: 31,
-    tag: "Promotion",
-    client: "XTRAFUEL",
-    title: "Fuel Without Limits",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791369338/xtrafuel_v1_p1.mp4",
-  },
-    {
-    id: 32,
-    tag: "Food & Bevarages",
-    client: "Berry Bros",
-    title: "Berry Swing",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791369375/berrybros_v7_p1.mp4",
-  },
-    {
-    id: 33,
-    tag: "Promotion",
-    client: "XTRAFUEL",
-    title: "Xtra Power",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791369378/xtrafuel_v10_p1.mp4",
-  },
-    {
-    id: 34,
-    tag: "Real State",
-    client: "Think n Grow",
-    title: "Urban Growth",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791369384/TnG_v8_p1.mp4",
-  },
-    {
-    id: 35,
-    tag: "Real State",
-    client: "Think n Grow",
-    title: "Victory Floors",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791369389/TnG_victoryfloors_p2.mp4",
-  },
-  {
-    id: 36,
-    tag: "Real State",
-    client: "Think n Grow",
-    title: "Property Pulse",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791369394/TnG_v6_p2.mp4",
-  },
-  {
-    id: 37,
-    tag: "Hotels & Resorts",
-    client: "JO MOTEL",
-    title: "Motel Moments",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791969637/V2.mp4",
-  },
-    {
-    id: 38,
-    tag: "Hotels & Resorts",
-    client: "JO MOTEL",
-    title: "Resort Escape",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791969620/V5.mp4",
-  },
-    {
-    id: 39,
-    tag: "Hotels & Resorts",
-    client: "JO MOTEL",
-    title: "Stay in Style",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791969611/V1.mp4",
-  },
-    {
-    id: 40,
-    tag: "Hotels & Resorts",
-    client: "JO MOTEL",
-    title: "Chase the Horizon",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791969608/v4.mp4",
-  },
-    {
-    id: 41,
-    tag: "Hotels & Resorts",
-    client: "JO MOTEL",
-    title: "JO Motel Finale",
-    metric: "40%+ Engagement",
-    video: "https://res.cloudinary.com/n8tbvqpb/video/upload/v1791969595/V3.mp4",
+    category: "Commercial",
+    title: "Samsung India — Launch",
+    subtitle: "Corporate HQ, Gurugram",
+    desc: "A product launch film combining drone aerials, studio close-ups, and lifestyle footage into one seamless brand story.",
+    img: CLD("v1794158513/2B4A4651.jpg"),
+    tag: "Brand Film",
   },
 ];
 
-/* ─── Helper: derive Cloudinary poster from video URL ─── */
-function getPoster(videoUrl) {
-  // Transform: /video/upload/vXXXX/name.mp4
-  //         → /video/upload/so_0,w_400,h_711,c_fill/vXXXX/name.jpg
-  return videoUrl
-    .replace("/video/upload/", "/video/upload/so_0,w_400,h_711,c_fill/")
-    .replace(/\.mp4$/, ".jpg");
-}
-
-/* ─── 9:16 Reel Card ──────────────────────────────── */
-const WorkCard = memo(({ item, index, inView, onPlay }) => {
-  const containerRef = useRef(null);
-  const videoRef = useRef(null);
-  const [videoSrc, setVideoSrc] = useState(null); // lazy: only set when card visible
-
-  /* Set video src only when card enters viewport */
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVideoSrc(item.video);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "200px" }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [item.video]);
-
-  const handleMouseEnter = useCallback(() => {
-    if (videoRef.current && videoSrc) {
-      videoRef.current.play().catch(() => {});
-    }
-  }, [videoSrc]);
-
-  const handleMouseLeave = useCallback(() => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-  }, []);
-
-  const metric = getWorkMetric(item.id);
-
-  return (
-    <motion.div
-      ref={containerRef}
-      initial={{ opacity: 0, y: 35 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay: index * 0.045, ease: [0.2, 0, 0, 1] }}
-      className="group cursor-pointer"
-      onClick={() => onPlay(item)}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <div className="aspect-[9/16] w-full rounded-2xl overflow-hidden border border-white/10 relative hover:border-[#F5C200]/50 transition-all duration-500">
-
-        {/* Poster shown until video loads */}
-        <img
-          src={getPoster(item.video)}
-          alt={item.title}
-          className="absolute inset-0 w-full h-full object-cover"
-          loading="lazy"
-        />
-
-        {/* Video — src set lazily */}
-        {videoSrc && (
-          <video
-            ref={videoRef}
-            src={videoSrc}
-            muted
-            loop
-            playsInline
-            preload="none"
-            className="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-105"
-          />
-        )}
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
-
-        {/* Tag */}
-        <div className="absolute top-3 left-3 right-3 flex justify-between">
-          <span className="text-[8px] uppercase tracking-[0.2em] text-white/40">
-            {item.tag}
-          </span>
-        </div>
-
-        {/* Play button (visible on hover) */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-          <div className="w-14 h-14 rounded-full bg-[#F5C200] flex items-center justify-center shadow-[0_0_30px_rgba(245,194,0,0.5)]">
-            <Play size={22} fill="black" stroke="none" className="ml-1" />
-          </div>
-        </div>
-
-        {/* Bottom info */}
-        <div className="absolute bottom-0 left-0 right-0 p-4">
-          <p className="text-[9px] uppercase tracking-[0.15em] text-white/40">
-            {item.client}
-          </p>
-          <h3 className="text-white font-semibold text-sm mt-0.5">{item.title}</h3>
-          <p className="text-[#F5C200] text-xs mt-1">{metric}</p>
-        </div>
-      </div>
-    </motion.div>
-  );
-});
-
-WorkCard.displayName = "WorkCard";
-
-/* ─── Page ────────────────────────────────────────── */
 export default function Work() {
   const [active, setActive] = useState("All");
-  const [modal, setModal] = useState(null);
 
-  const handleFilter = useCallback((cat) => setActive(cat), []);
-
-  const filtered = useMemo(
-    () => (active === "All" ? WORKS : WORKS.filter((w) => w.tag === active)),
-    [active]
-  );
-
-  const gridRef = useRef(null);
-  const inView = useInView(gridRef, { once: false, margin: "-40px" });
-
-  /* Close modal on Escape key */
-  useEffect(() => {
-    const onKey = (e) => { if (e.key === "Escape") setModal(null); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
-
-  /* Lock body scroll while modal open */
-  useEffect(() => {
-    document.body.style.overflow = modal ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [modal]);
+  const filtered = active === "All"
+    ? WORKS
+    : WORKS.filter((w) => w.category === active);
 
   return (
-    <>
-      <div className="min-h-screen pt-32 pb-24 px-6 bg-black">
-        <div className="max-w-7xl mx-auto">
+    <main className="overflow-x-hidden" style={{ background: "#0a0a0a" }}>
 
-          {/* ── Hero ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 36 }}
+      {/* ── Hero ── */}
+      <section className="px-6 pb-16 pt-36 md:px-10 md:pt-44">
+        <div className="mx-auto max-w-7xl">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, ease: [0.2, 0, 0, 1] }}
-            className="mb-16"
+            transition={{ duration: 0.6 }}
+            className="mb-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4AF6A]"
+            style={{ fontFamily: "Inter, sans-serif" }}
           >
-            <p className="text-[#F5C200] uppercase tracking-[0.3em] text-[10px] mb-4">
-              [ Selected Works ]
-            </p>
-            <h1
-              className="font-heading text-[#F5C200] leading-[0.87] mb-5"
-              style={{ fontSize: "clamp(3.5rem, 9vw, 7.5rem)" }}
-            >
-              Our
-              <br />
-              Portfolio
-            </h1>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-4 h-px bg-[#F5C200]/50" />
-              <p className="text-white/35 text-xs uppercase tracking-[0.2em]">
-                9:16 Format · Built for Social
-              </p>
-            </div>
-            <p className="text-white/40 text-sm leading-relaxed max-w-md">
-              A curated collection of reels, brand films and digital experiences
-              built for ambitious brands across India.
-            </p>
-          </motion.div>
-
-          {/* ── Filter Pills ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
+            Our Portfolio
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.2 }}
-            className="flex flex-wrap gap-2 mb-12"
+            transition={{ duration: 0.8, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="text-[clamp(3rem,9vw,8rem)] font-semibold leading-[0.88] text-[#F5F0E8]"
+            style={{ fontFamily: "Inter, sans-serif" }}
           >
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => handleFilter(cat)}
-                className={`px-5 py-2.5 rounded-full text-[9px] font-bold uppercase tracking-[0.2em] transition-all duration-300 ${
-                  active === cat
-                    ? "bg-[#F5C200] text-black shadow-[0_0_20px_rgba(245,194,0,0.35)]"
-                    : "bg-white/5 border border-white/10 text-white/45 hover:bg-[#F5C200]/10 hover:text-[#F5C200] hover:border-[#F5C200]/20"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </motion.div>
-
-          {/* ── Portfolio Grid ── */}
-          <div
-            ref={gridRef}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4"
+            Our <em>Work.</em>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="mt-7 max-w-lg text-sm leading-7 text-[#F5F0E8]/45"
+            style={{ fontFamily: "Inter, sans-serif" }}
           >
-            <AnimatePresence mode="popLayout">
-              {filtered.map((item, index) => (
-                <WorkCard
-                  key={item.id}
-                  item={item}
-                  index={index}
-                  inView={inView}
-                  onPlay={setModal}
-                />
-              ))}
-            </AnimatePresence>
-          </div>
-
-          {filtered.length === 0 && (
-            <div className="text-center py-20 text-white/25">
-              <p className="text-sm uppercase tracking-[0.2em]">
-                No projects in this category yet.
-              </p>
-            </div>
-          )}
+            A selection of projects we're proud of — wedding films, live events,
+            podcasts, and brand commercials.
+          </motion.p>
         </div>
-      </div>
+      </section>
 
-      {/* ── Video Modal ── */}
-      <AnimatePresence>
-        {modal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[9999] bg-black/96 backdrop-blur-xl flex items-center justify-center p-4"
-            onClick={() => setModal(null)}
-          >
-            {/* Close */}
+      {/* Divider */}
+      <div className="divider" />
+
+      {/* ── Camera Film Strip ── */}
+      <CameraFilmStrip />
+
+      {/* ── Filter Tabs ── */}
+      <section className="sticky top-16 z-30 border-b border-[#F5F0E8]/[0.07] bg-[#0a0a0a]/90 backdrop-blur-xl px-6 py-5 md:px-10">
+        <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto scrollbar-none">
+          {CATEGORIES.map((cat) => (
             <button
-              onClick={(e) => { e.stopPropagation(); setModal(null); }}
-              className="absolute top-6 right-6 z-50 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center hover:bg-[#F5C200] hover:text-black transition-all duration-300"
-              aria-label="Close"
+              key={cat}
+              onClick={() => setActive(cat)}
+              className={`shrink-0 rounded-full px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] transition-all duration-300 ${
+                active === cat
+                  ? "bg-[#F5F0E8] text-[#0a0a0a]"
+                  : "border border-[#F5F0E8]/15 text-[#F5F0E8]/50 hover:border-[#F5F0E8]/35 hover:text-[#F5F0E8]"
+              }`}
+              style={{ fontFamily: "Inter, sans-serif" }}
             >
-              <X size={20} />
+              {cat}
             </button>
+          ))}
+        </div>
+      </section>
 
-            {/* Video container */}
+      {/* ── Grid ── */}
+      <section className="px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto max-w-7xl">
+          <AnimatePresence mode="wait">
             <motion.div
-              initial={{ scale: 0.88, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.88, opacity: 0 }}
-              transition={{ duration: 0.35, ease: [0.2, 0, 0, 1] }}
-              className="relative max-h-[90vh] aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
+              key={active}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4 }}
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
             >
-              <video
-                src={modal.video}
-                controls
-                autoPlay
-                playsInline
-                controlsList="nodownload"
-                className="w-full h-full object-contain bg-black"
-              />
+              {filtered.map((work, i) => (
+                <Reveal key={work.id} delay={i * 0.06}>
+                  <article className="group relative overflow-hidden rounded-lg border border-[#F5F0E8]/[0.07] bg-[#111111]">
+                    {/* Image */}
+                    <div className="relative overflow-hidden" style={{ height: work.featured ? "340px" : "260px" }}>
+                      <img
+                        src={work.img}
+                        alt={work.title}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/90 via-[#111111]/10 to-transparent" />
 
-              {/* Info overlay */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent p-6 pointer-events-none">
-                <span className="text-[9px] uppercase tracking-[0.25em] text-[#F5C200] font-bold">
-                  {modal.tag}
-                </span>
-                <h3 className="font-heading text-2xl text-white mt-1">{modal.title}</h3>
-                <p className="text-[#F5C200] text-sm mt-0.5">{getWorkMetric(modal.id)}</p>
-                <p className="text-white/40 text-xs mt-1">{modal.client}</p>
-              </div>
+                      {/* Category badge */}
+                      <span
+                        className="absolute left-4 top-4 rounded-full border border-[#F5F0E8]/20 bg-[#111111]/60 px-3 py-1 text-[9px] font-medium uppercase tracking-[0.22em] text-[#F5F0E8]/70 backdrop-blur-sm"
+                        style={{ fontFamily: "Inter, sans-serif" }}
+                      >
+                        {work.category}
+                      </span>
+
+                      {/* Play overlay */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#F5F0E8]/30 bg-[#F5F0E8]/10 backdrop-blur-sm">
+                          <Play size={16} className="ml-0.5 text-[#F5F0E8]" fill="#F5F0E8" />
+                        </div>
+                      </div>
+
+                      {/* Tag */}
+                      <span
+                        className="absolute bottom-4 right-4 text-[9px] uppercase tracking-[0.2em] text-[#F5F0E8]/40"
+                        style={{ fontFamily: "Inter, sans-serif" }}
+                      >
+                        {work.tag}
+                      </span>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6">
+                      <p
+                        className="mb-1 text-[9px] uppercase tracking-[0.25em] text-[#D4AF6A]"
+                        style={{ fontFamily: "Inter, sans-serif" }}
+                      >
+                        {work.subtitle}
+                      </p>
+                      <h3
+                        className="mb-3 text-xl font-semibold text-[#F5F0E8] transition-colors group-hover:text-[#D4AF6A]"
+                        style={{ fontFamily: "Inter, sans-serif" }}
+                      >
+                        {work.title}
+                      </h3>
+                      <p
+                        className="text-sm leading-6 text-[#F5F0E8]/40"
+                        style={{ fontFamily: "Inter, sans-serif" }}
+                      >
+                        {work.desc}
+                      </p>
+
+                      <div className="mt-5 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#F5F0E8]/30 opacity-0 transition-all duration-300 group-hover:text-[#D4AF6A] group-hover:opacity-100">
+                        View Project
+                        <ArrowUpRight size={12} />
+                      </div>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+          </AnimatePresence>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="divider" />
+
+      {/* ── Venue Gallery — event & venue coverage ── */}
+      <VenueGallery />
+
+      <div className="divider" />
+
+      {/* ── Masonry Gallery — behind the lens ── */}
+      <MasonryGallery />
+
+      {/* ── Parallax Quote Banner ── */}
+      <ParallaxBanner
+        img="https://res.cloudinary.com/wqhpwm9y/image/upload/w_1800,q_auto,f_auto/v1794158510/2B4A4629.jpg"
+        quote="Behind every great shot is a team that never stops caring."
+        tag="New Shivam Production House · Gurgaon, India"
+      />
+
+      {/* Divider */}
+      <div className="divider" />
+
+      {/* ── CTA ── */}
+      <section className="bg-[#111111] px-6 py-20 text-center md:px-10 md:py-28">
+        <Reveal>
+          <p
+            className="mb-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4AF6A]"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            Start a Project
+          </p>
+          <h2
+            className="mb-6 text-3xl font-semibold text-[#F5F0E8] md:text-4xl"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            Your story could be next.
+          </h2>
+          <a
+            href="/contact"
+            className="inline-flex items-center gap-2 rounded-full bg-[#F5F0E8] px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#0a0a0a] transition-all duration-300 hover:bg-[#D4AF6A]"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            Get in Touch
+            <ArrowUpRight size={14} />
+          </a>
+        </Reveal>
+      </section>
+
+    </main>
   );
 }

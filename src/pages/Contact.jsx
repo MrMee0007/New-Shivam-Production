@@ -1,417 +1,316 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Instagram,
-  Linkedin,
-  Twitter,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight, Mail, Phone, MapPin, Instagram, Youtube, CheckCircle } from "lucide-react";
 
-
-const services = [
-  "Social Media Marketing",
-  "Influencer Marketing",
-  "Brand Management",
-  "Content Creation",
-  "Social Media Management",
+const SERVICES = [
+  "Wedding Cinematography",
+  "Live Broadcasting",
+  "Podcast Production",
+  "Commercial / Ad Film",
+  "Event Coverage",
+  "Testimonial Video",
   "Other",
 ];
 
-const heroWords = [
-  "Hello.",
-  "Growth.",
-  "Success.",
-  "Creators.",
-  "Business.",
+const BUDGETS = [
+  "Under ₹50,000",
+  "₹50,000 – ₹1,50,000",
+  "₹1,50,000 – ₹5,00,000",
+  "₹5,00,000+",
+  "Let's discuss",
 ];
 
-const Contact = () => {
-    const [currentWord, setCurrentWord] = useState(0);
-
-useEffect(() => {
-  const interval = setInterval(() => {
-    setCurrentWord((prev) => (prev + 1) % heroWords.length);
-  }, 2500);
-
-  return () => clearInterval(interval);
-}, []);
-
+export default function Contact() {
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    brand: "",
-    service: services[0],
-    budget: "",
-    message: "",
+    name: "", email: "", phone: "", eventName: "",
+    service: SERVICES[0], budget: BUDGETS[0], message: "",
   });
+  const [submitted, setSubmitted] = useState(false);
+
+  const update = (key) => (e) =>
+    setForm((prev) => ({ ...prev, [key]: e.target.value }));
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-    console.log("Form Submitted:", form);
-
-    alert(`Thank you ${form.name || "there"}! We'll get back to you soon.`);
-
-    setForm({
-      name: "",
-      email: "",
-      brand: "",
-      service: services[0],
-      budget: "",
-      message: "",
-    });
-  };
-
-  const update = (key) => (e) => {
-    setForm({
-      ...form,
-      [key]: e.target.value,
-    });
+    setSubmitted(true);
   };
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden relative">
+    <main className="overflow-x-hidden" style={{ background: "#0a0a0a" }}>
 
-
-      {/* Background Glow */}
-      <div className="absolute top-24 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[#F5C200]/8 blur-[180px] rounded-full pointer-events-none" />
-
-      {/* Hero */}
-
-
-<section className="relative pt-40 pb-24 px-6 md:px-12 overflow-hidden">
-
-  {/* Animated Background Blobs */}
-  <motion.div
-    animate={{
-      x: [0, 50, 0],
-      y: [0, -40, 0],
-      scale: [1, 1.15, 1],
-    }}
-    transition={{
-      duration: 12,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-    className="absolute top-20 left-20 w-72 h-72 bg-[#F5C200]/12 rounded-full blur-[120px]"
-  />
-
-  <motion.div
-    animate={{
-      x: [0, -60, 0],
-      y: [0, 40, 0],
-      scale: [1, 1.2, 1],
-    }}
-    transition={{
-      duration: 15,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-    className="absolute right-20 top-32 w-96 h-96 bg-[#F5C200]/6 rounded-full blur-[140px]"
-  />
-
-  <div className="max-w-7xl mx-auto relative z-10">
-
-    {/* Badge */}
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-primary/20 bg-card/40 backdrop-blur-xl"
-    >
-      <div className="w-2 h-2 rounded-full bg-[#F5C200] animate-pulse" />
-      <span className="text-xs tracking-[0.25em] uppercase font-mono">
-        Let's Build Something Great
-      </span>
-    </motion.div>
-
-    {/* Heading */}
-    <motion.h1
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-      className="mt-10 font-display text-6xl md:text-[9rem] leading-[0.9] tracking-tight"
-    >
-      <span className="block">Say</span>
-
-      <div className="relative h-[1.1em] overflow-hidden mt-3">
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={currentWord}
-            initial={{
-              y: 180,
-              rotateX: 90,
-              opacity: 0,
-            }}
-            animate={{
-              y: 0,
-              rotateX: 0,
-              opacity: 1,
-            }}
-            exit={{
-              y: -180,
-              rotateX: -90,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="absolute left-0 italic text-gradient-gold"
-          >
-            {heroWords[currentWord]}
-          </motion.span>
-        </AnimatePresence>
-      </div>
-    </motion.h1>
-
-    {/* Description */}
-    <motion.p
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4, duration: 0.8 }}
-      className="mt-10 max-w-3xl text-lg md:text-2xl text-muted-foreground leading-relaxed"
-    >
-      Whether you're launching a startup, growing a brand,
-      scaling your business, or building a creator presence,
-      Brand Monk helps transform ambitious ideas into
-      unforgettable digital experiences.
-    </motion.p>
-
-    {/* Stats */}
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.7 }}
-      className="mt-14 flex flex-wrap gap-8"
-    >
-      <div>
-        <h3 className="text-4xl font-display">50+</h3>
-        <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
-          Brands
-        </p>
-      </div>
-
-      <div>
-        <h3 className="text-4xl font-display">100+</h3>
-        <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
-          Creators
-        </p>
-      </div>
-
-      <div>
-        <h3 className="text-4xl font-display">24/7</h3>
-        <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
-          Innovation
-        </p>
-      </div>
-    </motion.div>
-
-  </div>
-</section>
-
-
-      {/* Content */}
-      <section className="px-6 md:px-12 pb-32 relative z-10">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-16">
-          {/* Form Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+      {/* ── Hero ── */}
+      <section className="px-6 pb-16 pt-36 md:px-10 md:pt-44">
+        <div className="mx-auto max-w-7xl">
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="lg:col-span-7"
+            transition={{ duration: 0.6 }}
+            className="mb-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#D4AF6A]"
+            style={{ fontFamily: "Inter, sans-serif" }}
           >
-            <div className="mb-10 p-8 rounded-3xl border border-primary/20 bg-primary/5 backdrop-blur-sm">
-              <h2 className="font-display text-3xl md:text-4xl">
-                Let's create something remarkable.
-              </h2>
+            Let's Talk
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="text-[clamp(3rem,9vw,8rem)] font-semibold leading-[0.88] text-[#F5F0E8]"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            Get in <em>Touch.</em>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="mt-7 max-w-lg text-sm leading-7 text-[#F5F0E8]/45"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            Whether it's a wedding, a live event, a podcast, or a commercial —
+            we'd love to hear about your project. Fill in the form and we'll
+            be in touch within 24 hours.
+          </motion.p>
+        </div>
+      </section>
 
-              <p className="mt-3 text-muted-foreground">
-                Share your goals and we'll help craft the right strategy for
-                your business, brand, or campaign.
+      {/* Divider */}
+      <div className="divider" />
+
+      {/* ── Main Content ── */}
+      <section className="px-6 py-16 md:px-10 md:py-24">
+        <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1fr_380px]">
+
+          {/* ── Form ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            <AnimatePresence mode="wait">
+              {!submitted ? (
+                <motion.form
+                  key="form"
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  onSubmit={onSubmit}
+                  className="space-y-8"
+                >
+                  {/* Name + Email */}
+                  <div className="grid gap-7 sm:grid-cols-2">
+                    <Field label="Your Name *" value={form.name} onChange={update("name")} required />
+                    <Field label="Email Address *" type="email" value={form.email} onChange={update("email")} required />
+                  </div>
+
+                  {/* Phone + Event Name */}
+                  <div className="grid gap-7 sm:grid-cols-2">
+                    <Field label="Phone Number" type="tel" value={form.phone} onChange={update("phone")} />
+                    <Field label="Event / Brand Name" value={form.eventName} onChange={update("eventName")} />
+                  </div>
+
+                  {/* Service + Budget */}
+                  <div className="grid gap-7 sm:grid-cols-2">
+                    <SelectField
+                      label="Service Needed"
+                      value={form.service}
+                      onChange={update("service")}
+                      options={SERVICES}
+                    />
+                    <SelectField
+                      label="Approximate Budget"
+                      value={form.budget}
+                      onChange={update("budget")}
+                      options={BUDGETS}
+                    />
+                  </div>
+
+                  {/* Message */}
+                  <div>
+                    <label className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.28em] text-[#F5F0E8]/40" style={{ fontFamily: "Inter, sans-serif" }}>
+                      Tell us about your project
+                    </label>
+                    <textarea
+                      rows={5}
+                      required
+                      value={form.message}
+                      onChange={update("message")}
+                      placeholder="Date, location, style, vision — anything that helps us understand your project..."
+                      className="w-full resize-none border-b border-[#F5F0E8]/15 bg-transparent py-3 text-sm text-[#F5F0E8] outline-none placeholder:text-[#F5F0E8]/20 focus:border-[#D4AF6A] transition-colors"
+                      style={{ fontFamily: "Inter, sans-serif" }}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="group inline-flex items-center gap-3 rounded-full bg-[#F5F0E8] px-8 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#0a0a0a] transition-all duration-300 hover:bg-[#D4AF6A] hover:gap-4"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    Send Message
+                    <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                  </button>
+                </motion.form>
+              ) : (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex flex-col items-start gap-5 py-10"
+                >
+                  <CheckCircle size={40} className="text-[#D4AF6A]" />
+                  <h3
+                    className="text-3xl font-semibold text-[#F5F0E8]"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    Message received.
+                  </h3>
+                  <p className="max-w-sm text-sm leading-7 text-[#F5F0E8]/50" style={{ fontFamily: "Inter, sans-serif" }}>
+                    Thank you, {form.name || "there"}! We'll review your project
+                    details and get back to you within 24 hours.
+                  </p>
+                  <button
+                    onClick={() => { setSubmitted(false); setForm({ name: "", email: "", phone: "", eventName: "", service: SERVICES[0], budget: BUDGETS[0], message: "" }); }}
+                    className="mt-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#F5F0E8]/40 hover:text-[#F5F0E8] transition-colors"
+                    style={{ fontFamily: "Inter, sans-serif" }}
+                  >
+                    Send another message
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* ── Sidebar ── */}
+          <motion.aside
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="space-y-6 lg:pt-2"
+          >
+            {/* Contact info card */}
+            <div className="rounded-lg border border-[#F5F0E8]/[0.07] bg-[#111111] p-7">
+              <p className="mb-6 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#F5F0E8]/30" style={{ fontFamily: "Inter, sans-serif" }}>
+                Contact Details
+              </p>
+              <ul className="space-y-5">
+                <li className="flex items-start gap-4">
+                  <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#D4AF6A]/20 bg-[#D4AF6A]/5">
+                    <Mail size={13} className="text-[#D4AF6A]" />
+                  </div>
+                  <div>
+                    <p className="text-[9px] uppercase tracking-[0.25em] text-[#F5F0E8]/30 mb-1" style={{ fontFamily: "Inter, sans-serif" }}>Email</p>
+                    <a href="mailto:newshivamproductions@gmail.com" className="text-sm text-[#F5F0E8]/70 hover:text-[#F5F0E8] transition-colors" style={{ fontFamily: "Inter, sans-serif" }}>
+                      newshivamproductions@gmail.com
+                    </a>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#D4AF6A]/20 bg-[#D4AF6A]/5">
+                    <Phone size={13} className="text-[#D4AF6A]" />
+                  </div>
+                  <div>
+                    <p className="text-[9px] uppercase tracking-[0.25em] text-[#F5F0E8]/30 mb-1" style={{ fontFamily: "Inter, sans-serif" }}>Phone</p>
+                    <p className="text-sm text-[#F5F0E8]/70" style={{ fontFamily: "Inter, sans-serif" }}>
+                      +91 88875 86830<br />+91 72488 48020
+                    </p>
+                    <p className="mt-1 text-[9px] text-[#F5F0E8]/30" style={{ fontFamily: "Inter, sans-serif" }}>Mon–Sat · 10 AM – 7 PM</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-4">
+                  <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#D4AF6A]/20 bg-[#D4AF6A]/5">
+                    <MapPin size={13} className="text-[#D4AF6A]" />
+                  </div>
+                  <div>
+                    <p className="text-[9px] uppercase tracking-[0.25em] text-[#F5F0E8]/30 mb-1" style={{ fontFamily: "Inter, sans-serif" }}>Studio</p>
+                    <p className="text-sm text-[#F5F0E8]/70" style={{ fontFamily: "Inter, sans-serif" }}>
+                      New Shivam Production House<br />
+                      Gurgaon, Haryana, India
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* Availability card */}
+            <div className="rounded-lg border border-[#F5F0E8]/[0.07] bg-[#111111] p-7">
+              <div className="mb-3 flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#F5F0E8]/40" style={{ fontFamily: "Inter, sans-serif" }}>
+                  Currently Accepting Projects
+                </p>
+              </div>
+              <p className="text-xs leading-6 text-[#F5F0E8]/35" style={{ fontFamily: "Inter, sans-serif" }}>
+                We're booking for 2025–2026. Limited dates available for
+                wedding season — enquire early to secure your date.
               </p>
             </div>
 
-            <form onSubmit={onSubmit} className="space-y-8">
-              <div className="grid md:grid-cols-2 gap-8">
-                <Field
-                  label="Your Name"
-                  value={form.name}
-                  onChange={update("name")}
-                  required
-                />
-
-                <Field
-                  label="Email Address"
-                  type="email"
-                  value={form.email}
-                  onChange={update("email")}
-                  required
-                />
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-8">
-                <Field
-                  label="Brand / Company"
-                  value={form.brand}
-                  onChange={update("brand")}
-                />
-
-                <div>
-                  <label className="text-[10px] font-mono tracking-[0.3em] uppercase text-muted-foreground">
-                    Service Needed
-                  </label>
-
-                  <select
-                    value={form.service}
-                    onChange={update("service")}
-                    className="mt-2 w-full bg-transparent border-b border-border focus:border-primary outline-none py-3 font-display text-xl"
+            {/* Socials */}
+            <div className="rounded-lg border border-[#F5F0E8]/[0.07] bg-[#111111] p-7">
+              <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.3em] text-[#F5F0E8]/30" style={{ fontFamily: "Inter, sans-serif" }}>
+                Follow Our Work
+              </p>
+              <div className="flex gap-3">
+                {[
+                  { icon: Instagram, label: "Instagram" },
+                  { icon: Youtube, label: "YouTube" },
+                ].map(({ icon: Icon, label }) => (
+                  <a
+                    key={label}
+                    href="#"
+                    aria-label={label}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-[#F5F0E8]/12 text-[#F5F0E8]/40 transition-all duration-300 hover:border-[#D4AF6A]/40 hover:text-[#D4AF6A]"
                   >
-                    {services.map((service) => (
-                      <option
-                        key={service}
-                        value={service}
-                        className="bg-background"
-                      >
-                        {service}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <Field
-                label="Approximate Budget"
-                placeholder="₹50,000 - ₹5,00,000"
-                value={form.budget}
-                onChange={update("budget")}
-              />
-
-              <div>
-                <label className="text-[10px] font-mono tracking-[0.3em] uppercase text-muted-foreground">
-                  Project Details
-                </label>
-
-                <textarea
-                  rows={6}
-                  required
-                  value={form.message}
-                  onChange={update("message")}
-                  placeholder="Tell us about your project, goals, audience, timeline, and expectations..."
-                  className="mt-2 w-full bg-transparent border-b border-border focus:border-primary outline-none py-3 font-display text-xl resize-none placeholder:text-muted-foreground/40"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="group relative overflow-hidden px-10 py-5 bg-primary text-primary-foreground font-mono text-sm tracking-[0.25em] uppercase rounded-xl"
-              >
-                <span className="relative z-10 flex items-center gap-3">
-                  Send Message
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </button>
-            </form>
-          </motion.div>
-
-          {/* Sidebar */}
-          <motion.aside
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="lg:col-span-5"
-          >
-            <div className="sticky top-32 space-y-6">
-              <Detail
-                icon={<Mail className="w-4 h-4" />}
-                label="Email"
-                lines={[
-                  "anshgarg7640@gmail.com",
-                ]}
-              />
-
-              <Detail
-                icon={<Phone className="w-4 h-4" />}
-                label="Phone"
-                lines={[
-                  "+91 88875 86830",
-                  "+91 72488 48020",
-                  "Mon - Sat | 10 AM - 7 PM",
-                ]}
-              />
-
-              <Detail
-                icon={<MapPin className="w-4 h-4" />}
-                label="Office"
-                lines={[
-                  "BRAND//BROS Media",
-                  "Gurgaon, Haryana, India",
-                ]}
-              />
-
-              <div className="rounded-3xl border border-border bg-card/50 backdrop-blur-xl p-8">
-                <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-muted-foreground mb-5">
-                  Follow Us
-                </p>
-
-                <div className="flex gap-4">
-                  {[
-                    { Icon: Instagram, href: "#" },
-                    { Icon: Linkedin, href: "#" },
-                    { Icon: Twitter, href: "#" },
-                  ].map(({ Icon, href }, index) => (
-                    <a
-                      key={index}
-                      href={href}
-                      className="w-12 h-12 flex items-center justify-center rounded-xl border border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
-                    >
-                      <Icon className="w-5 h-5" />
-                    </a>
-                  ))}
-                </div>
+                    <Icon size={15} />
+                  </a>
+                ))}
               </div>
             </div>
           </motion.aside>
         </div>
       </section>
+    </main>
+  );
+}
 
+/* ── Sub-components ── */
+function Field({ label, ...props }) {
+  return (
+    <div>
+      <label
+        className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.28em] text-[#F5F0E8]/40"
+        style={{ fontFamily: "Inter, sans-serif" }}
+      >
+        {label}
+      </label>
+      <input
+        {...props}
+        className="w-full border-b border-[#F5F0E8]/15 bg-transparent py-3 text-sm text-[#F5F0E8] outline-none placeholder:text-[#F5F0E8]/20 focus:border-[#D4AF6A] transition-colors"
+        style={{ fontFamily: "Inter, sans-serif" }}
+      />
     </div>
   );
-};
+}
 
-const Field = ({ label, ...props }) => (
-  <div>
-    <label className="text-[10px] font-mono tracking-[0.3em] uppercase text-muted-foreground">
-      {label}
-    </label>
-
-    <input
-      {...props}
-      className="mt-2 w-full bg-transparent border-b border-border focus:border-primary outline-none py-3 font-display text-xl transition-colors placeholder:text-muted-foreground/40"
-    />
-  </div>
-);
-
-const Detail = ({ icon, label, lines }) => (
-  <div className="rounded-3xl border border-border bg-card/50 backdrop-blur-xl p-8">
-    <div className="flex items-center gap-3 text-primary">
-      {icon}
-      <p className="text-[10px] font-mono tracking-[0.3em] uppercase">
+function SelectField({ label, value, onChange, options }) {
+  return (
+    <div>
+      <label
+        className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.28em] text-[#F5F0E8]/40"
+        style={{ fontFamily: "Inter, sans-serif" }}
+      >
         {label}
-      </p>
+      </label>
+      <select
+        value={value}
+        onChange={onChange}
+        className="w-full border-b border-[#F5F0E8]/15 bg-transparent py-3 text-sm text-[#F5F0E8]/80 outline-none focus:border-[#D4AF6A] transition-colors cursor-pointer"
+        style={{ fontFamily: "Inter, sans-serif", background: "#0a0a0a" }}
+      >
+        {options.map((opt) => (
+          <option key={opt} value={opt} style={{ background: "#111111" }}>
+            {opt}
+          </option>
+        ))}
+      </select>
     </div>
-
-    <div className="mt-4 space-y-2 font-display text-xl">
-      {lines.map((line) => (
-        <p key={line}>{line}</p>
-      ))}
-    </div>
-  </div>
-);
-
-export default Contact;
-
-
+  );
+}

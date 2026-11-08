@@ -1,29 +1,21 @@
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectCoverflow, Pagination, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import { ArrowRight, Award, Users, TrendingUp, Zap, Star, CheckCircle } from "lucide-react";
+import {
+  ArrowUpRight,
+  ArrowRight,
+  Award,
+  Users,
+  TrendingUp,
+  CheckCircle,
+  Sparkles,
+} from "lucide-react";
 
-/* ── DATA ─────────────────────────────────────── */
 const STATS = [
-  { num: "10+",  label: "Brands Launched" },
-  { num: "105+", label: "Reels Produced"  },
-  { num: "1M",  label: "Total Reach"     },
-  { num: "80%",  label: "Client Retention"},
-];
-
-const CAROUSEL_SLIDES = [
-  { tag: "Branding",       title: "The Sensory Universe",   metric: "1.2M Views",     bg: "linear-gradient(145deg,#120600,#5c2500,#2a1000)" },
-  { tag: "Reels",          title: "Defining Modern Luxury", metric: "+240% Engagement",bg: "linear-gradient(145deg,#0a0016,#3a0060,#180030)" },
-  { tag: "Product Shoots", title: "Light on Glass",         metric: "+87% Conversion", bg: "linear-gradient(145deg,#001a12,#004535)" },
-  { tag: "Ads",            title: "Midnight Run",           metric: "4.8x ROAS",       bg: "linear-gradient(145deg,#00080f,#001a35)" },
-  { tag: "Events",         title: "Three Days, One Story",  metric: "8.4M Impressions",bg: "linear-gradient(145deg,#1a0010,#500040)" },
-  { tag: "Social Media",   title: "Dining in the Dark",     metric: "+312% Followers", bg: "linear-gradient(145deg,#091400,#243500)" },
+  { num: "500+", label: "Events Covered" },
+  { num: "1200+", label: "Hours of Footage" },
+  { num: "12+", label: "Years Experience" },
+  { num: "98%", label: "Client Satisfaction" },
 ];
 
 const TEAM = [
@@ -31,499 +23,548 @@ const TEAM = [
     name: "Yug Gupta",
     role: "Founder & Creative Director",
     img: "https://res.cloudinary.com/h8jkoa7d/image/upload/v1791297372/Screenshot_2026-10-06_195554.png",
-    color: "from-yellow-400 via-orange-400 to-red-500",
-    bio: "Yug Gupta is the Founder of Brand Bros and a Computer Science Engineering student with a passion for cinematic storytelling, visual branding, and creative innovation. As a cinematographer and creative visionary, he transforms ideas into compelling visual experiences that leave a lasting impact.",
-    quote: "Every frame has a purpose. Every story deserves to be unforgettable.",
+    bio: "Yug Gupta is the Founder of New Shivam Production House and a passionate cinematographer with over 12 years of experience. He specialises in cinematic wedding films, live event broadcasting, and brand commercials — transforming real-life moments into timeless visual stories.",
+    quote:
+      "Every frame has a purpose. Every story deserves to be unforgettable.",
   },
   {
     name: "Ansh Garg",
-    role: "Co-Founder & Creative Management Head",
+    role: "Co-Founder & Post-Production Head",
     img: "https://res.cloudinary.com/h8jkoa7d/image/upload/v1791298020/ChatGPT_Image_Oct_6_2026_08_16_17_PM.png",
-    color: "from-cyan-400 via-blue-500 to-purple-500",
-    bio: "Ansh Garg is the Co-Founder of Brand Bros, leading creative management and post-production. Renowned for his exceptional editing skills and meticulous attention to detail, he turns raw footage into immersive cinematic experiences.",
+    bio: "Ansh Garg is the Co-Founder leading post-production at New Shivam. Renowned for his exceptional colour grading, sound design, and meticulous editing skills, he transforms raw footage into immersive cinematic experiences that move audiences.",
     quote: "Editing is where imagination becomes reality.",
   },
 ];
 
 const VALUES = [
-  { icon: Award,      num: "01", title: "Craft Over Speed",      desc: "We never sacrifice quality for convenience. Every frame, colour grade, and caption is considered with intention and purpose." },
-  { icon: TrendingUp, num: "02", title: "Results-First Thinking",desc: "Beautiful content that doesn't move a metric is decorative. We engineer every asset around a measurable outcome." },
-  { icon: Users,      num: "03", title: "Brand-First Always",     desc: "We embed ourselves in your brand's world before we pick up a camera. Your voice — only amplified, never replaced." },
+  {
+    icon: Award,
+    num: "01",
+    title: "Cinematic craft first",
+    desc: "We never sacrifice quality for speed. Every frame, colour grade, and edit is considered with intention — because your memories deserve the best.",
+  },
+  {
+    icon: TrendingUp,
+    num: "02",
+    title: "Story-driven production",
+    desc: "Great visuals without great storytelling fall flat. We engineer every project around emotion, narrative, and the story that needs to be told.",
+  },
+  {
+    icon: Users,
+    num: "03",
+    title: "Client partnership always",
+    desc: "We embed ourselves in your vision before we pick up a camera. Your story — captured authentically, never compromised.",
+  },
 ];
 
 const TIMELINE = [
   {
-    year: "March 2026",
-    title: "Foundation",
-    desc: "After gaining hands-on experience at a marketing agency and mastering the fundamentals of branding, content strategy, production, editing, and client management, Brand Bros was founded to redefine visual storytelling."
+    year: "2012",
+    title: "The beginning",
+    desc: "New Shivam Production House was founded in Gurgaon with a single camera, a passionate team, and a commitment to capturing life's most meaningful moments with cinematic integrity.",
   },
-
   {
-    year: "April 2026",
-    title: "Winning Trust",
-    desc: "Partnered with our first businesses, delivering high-quality brand films, social media campaigns, and product content that established long-term client relationships."
+    year: "2015",
+    title: "Wedding cinema takes off",
+    desc: "Established ourselves as one of Gurgaon's most sought-after wedding cinematography studios, delivering films that couples cherish for a lifetime.",
   },
-
   {
-    year: "May 2026",
-    title: "Brands That Grew",
-    desc: "Worked with businesses across multiple industries, helping them build stronger digital identities, reach larger audiences, and transform followers into customers through consistent creative content."
+    year: "2018",
+    title: "Expanding into broadcast",
+    desc: "Built a full live broadcasting setup, covering corporate events, award nights, and large-scale gatherings with multi-camera production and real-time streaming.",
   },
-
   {
-    year: "June 2026",
-    title: "Beyond Content",
-    desc: "Evolved into a full-service creative partner offering branding, advertising campaigns, event coverage, drone production, and social media growth strategies."
+    year: "2021",
+    title: "Podcasts & commercial films",
+    desc: "Launched a dedicated podcast production studio and expanded into ad film production, helping brands tell their stories with cinematic quality and strategic impact.",
   },
-
   {
     year: "Present",
-    title: "The Vision Ahead",
-    desc: "We're just getting started. Brand Bros exists to build iconic brands, inspire creativity, and become one of India's leading creative studios known for work that leaves a lasting impact."
+    title: "500+ events. Still counting.",
+    desc: "New Shivam Production House continues to grow as a full-service production studio — trusted by families, brands, and broadcasters across India for work that lasts.",
   },
 ];
 
-/* ── SECTION WRAPPER ──────────────────────────── */
-function Section({ children, className = "" }) {
-  const ref    = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  return (
-    <div ref={ref} className={className} style={{ opacity: inView ? 1 : 0, transition: "opacity 0.6s ease" }}>
-      {children}
-    </div>
-  );
-}
+const TESTIMONIALS = [
+  {
+    quote:
+      "New Shivam captured our wedding in a way we never imagined possible. Every emotion, every moment — preserved forever. We've watched it over a hundred times.",
+    name: "Priya & Rohan Sharma",
+    org: "Wedding Clients",
+  },
+  {
+    quote:
+      "Their live broadcasting setup was flawless. 15,000 viewers tuned in for our annual awards night and not a single glitch. Truly professional.",
+    name: "Events Manager",
+    org: "Maruti Suzuki India",
+  },
+  {
+    quote:
+      "The podcast studio they set up for us was world-class. Sound quality, lighting, the whole experience — our listeners noticed the difference immediately.",
+    name: "Host & Founder",
+    org: "The Growth Podcast",
+  },
+  {
+    quote:
+      "Our ad film got over 2 million views in the first week. The team understood our brand deeply and delivered something that actually drove sales.",
+    name: "Marketing Director",
+    org: "Himalaya Wellness",
+  },
+];
 
-/* ── 3D TEAM CARD ─────────────────────────────── */
-function TeamCard({ member, index }) {
-  const [flipped, setFlipped] = useState(false);
-  const ref    = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+function Reveal({ children, className = "", delay = 0 }) {
+  const ref = useRef(null);
+  const visible = useInView(ref, {
+    once: true,
+    margin: "-70px",
+  });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.15 }}
-      className="relative h-[520px] perspective-1000 cursor-pointer"
-      onClick={() => setFlipped(f => !f)}
+      className={className}
+      initial={{ opacity: 0, y: 28 }}
+      animate={visible ? { opacity: 1, y: 0 } : {}}
+      transition={{
+        duration: 0.65,
+        delay,
+        ease: "easeOut",
+      }}
     >
-      <div
-        className="relative w-full h-full preserve-3d transition-all duration-700"
-        style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
-      >
-        {/* Front */}
-        <div className="absolute inset-0 backface-hidden rounded-2xl overflow-hidden border border-white/8 group">
-          <img src={member.img} alt={member.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-          <div className={`absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r ${member.color}`} />
-          <div className="absolute bottom-0 left-0 right-0 p-7">
-            <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[var(--brand)] mb-2 block">{member.role}</span>
-            <h3 className="font-heading text-3xl text-white">{member.name}</h3>
-            <p className="text-xs text-white/40 mt-2 tracking-[0.15em] uppercase">Click to read bio →</p>
-          </div>
-        </div>
-
-        {/* Back */}
-{/* Back */}
-<div
-  className="absolute inset-0 rotate-y-180 backface-hidden rounded-2xl overflow-hidden border border-white/10 bg-[#0a0a0a]"
->
-  {/* Background Image */}
-  <img
-    src={member.img}
-    alt={member.name}
-    className="absolute inset-0 w-full h-full object-cover opacity-15 scale-110"
-  />
-
-  {/* Overlay */}
-  <div className="absolute inset-0 bg-gradient-to-br from-black via-[#0b0b0b]/95 to-black" />
-
-  {/* Content */}
-  <div className="relative z-10 h-full flex flex-col p-8">
-
-    {/* Profile */}
-    <div className="flex items-center gap-4 mb-8">
-      <img
-        src={member.img}
-        alt={member.name}
-        className="w-20 h-20 rounded-full object-cover border border-white/10"
-      />
-
-      <div>
-        <span className="text-[10px] uppercase tracking-[0.3em] text-[var(--brand)] font-semibold">
-          {member.role}
-        </span>
-
-        <h3 className="font-heading text-3xl text-white mt-1">
-          {member.name}
-        </h3>
-      </div>
-    </div>
-
-    {/* Bio */}
-    <div className="flex-1">
-      <p className="text-[15px] leading-8 text-white/65">
-        {member.bio}
-      </p>
-
-      <blockquote className="mt-8 border-l-2 border-[var(--brand)] pl-5 italic text-white/90 leading-relaxed text-[15px]">
-        "{member.quote}"
-      </blockquote>
-    </div>
-
-    {/* Footer */}
-    <div className="pt-6 border-t border-white/10 flex items-center justify-between">
-      <div>
-        <p className="text-[10px] uppercase tracking-[0.3em] text-white/30">
-          Brand Bros
-        </p>
-
-        <p className="text-sm text-white/60 mt-1">
-          Building stories that inspire.
-        </p>
-      </div>
-
-      <span className="text-[11px] uppercase tracking-[0.25em] text-[var(--brand)]">
-        Tap to Flip ↺
-      </span>
-    </div>
-
-  </div>
-</div>
-      </div>
+      {children}
     </motion.div>
   );
 }
 
-/* ── PAGE ─────────────────────────────────────── */
-export default function About() {
-  const heroRef    = useRef(null);
-  const heroInView = useInView(heroRef, { once: true });
-
+function Eyebrow({ children }) {
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+    <p className="mb-5 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.32em] text-[#F5C200]">
+      <span className="h-px w-8 bg-[#F5C200]" />
+      {children}
+    </p>
+  );
+}
 
-      {/* ═══ HERO ════════════════════════════════ */}
-      <section className="relative min-h-screen flex items-center pt-32 pb-24 px-6 overflow-hidden" ref={heroRef}>
-        {/* Blobs */}
-        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-[var(--brand)]/8 blur-[130px] animate-blob-1 pointer-events-none" />
-        <div className="absolute -bottom-20 right-0 w-[500px] h-[500px] rounded-full bg-[#F5C200]/4 blur-[110px] animate-blob-2 pointer-events-none" />
-        <div className="absolute inset-0 opacity-20 diag-stripes pointer-events-none" />
+export default function About() {
+  return (
+    <main className="overflow-hidden bg-[#080808] text-white">
+      {/* HERO */}
+      <section className="relative flex min-h-[92vh] items-end overflow-hidden px-5 pb-16 pt-36 sm:px-8 sm:pb-24 lg:px-14">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_78%_24%,rgba(245,194,0,0.12),transparent_34%),linear-gradient(115deg,#080808_10%,#111_60%,#080808)]" />
 
-        {/* Rotating ring decoration */}
-        <div className="absolute right-16 top-1/2 -translate-y-1/2 hidden xl:block pointer-events-none">
-          <div className="relative w-72 h-72">
-            <div className="absolute inset-0 rounded-full border border-[var(--brand)]/10 animate-spin-slow" />
-            <div className="absolute inset-6 rounded-full border border-[var(--brand)]/6 animate-spin-reverse" />
-            <div className="absolute inset-12 rounded-full border border-white/5 animate-spin-slow" style={{ animationDuration: "30s" }} />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="font-heading text-5xl text-[var(--brand)] opacity-30">10+</div>
-                <div className="text-[9px] uppercase tracking-[0.3em] text-white/20 mt-1">Brands</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className="absolute right-[-7rem] top-28 h-[30rem] w-[30rem] rounded-full border border-[#F5C200]/10 sm:right-[-4rem] sm:h-[42rem] sm:w-[42rem]" />
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 border border-[var(--brand)]/20 rounded-full px-4 py-2 bg-[var(--brand)]/5 mb-8"
-          >
-            <span className="size-1.5 rounded-full bg-[var(--brand)] animate-pulse-glow" />
-            <span className="text-[9px] uppercase tracking-[0.35em] text-[var(--brand)]">// About BRAND//BROS</span>
-          </motion.div>
+        <div className="absolute right-[-3rem] top-44 h-[22rem] w-[22rem] rounded-full border border-white/5 sm:right-0 sm:h-[32rem] sm:w-[32rem]" />
 
-          <motion.h1
-            initial={{ opacity: 0, y: 50 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.1, ease: [0.2, 0, 0, 1] }}
-            className="font-heading uppercase text-[clamp(3.8rem,11vw,9.5rem)] leading-[0.85] tracking-tight mb-8"
-          >
-            <span className="block">We Build</span>
-            <span className="block text-gradient-gold">Brands That</span>
-            <span className="block">Matter.</span>
-          </motion.h1>
+        <div className="absolute right-[8%] top-[22%] hidden h-3 w-3 rounded-full bg-[#F5C200] shadow-[0_0_40px_12px_rgba(245,194,0,0.25)] lg:block" />
 
-          <div className="grid lg:grid-cols-2 gap-12 items-end mt-12">
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={heroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.35 }}
-              className="text-white/50 leading-relaxed text-lg max-w-xl"
+        <div className="relative z-10 mx-auto grid w-full max-w-[1400px] items-end gap-12 lg:grid-cols-[1.3fr_.7fr]">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-white/65"
             >
-              BRAND//BROS is a premium creative studio based in Gurgaon. We turn ambitious businesses
-              into unforgettable digital brands through cinematic production, strategic content,
-              and data-driven growth — all under one roof.
-            </motion.p>
+              <Sparkles size={13} className="text-[#F5C200]" />
+              Independent production studio · Gurgaon
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 35 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="font-heading text-[clamp(4rem,11.5vw,10.5rem)] font-black uppercase leading-[0.78] tracking-[-0.07em]"
+            >
+              We capture
+              <br />
+              <span className="text-[#F5C200]">moments</span>
+              <br />
+              forever<span className="text-[#F5C200]">.</span>
+            </motion.h1>
 
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={heroInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="flex flex-wrap gap-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="mt-10 flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between"
             >
-              {STATS.map(({ num, label }) => (
-                <div key={label}>
-                  <div className="font-heading text-4xl text-[var(--brand)]">{num}</div>
-                  <div className="text-[9px] uppercase tracking-[0.22em] text-white/35 mt-1">{label}</div>
-                </div>
-              ))}
+              <p className="max-w-lg text-base leading-7 text-white/55 sm:text-lg">
+                We turn life's most meaningful moments into cinematic
+                masterpieces — through wedding films, live broadcasts,
+                podcasts, and brand commercials built to last.
+              </p>
+
+              <Link
+                to="/contact"
+                className="group inline-flex w-fit shrink-0 items-center gap-3 border-b border-[#F5C200] pb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#F5C200] transition-colors hover:text-white"
+              >
+                Start a project
+                <ArrowUpRight
+                  size={17}
+                  className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1"
+                />
+              </Link>
             </motion.div>
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.65 }}
-            className="mt-10"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.25 }}
+            className="hidden justify-self-end lg:block"
           >
-            <Link
-              to="/contact"
-              className="group inline-flex items-center gap-3 bg-[var(--brand)] text-black px-7 py-4 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:brightness-110 hover:-translate-y-0.5 transition-all duration-300"
-            >
-              Work With Us
-              <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <div className="relative flex h-64 w-64 items-center justify-center rounded-full border border-[#F5C200]/25">
+              <div className="absolute inset-4 rounded-full border border-white/10" />
+
+              <div className="text-center">
+                <p className="font-heading text-7xl font-black text-[#F5C200]">
+                  BB<span className="text-white">.</span>
+                </p>
+                <p className="mt-3 text-[9px] uppercase tracking-[0.35em] text-white/45">
+                  Built to be remembered
+                </p>
+              </div>
+
+              <span className="absolute -right-2 top-10 h-3 w-3 rounded-full bg-[#F5C200]" />
+            </div>
           </motion.div>
         </div>
+
+        <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-[#F5C200]/50 to-transparent" />
       </section>
 
-      {/* ═══ MARQUEE ─ reversed ══════════════════ */}
-      <div className="overflow-hidden border-y border-white/10 bg-[#050505] py-6 shadow-[inset_0_0_40px_rgba(0,0,0,0.8)]">
-        <div className="flex w-max min-w-full animate-marquee-right whitespace-nowrap select-none">
-          {[...Array(24)].map((_, i) => (
-            <span key={i} className="mx-10 text-[12px] sm:text-[13px] uppercase tracking-[0.45em] text-white/15">
-              Create <span className="text-[var(--brand)]/60 mx-3">✦</span> Edit <span className="text-[var(--brand)]/60 mx-3">✦</span> Inspire <span className="text-[var(--brand)]/60 mx-3">✦</span>
-            </span>
+      {/* STATS */}
+      <section className="border-b border-white/10 bg-[#0d0d0d] px-5 sm:px-8 lg:px-14">
+        <div className="mx-auto grid max-w-[1400px] grid-cols-2 divide-x divide-y divide-white/10 sm:grid-cols-4 sm:divide-y-0">
+          {STATS.map((stat, i) => (
+            <Reveal
+              key={stat.label}
+              delay={i * 0.06}
+              className="px-5 py-8 sm:px-8 sm:py-10"
+            >
+              <p className="font-heading text-4xl font-black tracking-tight text-[#F5C200] sm:text-5xl">
+                {stat.num}
+              </p>
+              <p className="mt-2 text-[9px] uppercase tracking-[0.22em] text-white/40 sm:text-[10px]">
+                {stat.label}
+              </p>
+            </Reveal>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* ═══ WHO WE ARE ══════════════════════════ */}
-      <section className="py-28 px-6">
-        <div className="max-w-7xl mx-auto">
-          <Section>
-            <div className="grid lg:grid-cols-12 gap-16 items-center">
-              <div className="lg:col-span-5">
-                <p className="text-[var(--brand)] uppercase tracking-[0.3em] text-[10px] mb-5">// Who We Are</p>
-                <h2 className="font-heading text-4xl md:text-[3.2rem] leading-[0.92]">
-                  More than a<br />content studio.
-                </h2>
-              </div>
-              <div className="lg:col-span-7">
-                <p className="text-white/50 text-lg leading-relaxed mb-6">
-                  We don't just make videos — we craft brand identities, cinematic campaigns, and
-                  digital experiences that connect businesses with people at scale.
-                </p>
-                <p className="text-white/40 text-base leading-relaxed">
-                  Every project is a blend of strategy, creativity, and technology.
-                  We believe the best content is the kind that makes your audience feel something —
-                  and then makes them buy something.
-                </p>
-                <div className="mt-8 flex flex-col gap-3">
-                  {["48-hour standard edit turnaround", "Full in-house crew — no freelancers", "Data-backed content strategy every month"].map(p => (
-                    <div key={p} className="flex items-center gap-3 text-sm text-white/60">
-                      <CheckCircle size={15} className="text-[var(--brand)] flex-shrink-0" />
-                      {p}
-                    </div>
-                  ))}
-                </div>
+      {/* BRAND MANIFESTO */}
+      <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14">
+        <div className="mx-auto grid max-w-[1400px] gap-14 lg:grid-cols-[0.65fr_1.35fr] lg:gap-24">
+          <Reveal>
+            <Eyebrow>The big idea</Eyebrow>
+            <p className="max-w-xs text-sm leading-7 text-white/45">
+              Not another studio. A creative partner invested in what your
+              story can become.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.12}>
+            <h2 className="font-heading text-3xl font-bold leading-[1.12] tracking-tight sm:text-5xl lg:text-6xl">
+              The world doesn't need more footage. It needs{" "}
+              <span className="text-[#F5C200]">
+                something worth feeling.
+              </span>
+            </h2>
+
+            <div className="mt-9 grid gap-6 border-t border-white/10 pt-7 sm:grid-cols-2">
+              <p className="text-sm leading-7 text-white/50">
+                We build cinematic wedding films, broadcast-quality live
+                events, and commercial productions that connect real
+                audiences with real emotion.
+              </p>
+
+              <div className="space-y-3">
+                {[
+                  "Story before the shoot",
+                  "Emotion with a clear purpose",
+                  "Films built to move people",
+                ].map((item) => (
+                  <p
+                    key={item}
+                    className="flex items-center gap-3 text-sm text-white/75"
+                  >
+                    <CheckCircle
+                      size={15}
+                      className="shrink-0 text-[#F5C200]"
+                    />
+                    {item}
+                  </p>
+                ))}
               </div>
             </div>
-          </Section>
+          </Reveal>
         </div>
       </section>
 
-      {/* ═══ SWIPER WORK SHOWCASE ════════════════ */}
+      {/* TEAM */}
+      <section className="bg-[#101010] px-5 py-24 sm:px-8 sm:py-32 lg:px-14">
+        <div className="mx-auto max-w-[1400px]">
+          <Reveal className="mb-14 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <Eyebrow>The people behind the pixels</Eyebrow>
+              <h2 className="font-heading text-4xl font-black uppercase leading-[0.95] tracking-tight sm:text-6xl">
+                Small team.
+                <br />
+                <span className="text-white/35">Big energy.</span>
+              </h2>
+            </div>
 
+            <p className="max-w-sm text-sm leading-7 text-white/45">
+              A close-knit crew of visual thinkers, makers, and
+              problem-solvers. Get to know the people behind the work.
+            </p>
+          </Reveal>
 
-      {/* ═══ TEAM — 3D FLIP CARDS ════════════════ */}
-      <section className="py-28 px-6">
-        <div className="max-w-7xl mx-auto">
-          <Section className="mb-16">
-            <p className="text-[var(--brand)] uppercase tracking-[0.3em] text-[10px] mb-4">// The Team</p>
-            <h2 className="font-heading text-4xl md:text-[3.2rem] leading-[0.92] max-w-xl">
-              The creatives behind<br />every frame we shoot.
-              <span className="block text-white/30 text-2xl mt-2">Click a card to flip it.</span>
-            </h2>
-          </Section>
-
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid gap-6 lg:grid-cols-2">
             {TEAM.map((member, i) => (
-              <TeamCard key={member.name} member={member} index={i} />
+              <Reveal key={member.name} delay={i * 0.12}>
+                <article className="group grid overflow-hidden border border-white/10 bg-[#080808] transition-colors duration-500 hover:border-[#F5C200]/40 sm:grid-cols-[0.82fr_1.18fr]">
+                  <div className="relative min-h-[320px] overflow-hidden sm:min-h-[440px]">
+                    <img
+                      src={member.img}
+                      alt={member.name}
+                      className="absolute inset-0 h-full w-full object-cover object-center grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:to-black/15" />
+
+                    <span className="absolute left-5 top-5 border border-white/25 bg-black/50 px-3 py-1 text-[9px] uppercase tracking-[0.25em]">
+                      0{i + 1}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col justify-between p-6 sm:p-8 lg:p-9">
+                    <div>
+                      <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.23em] text-[#F5C200]">
+                        {member.role}
+                      </p>
+
+                      <h3 className="font-heading text-3xl font-black uppercase tracking-tight sm:text-4xl">
+                        {member.name}
+                      </h3>
+
+                      <p className="mt-6 text-sm leading-7 text-white/50">
+                        {member.bio}
+                      </p>
+                    </div>
+
+                    <div className="mt-8 border-l-2 border-[#F5C200] pl-4">
+                      <p className="text-sm italic leading-6 text-white/75">
+                        “{member.quote}”
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══ VALUES ══════════════════════════════ */}
-      <section className="py-28 px-6 bg-black">
-        <div className="max-w-7xl mx-auto">
-          <Section className="mb-16">
-            <p className="text-[var(--brand)] uppercase tracking-[0.3em] text-[10px] mb-4">// Our Principles</p>
-            <h2 className="font-heading text-4xl md:text-[3.2rem] leading-[0.92]">
-              Three things we<br />
-              <span className="text-white/35">never compromise on.</span>
+      {/* PRINCIPLES */}
+      <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14">
+        <div className="mx-auto max-w-[1400px]">
+          <Reveal className="mb-14 max-w-2xl">
+            <Eyebrow>What guides us</Eyebrow>
+            <h2 className="font-heading text-4xl font-black uppercase leading-[0.95] sm:text-6xl">
+              Our standards
+              <br />
+              are <span className="text-[#F5C200]">non-negotiable.</span>
             </h2>
-          </Section>
+          </Reveal>
 
-          <div className="grid md:grid-cols-3 gap-px bg-white/5">
-            {VALUES.map((v, i) => {
-              const Icon = v.icon;
+          <div className="grid border-l border-t border-white/10 md:grid-cols-3">
+            {VALUES.map((value, i) => {
+              const Icon = value.icon;
+
               return (
-                <Section key={v.title}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ duration: 0.6, delay: i * 0.1 }}
-                    className="group relative bg-black p-10 overflow-hidden hover:bg-[#F5C200]/4 transition-all duration-500 cursor-default h-full"
-                  >
-                    <div className="absolute bottom-0 left-0 h-px w-0 group-hover:w-full bg-gradient-to-r from-[var(--brand)] to-transparent transition-all duration-700 pointer-events-none" />
-                    <div className="mb-6 flex items-start justify-between">
-                      <span className="font-heading text-5xl text-white/6 group-hover:text-[var(--brand)]/18 transition-colors duration-400 select-none">{v.num}</span>
-                      <div className="w-11 h-11 rounded-xl border border-white/8 flex items-center justify-center text-white/35 group-hover:border-[var(--brand)] group-hover:text-[var(--brand)] transition-all duration-300">
-                        <Icon size={20} />
-                      </div>
-                    </div>
-                    <h3 className="font-sans font-semibold text-base text-white mb-3 group-hover:text-[var(--brand)] transition-colors duration-300">{v.title}</h3>
-                    <p className="text-[0.83rem] text-white/40 leading-relaxed">{v.desc}</p>
-                  </motion.div>
-                </Section>
+                <Reveal
+                  key={value.title}
+                  delay={i * 0.08}
+                  className="group border-b border-r border-white/10 p-7 transition-colors duration-300 hover:bg-white/[0.025] sm:p-9 lg:p-11"
+                >
+                  <div className="mb-14 flex items-start justify-between">
+                    <span className="font-heading text-5xl font-black text-white/15 transition-colors group-hover:text-[#F5C200]/60">
+                      {value.num}
+                    </span>
+
+                    <Icon
+                      size={23}
+                      strokeWidth={1.4}
+                      className="text-[#F5C200]"
+                    />
+                  </div>
+
+                  <h3 className="mb-4 text-xl font-semibold">
+                    {value.title}
+                  </h3>
+
+                  <p className="max-w-sm text-sm leading-7 text-white/45">
+                    {value.desc}
+                  </p>
+
+                  <div className="mt-8 h-px w-10 bg-[#F5C200] transition-all duration-500 group-hover:w-full" />
+                </Reveal>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* ═══ TIMELINE ════════════════════════════ */}
-      <section className="py-28 px-6">
-        <div className="max-w-4xl mx-auto">
-          <Section className="mb-20">
-            <p className="text-[var(--brand)] uppercase tracking-[0.3em] text-[10px] mb-4">// Our Journey</p>
-            <h2 className="font-heading text-4xl md:text-[3.2rem] leading-[0.92]">
-              How we got here.
+      {/* JOURNEY */}
+      <section className="border-y border-white/10 bg-[#0d0d0d] px-5 py-24 sm:px-8 sm:py-32 lg:px-14">
+        <div className="mx-auto grid max-w-[1400px] gap-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
+          <Reveal className="lg:sticky lg:top-28 lg:self-start">
+            <Eyebrow>From day one</Eyebrow>
+
+            <h2 className="font-heading text-4xl font-black uppercase leading-[0.95] sm:text-6xl">
+              The story
+              <br />
+              so far<span className="text-[#F5C200]">.</span>
             </h2>
-          </Section>
 
-          <div className="relative">
-            {/* Vertical line */}
-            <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-[var(--brand)]/60 via-[var(--brand)]/20 to-transparent" />
+            <p className="mt-6 max-w-xs text-sm leading-7 text-white/45">
+              A growing studio with a clear point of view — and a lot more to
+              create.
+            </p>
+          </Reveal>
 
+          <div className="relative border-l border-white/10 pl-7 sm:pl-10">
             {TIMELINE.map((item, i) => (
-              <motion.div
+              <Reveal
                 key={item.year}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.6, delay: i * 0.08 }}
-                className="relative pl-16 pb-14 group"
+                delay={i * 0.04}
+                className="relative pb-12 last:pb-0"
               >
-                {/* Dot */}
-                <div className="absolute left-0 top-1 w-12 h-12 rounded-full bg-[#0c0c0c] border border-[var(--brand)]/30 group-hover:border-[var(--brand)] group-hover:bg-[var(--brand)]/10 transition-all duration-300 flex items-center justify-center">
-                  <div className="w-2 h-2 rounded-full bg-[var(--brand)] animate-pulse-glow" />
-                </div>
-                <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-[var(--brand)] block mb-2">{item.year}</span>
-                <h3 className="font-sans font-semibold text-lg text-white mb-2 group-hover:text-[var(--brand)] transition-colors duration-300">{item.title}</h3>
-                <p className="text-sm text-white/40 leading-relaxed max-w-lg">{item.desc}</p>
-              </motion.div>
+                <span className="absolute -left-[2.05rem] top-1 h-3 w-3 rounded-full border-2 border-[#080808] bg-[#F5C200] ring-4 ring-[#F5C200]/10 sm:-left-[2.55rem]" />
+
+                <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[#F5C200]">
+                  {item.year}
+                </p>
+
+                <h3 className="font-heading text-2xl font-bold sm:text-3xl">
+                  {item.title}
+                </h3>
+
+                <p className="mt-3 max-w-2xl text-sm leading-7 text-white/45">
+                  {item.desc}
+                </p>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══ SECOND SWIPER — Testimonials Scroll ═ */}
-      <section className="py-16 bg-black overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 mb-10">
-          <p className="text-[var(--brand)] uppercase tracking-[0.3em] text-[10px]">// Kind Words</p>
-        </div>
-        <Swiper
-          modules={[Autoplay]}
-          slidesPerView={1.1}
-          spaceBetween={16}
-          breakpoints={{ 640: { slidesPerView: 1.8 }, 1024: { slidesPerView: 2.5 } }}
-          autoplay={{ delay: 4000, disableOnInteraction: false }}
-          loop
-          className="px-6 pb-4"
-        >
-          {[
-            { quote: "BRAND//BROS treats every project like a craft. The Himalayan campaign moved both culture and cash.", name: "Marketing Lead", org: "Royal Enfield" },
-            { quote: "Their content network is unreal. We unlocked 3x install lift in a single quarter.", name: "Growth Director", org: "Ixigo" },
-            { quote: "They understood photography culture better than most photographers. Every metric moved up.", name: "Brand Manager", org: "Nikon India" },
-            { quote: "From positioning to funnels, BRAND//BROS rebuilt our admissions engine. +71% qualified leads.", name: "Dean of Admissions", org: "GLA University" },
-          ].map((t, i) => (
-            <SwiperSlide key={i}>
-              <div className="rounded-2xl border border-white/7 bg-white/[0.02] p-8 hover:border-[var(--brand)]/30 transition-all duration-300">
-                <div className="text-[var(--brand)] text-3xl font-serif mb-4">"</div>
-                <p className="text-white/65 text-[0.92rem] leading-relaxed mb-6">{t.quote}"</p>
-                <div>
-                  <p className="font-semibold text-white text-sm">{t.name}</p>
-                  <p className="text-[9px] uppercase tracking-[0.2em] text-[var(--brand)] mt-0.5">{t.org}</p>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </section>
-
-      {/* ═══ STAR RATING STRIP ═══════════════════ */}
-      {/* <section className="py-12 border-y border-white/5 bg-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-wrap items-center justify-center gap-12">
-            {[["Google", "4.2"], ["Instagram", "3.8"], ["LinkedIn", "3.6"]].map(([pl, rat]) => (
-              <div key={pl} className="text-center">
-                <div className="flex items-center gap-1 justify-center mb-2">
-                  {[...Array(5)].map((_, i) => <Star key={i} size={13} fill="#c7a450" stroke="none" />)}
-                </div>
-                <p className="font-heading text-xl text-[var(--brand)]">{rat}</p>
-                <p className="text-[9px] uppercase tracking-[0.2em] text-white/30 mt-0.5">on {pl}</p>
-              </div>
-            ))}
-            <div className="text-center">
-              <p className="font-heading text-2xl text-[var(--brand)]">83%</p>
-              <p className="text-[9px] uppercase tracking-[0.2em] text-white/30 mt-0.5">Client Retention</p>
+      {/* TESTIMONIALS */}
+      <section className="px-5 py-24 sm:px-8 sm:py-32 lg:px-14">
+        <div className="mx-auto max-w-[1400px]">
+          <Reveal className="mb-12 flex items-end justify-between gap-5">
+            <div>
+              <Eyebrow>Kind words</Eyebrow>
+              <h2 className="font-heading text-4xl font-black uppercase sm:text-6xl">
+                Don't take
+                <br className="sm:hidden" /> our word.
+              </h2>
             </div>
-          </div>
-        </div>
-      </section> */}
 
-      {/* ═══ CTA ═════════════════════════════════ */}
-      <section className="relative py-36 px-6 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full bg-[var(--brand)]/6 blur-[160px]" />
-        </div>
-        <div className="relative max-w-4xl mx-auto text-center">
-          <p className="text-[var(--brand)] uppercase tracking-[0.35em] text-[10px] mb-6">// Let's Create Together</p>
-          <h2 className="font-heading text-[clamp(3rem,9vw,7rem)] leading-[0.88] mb-8">
-            Your brand's<br /><span className="text-gradient-gold">best chapter</span><br />starts here.
-          </h2>
-          <p className="text-white/45 text-base max-w-xl mx-auto mb-10 leading-relaxed">
-            We take on a limited number of new clients each quarter to ensure every project gets our full attention. Apply now for next quarter.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link
-              to="/contact"
-              className="group inline-flex items-center gap-2 bg-[var(--brand)] text-black px-8 py-4 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:brightness-110 hover:-translate-y-0.5 transition-all duration-300"
-            >
-              Book a Discovery Call
-              <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <a
-              href="mailto:hello@brandbros.in"
-              className="inline-flex items-center gap-2 border border-white/12 px-8 py-4 rounded-lg text-[10px] font-bold uppercase tracking-widest hover:border-[var(--brand)]/40 hover:text-[var(--brand)] transition-all duration-300"
-            >
-              anshgarg7640@gmail.com
-            </a>
+            <span className="hidden text-xs uppercase tracking-[0.2em] text-white/35 sm:block">
+              The work speaks.
+            </span>
+          </Reveal>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {TESTIMONIALS.map((t, i) => (
+              <Reveal key={t.org} delay={i * 0.06}>
+                <article className="flex h-full flex-col justify-between border border-white/10 bg-white/[0.02] p-7 transition-colors hover:border-[#F5C200]/35 sm:p-9">
+                  <div>
+                    <p className="font-heading text-5xl leading-none text-[#F5C200]">
+                      “
+                    </p>
+
+                    <p className="mt-3 text-lg leading-8 text-white/75">
+                      {t.quote}
+                    </p>
+                  </div>
+
+                  <div className="mt-8 flex items-end justify-between border-t border-white/10 pt-5">
+                    <div>
+                      <p className="text-sm font-semibold">{t.name}</p>
+
+                      <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-[#F5C200]">
+                        {t.org}
+                      </p>
+                    </div>
+
+                    <span className="text-xs tracking-[0.2em] text-white/30">
+                      0{i + 1}
+                    </span>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-    </div>
+      {/* CALL TO ACTION */}
+      <section className="relative overflow-hidden border-t border-white/10 bg-[#F5C200] px-5 py-24 text-black sm:px-8 sm:py-32 lg:px-14">
+        <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full border border-black/10" />
+        <div className="absolute -right-8 -top-8 h-64 w-64 rounded-full border border-black/10" />
+
+        <div className="relative mx-auto flex max-w-[1400px] flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+          <Reveal>
+            <p className="mb-6 text-[10px] font-bold uppercase tracking-[0.3em] text-black/60">
+              Have a good one in mind?
+            </p>
+
+            <h2 className="font-heading text-[clamp(3.4rem,9vw,8rem)] font-black uppercase leading-[0.8] tracking-[-0.07em]">
+              Let's make
+              <br />
+              it matter<span className="text-white">.</span>
+            </h2>
+          </Reveal>
+
+          <Reveal delay={0.12} className="max-w-sm">
+            <p className="mb-7 text-base leading-7 text-black/65">
+              Have a brand to build, a story to tell, or an idea you can't stop
+              thinking about? Let's turn it into something real.
+            </p>
+
+            <div className="flex flex-wrap gap-3">
+              <Link
+                to="/contact"
+                className="group inline-flex items-center gap-3 bg-black px-6 py-4 text-[10px] font-bold uppercase tracking-[0.18em] text-white transition-transform hover:-translate-y-1"
+              >
+                Let's talk
+                <ArrowRight
+                  size={15}
+                  className="transition-transform group-hover:translate-x-1"
+                />
+              </Link>
+
+              <a
+                href="mailto:newshivamproductions@gmail.com"
+                className="inline-flex items-center border border-black/25 px-5 py-4 text-[10px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-black/5"
+              >
+                Email us
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="flex flex-col gap-3 bg-[#080808] px-5 py-6 text-[9px] uppercase tracking-[0.22em] text-white/30 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-14">
+        <span>NEW SHIVAM PRODUCTION HOUSE © {new Date().getFullYear()}</span>
+        <span>Built on passion. Driven by craft.</span>
+      </footer>
+    </main>
   );
 }
-

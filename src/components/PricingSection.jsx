@@ -1,94 +1,90 @@
+import { Camera, Video, TrendingUp, Aperture, Star, Clock, Shield } from "lucide-react";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Camera, Video, TrendingUp, Aperture, Star, Clock, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 
-/* Matches pitch deck "ADD-ON SERVICES" slide */
+const PACKAGES = [
+  {
+    name: "ESSENTIAL",
+    desc: "Perfect for intimate ceremonies and small events.",
+    features: [
+      "1 Cinematographer",
+      "6 Hours of Coverage",
+      "Cinematic Wedding Film (5–8 min)",
+      "Highlight Reel (60–90 sec)",
+      "Professional Color Grading",
+      "Digital Delivery",
+      "2 Revisions Included",
+      "Online Gallery",
+    ],
+    featured: false,
+  },
+  {
+    name: "SIGNATURE",
+    desc: "Our most popular — full-day cinematic coverage.",
+    features: [
+      "2 Cinematographers",
+      "Full Day Coverage (10–12 hrs)",
+      "Cinematic Wedding Film (10–15 min)",
+      "Highlight Reel (90–120 sec)",
+      "Drone Aerial Shots",
+      "Professional Color Grading & Sound",
+      "Same-Day Edit Teaser",
+      "3 Revisions + Priority Support",
+      "USB + Online Delivery",
+    ],
+    featured: true,
+  },
+  {
+    name: "GRAND",
+    desc: "Complete multi-day luxury production experience.",
+    features: [
+      "3 Cinematographers + Director",
+      "Multi-Day Coverage",
+      "Feature Wedding Film (20–30 min)",
+      "Multiple Highlight Reels",
+      "4K Drone Coverage",
+      "Live Broadcasting Option",
+      "Full Post-Production Suite",
+      "Unlimited Revisions",
+      "Premium USB Box + Digital Archive",
+      "Exclusive Behind-the-Scenes Film",
+    ],
+    featured: false,
+  },
+];
+
 const ADDONS = [
   {
     icon: Camera,
-    title: "PRODUCT SHOOT",
-    desc: "Studio & on-location photography and high-converting commercial reels.",
+    title: "DRONE COVERAGE",
+    desc: "Breathtaking 4K aerial cinematography that adds a cinematic dimension to your film.",
     available: true,
   },
   {
     icon: Video,
-    title: "EVENT COVERAGE",
-    desc: "Cinematic multi-camera filming, dynamic recaps & after-movie production.",
+    title: "LIVE STREAMING",
+    desc: "Professional multi-camera live broadcast for guests who can't be there in person.",
     available: true,
   },
   {
     icon: TrendingUp,
-    title: "META ADS",
-    desc: "Targeted Facebook & Instagram ad campaigns optimized for scalable ROI.",
+    title: "PODCAST STUDIO",
+    desc: "Full podcast production — recording, editing, sound design & distribution setup.",
     available: true,
   },
   {
     icon: Aperture,
-    title: "DRONE SHOOT",
-    desc: "Licensed 4K aerial videography & dynamic FPV perspectives. Launching soon.",
+    title: "360° VIRTUAL TOUR",
+    desc: "Immersive 360° virtual walkthroughs of your venue or property. Coming soon.",
     available: false,
   },
 ];
 
 const BOTTOM = [
-  { icon: Star,   label: "PREMIUM QUALITY",  desc: "Top-tier results"       },
-  { icon: Clock,  label: "ON-TIME DELIVERY", desc: "Always on schedule"     },
-  { icon: Shield, label: "TRUSTED BY BRANDS",desc: "Built on relationships" },
-];
-
-const PLANS = [
-  {
-    name: "STARTER",
-    desc: "Perfect for startups.",
-    features: [
-      "12 Reels (11 Std + 1 Premium)",
-      "4 Carousel Posts",
-      "Caption Writing",
-      "Content Calendar",
-      "Social Media Management",
-      "Story Management",
-      "Custom Thumbnails",
-      "Monthly Review",
-      "Complimentry Outro"
-    ],
-    featured: false,
-  },
-  {
-    name: "GROWTH",
-    desc: "Most popular — scale your brand.",
-    features: [
-      "12 Reels (8 Std + 4 Premium)",
-      "5 Carousel Posts",
-      "Caption Writing",
-      "Content Calendar",
-      "Social Media Management",
-      "Story Management",
-      "Custom Thumbnails",
-      "Monthly Review",
-      "Priority Support",
-      "Complimentry Outro",
-    ],
-    featured: true,
-  },
-  {
-    name: "PREMIUM",
-    desc: "Full-throttle for market leaders.",
-    features: [
-      "16 Reels (8 Std + 8 Premium)",
-      "8 Carousel Posts",
-      "Caption Writing",
-      "Content Calendar",
-      "Social Media Management",
-      "Story Management",
-      "Custom Thumbnails",
-      "Monthly Review",
-      "Priority Support",
-      "Advanced Content Strategy",
-      "Complimentry Outro",
-    ],
-    featured: false,
-  },
+  { icon: Star,   label: "PREMIUM QUALITY",   desc: "Cinematic excellence, always"     },
+  { icon: Clock,  label: "ON-TIME DELIVERY",  desc: "Delivered when promised"          },
+  { icon: Shield, label: "TRUSTED STUDIO",    desc: "12+ years of trusted memories"   },
 ];
 
 export default function PricingSection() {
@@ -99,7 +95,7 @@ export default function PricingSection() {
     <section id="pricing" className="py-28 px-6 bg-black" ref={ref}>
       <div className="max-w-7xl mx-auto">
 
-        {/* Retainer plans */}
+        {/* Packages */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -107,16 +103,16 @@ export default function PricingSection() {
           className="text-center mb-4"
         >
           <h2 className="font-heading text-[clamp(3rem,8vw,7rem)] leading-none">
-         <span className="text-[#F5C200]">   OUR PLANS</span>
+            <span className="text-[#F5C200]">OUR PACKAGES</span>
           </h2>
-          <p className="text-white/45 mt-4 text-sm">Transparent retainers. Cancel anytime. Scale à la carte.</p>
+          <p className="text-white/45 mt-4 text-sm">Tailored to your story. Contact us for a custom quote.</p>
         </motion.div>
         <div className="flex justify-center mb-12">
           <div className="w-16 h-0.5 bg-[#F5C200]" />
         </div>
 
         <div className="grid md:grid-cols-3 gap-5 mb-20 items-start">
-          {PLANS.map((plan, i) => (
+          {PACKAGES.map((plan, i) => (
             <motion.div
               key={plan.name}
               initial={{ opacity: 0, y: 30 }}
@@ -140,30 +136,25 @@ export default function PricingSection() {
               <ul className="space-y-2 flex-1 mb-7">
                 {plan.features.map(f => (
                   <li key={f} className="flex items-start gap-2 text-[0.78rem] text-white/50">
-                    <span className="text-white/20 mt-0.5 flex-shrink-0">—</span>{f}
+                    <span className="text-[#F5C200] mt-0.5 flex-shrink-0">✦</span>{f}
                   </li>
                 ))}
-                {plan.gold && (
-                  <li className="flex items-start gap-2 text-[0.78rem] text-[#F5C200]">
-                    {plan.gold}
-                  </li>
-                )}
               </ul>
               <Link
                 to="/contact"
                 className={`block text-center py-3.5 rounded-lg text-[9px] font-bold uppercase tracking-widest transition-all duration-300 ${
                   plan.featured
                     ? "bg-[#F5C200] text-black hover:bg-[#FFD740]"
-                    : "border border-white/25  hover:border-[#F5C200]/50 hover:text-[#F5C200] text-white"
+                    : "border border-white/25 hover:border-[#F5C200]/50 hover:text-[#F5C200] text-white"
                 }`}
               >
-                Get Started →
+                Book Now →
               </Link>
             </motion.div>
           ))}
         </div>
 
-        {/* ── ADD-ON SERVICES — pitch deck slide ── */}
+        {/* ── ADD-ON SERVICES ── */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -171,11 +162,11 @@ export default function PricingSection() {
           className="text-center mb-4"
         >
           <h2 className="font-heading text-[clamp(2.5rem,7vw,5.5rem)] leading-none">
-           <span className="text-[#F5C200]"> ADD-ON SERVICES</span>
+            <span className="text-[#F5C200]">ADD-ON SERVICES</span>
           </h2>
           <p className="text-white/45 mt-3 text-sm">
             Powerful add-ons to{" "}
-            <span className="text-[#F5C200] font-semibold">elevate your brand.</span>
+            <span className="text-[#F5C200] font-semibold">elevate your production.</span>
           </p>
         </motion.div>
         <div className="flex justify-center mb-10">
@@ -231,7 +222,7 @@ export default function PricingSection() {
                     to="/contact"
                     className="w-full py-2.5 rounded-lg border border-white/15 text-white/80 hover:text-black hover:bg-[#F5C200] hover:border-[#F5C200] text-[9px] font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-1.5"
                   >
-                    <span>Inquire Now</span>
+                    <span>Add to Package</span>
                     <span className="text-xs">→</span>
                   </Link>
                 ) : (
