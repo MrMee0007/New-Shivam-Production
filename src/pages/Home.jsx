@@ -9,7 +9,6 @@ import "swiper/css/pagination";
 
 /* ── New visual components ── */
 import CameraFilmStrip    from "../components/CameraFilmStrip";
-import ShowreelSection    from "../components/ShowreelSection";
 import BentoGrid          from "../components/BentoGrid";
 import MasonryGallery     from "../components/MasonryGallery";
 import VideoGrid          from "../components/VideoGrid";
@@ -17,6 +16,7 @@ import ParallaxBanner     from "../components/ParallaxBanner";
 import VenueGallery       from "../components/VenueGallery";
 import CelebrityShowcase  from "../components/CelebrityShowcase";
 import OurJourney         from "../components/OurJourney";
+import StackSpread        from "../components/StackSpread";
 
 /* ── Helper: scroll-reveal ── */
 function Reveal({ children, className = "", delay = 0, y = 30 }) {
@@ -71,7 +71,7 @@ const WORKS = [
 
 export default function Home() {
   return (
-    <main className="overflow-x-hidden" style={{ background: "#0a0a0a" }}>
+    <main className="overflow-x-clip" style={{ background: "#0a0a0a" }}>
 
       {/* ═══════════ HERO ═══════════ */}
       <section className="relative flex min-h-screen flex-col items-center justify-center px-6 text-center overflow-hidden">
@@ -199,8 +199,8 @@ export default function Home() {
 
       <div className="divider" />
 
-      {/* ═══════════ SHOWREEL — full-width video ═══════════ */}
-      <ShowreelSection />
+      {/* ═══════════ STACK SPREAD — interactive scattering frames at showreel location ═══════════ */}
+      <StackSpread />
 
       <div className="divider" />
 
@@ -237,6 +237,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <div className="divider" />
 
       {/* ═══════════ BENTO GRID — portfolio frames ═══════════ */}
       <BentoGrid />
