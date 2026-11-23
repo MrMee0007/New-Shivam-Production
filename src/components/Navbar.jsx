@@ -153,7 +153,7 @@ export default function Navbar() {
                 >
                   newshivamproductions@gmail.com
                 </a>
-                <p className="text-sm text-[#F5F0E8]/60">+91 88875 86830</p>
+                <a href="tel:+919634472683" className="text-sm text-[#F5F0E8]/60 hover:text-[#F5F0E8]">+91 96344 72683</a>
               </div>
             </motion.div>
           </>

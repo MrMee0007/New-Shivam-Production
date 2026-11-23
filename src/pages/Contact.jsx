@@ -4,6 +4,8 @@ import { ArrowRight, Mail, Phone, MapPin, Instagram, Youtube, CheckCircle } from
 
 const SERVICES = [
   "Wedding Cinematography",
+  "Bridal Portraits",
+  "Maternity Shoot",
   "Live Broadcasting",
   "Podcast Production",
   "Commercial / Ad Film",
@@ -209,7 +211,7 @@ export default function Contact() {
                   <div>
                     <p className="text-[9px] uppercase tracking-[0.25em] text-[#F5F0E8]/30 mb-1" style={{ fontFamily: "Inter, sans-serif" }}>Phone</p>
                     <p className="text-sm text-[#F5F0E8]/70" style={{ fontFamily: "Inter, sans-serif" }}>
-                      +91 88875 86830<br />+91 72488 48020
+                      <a href="tel:+919634472683" className="hover:text-[#F5F0E8] transition-colors">+91 96344 72683</a>
                     </p>
                     <p className="mt-1 text-[9px] text-[#F5F0E8]/30" style={{ fontFamily: "Inter, sans-serif" }}>Mon–Sat · 10 AM – 7 PM</p>
                   </div>
@@ -222,7 +224,7 @@ export default function Contact() {
                     <p className="text-[9px] uppercase tracking-[0.25em] text-[#F5F0E8]/30 mb-1" style={{ fontFamily: "Inter, sans-serif" }}>Studio</p>
                     <p className="text-sm text-[#F5F0E8]/70" style={{ fontFamily: "Inter, sans-serif" }}>
                       New Shivam Production House<br />
-                      Gurgaon, Haryana, India
+                      Mathura, Uttar Pradesh, India
                     </p>
                   </div>
                 </li>

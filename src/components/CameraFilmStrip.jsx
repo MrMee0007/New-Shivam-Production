@@ -302,7 +302,7 @@ export default function CameraFilmStrip() {
           textTransform: "uppercase",
         }}
       >
-        New Shivam Production House · Est. 2012 · Gurgaon
+        New Shivam Production House · Est. 2012 · Mathura
       </div>
     </section>
   );

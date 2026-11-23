@@ -532,7 +532,7 @@ export default function IntroAnimation() {
         {/* Scroll progress */}
         <div className="absolute bottom-5 left-5 right-5 z-40 flex items-center justify-between sm:bottom-8 sm:left-10 sm:right-10 lg:left-14 lg:right-14">
           <span className="text-[8px] uppercase tracking-[0.22em] text-white/35 sm:text-[9px]">
-            Gurgaon · India
+            Mathura · Uttar Pradesh · India
           </span>
 
           <div className="flex items-center gap-3">

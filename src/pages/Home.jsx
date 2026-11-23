@@ -64,7 +64,7 @@ const CLD = (file, w = 900) =>
   `https://res.cloudinary.com/wqhpwm9y/image/upload/w_${w},q_auto,f_auto/${file}`;
 
 const WORKS = [
-  { category: "Wedding Film",    title: "Priya & Rohan",        location: "Leela Palace, Gurgaon",    img: CLD("v1794158518/2B4A4671.jpg") },
+  { category: "Wedding Film",    title: "Priya & Rohan",        location: "Leela Palace, Mathura",    img: CLD("v1794158518/2B4A4671.jpg") },
   { category: "Candid Stories",  title: "Unscripted Emotions",  location: "Delhi NCR & Destinations", img: CLD("v1794174541/6M4A7644.jpg") },
   { category: "Wedding Moments", title: "Rituals & Radiance",   location: "New Shivam Productions",   img: CLD("v1794174546/6M4A7702.jpg") },
 ];
@@ -136,8 +136,8 @@ export default function Home() {
             className="mx-auto mb-12 max-w-md text-base leading-7 text-[#F5F0E8]/60"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
-            Wedding films, live broadcasts, podcast studios &amp; brand
-            commercials — crafted with cinematic precision from Gurgaon, India.
+            Wedding cinema, bridal portraits, maternity stories, live broadcasts &amp; brand
+            commercials — crafted with cinematic precision from Mathura, Uttar Pradesh, India.
           </motion.p>
 
           <motion.div
@@ -247,7 +247,7 @@ export default function Home() {
       <ParallaxBanner
         img="https://res.cloudinary.com/wqhpwm9y/image/upload/w_1800,q_auto,f_auto/v1794174533/6M4A7884.jpg"
         quote="Every love story is beautiful. Let us make yours unforgettable."
-        tag="Wedding Cinematography · Gurgaon"
+        tag="Wedding Cinematography · Mathura"
       />
 
       {/* ═══════════ VIDEO GRID — 3×2 stills lightbox ═══════════ */}

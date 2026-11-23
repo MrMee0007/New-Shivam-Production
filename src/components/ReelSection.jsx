@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 const REELS = [
   { id: 1, tag: "Brand Film",    title: "Noir Roasters",    sub: "F&B · Delhi",           metric: "1.2M Views",    bg: "linear-gradient(145deg,#120600 0%,#5c2500 50%,#2a1000 100%)" },
   { id: 2, tag: "Fashion Reel",  title: "Luxe Collective",  sub: "Fashion · Mumbai",       metric: "+240% Engagement",bg:"linear-gradient(145deg,#0a0016 0%,#3a0060 50%,#180030 100%)" },
-  { id: 3, tag: "Product",       title: "Aura Skincare",    sub: "Beauty · Gurgaon",       metric: "+87% Conversion",bg:"linear-gradient(145deg,#001a12 0%,#004535 50%,#001e14 100%)" },
+  { id: 3, tag: "Product",       title: "Aura Skincare",    sub: "Beauty · Mathura",       metric: "+87% Conversion",bg:"linear-gradient(145deg,#001a12 0%,#004535 50%,#001e14 100%)" },
   { id: 4, tag: "Commercial",    title: "Veloce Motors",    sub: "Auto · Pune",            metric: "4.8x ROAS",     bg: "linear-gradient(145deg,#00080f 0%,#001a35 50%,#000810 100%)" },
   { id: 5, tag: "Event Reel",    title: "Pulse Festival",   sub: "Events · Hyderabad",     metric: "8.4M Impressions",bg:"linear-gradient(145deg,#1a0010 0%,#500040 50%,#200020 100%)" },
   { id: 6, tag: "Social Reel",   title: "Indigo Kitchen",   sub: "Hospitality · Bengaluru",metric: "+312% Followers",bg:"linear-gradient(145deg,#091400 0%,#243500 50%,#0f2000 100%)" },

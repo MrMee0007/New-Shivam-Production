@@ -28,7 +28,7 @@ export default function Footer() {
               <em>Create.</em>
             </h2>
             <p className="max-w-xs text-sm leading-7 text-[#F5F0E8]/45">
-              A full-service production studio based in Gurgaon — capturing
+              A full-service production studio based in Mathura — capturing
               life's most meaningful moments with cinematic precision.
             </p>
 
@@ -84,11 +84,11 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3 text-sm text-[#F5F0E8]/55">
                 <Phone size={14} className="mt-0.5 shrink-0 text-[#D4AF6A]" />
-                <span>+91 88875 86830<br />+91 72488 48020</span>
+                <a href="tel:+919634472683" className="hover:text-[#F5F0E8] transition-colors">+91 96344 72683</a>
               </li>
               <li className="flex items-start gap-3 text-sm text-[#F5F0E8]/55">
                 <MapPin size={14} className="mt-0.5 shrink-0 text-[#D4AF6A]" />
-                <span>Gurgaon, Haryana, India</span>
+                <span>Mathura, Uttar Pradesh, India</span>
               </li>
             </ul>
           </div>
@@ -97,7 +97,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-white/[0.06] pt-7 text-[11px] uppercase tracking-[0.2em] text-[#F5F0E8]/25 sm:flex-row">
           <span>© {new Date().getFullYear()} New Shivam Production House</span>
-          <span>Gurgaon · India</span>
+          <span>Mathura · Uttar Pradesh · India</span>
         </div>
       </div>
     </footer>

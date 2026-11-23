@@ -61,12 +61,12 @@ const TIMELINE = [
   {
     year: "2012",
     title: "The beginning",
-    desc: "New Shivam Production House was founded in Gurgaon with a single camera, a passionate team, and a commitment to capturing life's most meaningful moments with cinematic integrity.",
+    desc: "    New Shivam Production House was founded in Mathura with a single camera, a passionate team, and a commitment to capturing life's most meaningful moments with cinematic integrity.",
   },
   {
     year: "2015",
     title: "Wedding cinema takes off",
-    desc: "Established ourselves as one of Gurgaon's most sought-after wedding cinematography studios, delivering films that couples cherish for a lifetime.",
+    desc: "    Established ourselves as one of Mathura's most sought-after wedding cinematography studios, delivering films that couples cherish for a lifetime.",
   },
   {
     year: "2018",
@@ -167,7 +167,7 @@ export default function About() {
               className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-white/65"
             >
               <Sparkles size={13} className="text-[#F5C200]" />
-              Independent production studio · Gurgaon
+              Independent production studio · Mathura
             </motion.div>
 
             <motion.h1

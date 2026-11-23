@@ -57,8 +57,7 @@ const CTA = () => {
                   <Phone size={14} className="text-[#F5C200]" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <p className="text-white font-semibold text-sm">+91 88875 86830</p>
-                  <p className="text-white font-semibold text-sm">+91 72488 48020</p>
+                  <a href="tel:+919634472683" className="text-white font-semibold text-sm hover:text-[#F5C200] transition-colors">+91 96344 72683</a>
                   <p className="text-white/35 text-xs mt-1">Available Mon–Sat, 10 AM – 7 PM</p>
                 </div>
               </div>

@@ -13,7 +13,7 @@ const SLIDES = [
   {
     category: "Wedding Cinema",
     title: "Priya & Rohan's Wedding",
-    location: "Leela Palace, Gurgaon",
+    location: "Leela Palace, Mathura",
     desc: "A three-day royal celebration captured in a single breathtaking cinematic film.",
     tag: "Cinematic Film · 7 min",
     color: "#F5C200",
@@ -31,7 +31,7 @@ const SLIDES = [
   {
     category: "Podcast Studio",
     title: "The Growth Podcast",
-    location: "New Shivam Studio, Gurgaon",
+    location: "New Shivam Studio, Mathura",
     desc: "A branded podcast studio built from scratch — lighting, acoustic treatment, 4-camera setup.",
     tag: "Podcast Production · Weekly",
     color: "#F5C200",
@@ -40,7 +40,7 @@ const SLIDES = [
   {
     category: "Commercial Film",
     title: "Himalaya Wellness Ad Film",
-    location: "Delhi & Gurgaon Locations",
+    location: "Mathura & Uttar Pradesh Locations",
     desc: "A 60-second ad film that generated 2M+ views and drove measurable product sales.",
     tag: "Ad Film · 60 sec",
     color: "#F5C200",
