@@ -5,25 +5,25 @@
 import { motion } from "framer-motion";
 
 const ROW_1 = [
-  "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=75",
-  "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=75",
-  "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=75",
-  "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=75",
-  "https://images.unsplash.com/photo-1567593810070-7a3d471af022?w=600&q=75",
-  "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600&q=75",
-  "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=75",
-  "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600&q=75",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1795497812/2B4A4767.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1795497813/2B4A4783.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1795497812/2B4A4693.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1794770057/WhatsApp_Image_2026-11-15_at_11.25.49_PM_1.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1794174544/6M4A7674.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1795643194/WhatsApp_Image_2026-11-24_at_3.40.36_PM.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1794769884/WhatsApp_Image_2026-11-15_at_11.29.50_PM.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1795505060/081A5308.jpg",
 ];
 
 const ROW_2 = [
-  "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=600&q=75",
-  "https://images.unsplash.com/photo-1559523161-0fc0d8b814de?w=600&q=75",
-  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=75",
-  "https://images.unsplash.com/photo-1529543544282-ea669407fca3?w=600&q=75",
-  "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=75",
-  "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&q=75",
-  "https://images.unsplash.com/photo-1493606278519-11aa9f86e40a?w=600&q=75",
-  "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&q=75",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1795497811/2B4A4728.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1795497810/6M4A8277.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1794770056/WhatsApp_Image_2026-11-15_at_11.22.42_PM.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1795643193/43.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1794174544/6M4A7648.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1794769882/WhatsApp_Image_2026-11-15_at_11.29.46_PM.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1795506003/IMG_1240.jpg",
+  "https://res.cloudinary.com/wqhpwm9y/image/upload/w_600,q_auto,f_auto/v1795505064/081A9969.jpg",
 ];
 
 function Strip({ images, direction = -1, speed = 40 }) {

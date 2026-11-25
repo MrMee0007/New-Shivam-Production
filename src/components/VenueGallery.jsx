@@ -37,6 +37,17 @@ const IMAGES = [
   { file: "v1794162624/6M4A7154.jpg", label: "Wide Angle" },
   { file: "v1794162623/6M4A7151.jpg", label: "Venue Detail" },
   { file: "v1794162622/6M4A7185.jpg", label: "Night Coverage" },
+  { file: "v1795505066/081A9979.jpg", label: "Grand Venue Setup" },
+  { file: "v1795505064/081A9969.jpg", label: "Venue Night Decor" },
+  { file: "v1795505063/081A5304.jpg", label: "Event Hall" },
+  { file: "v1795505063/081A9968.jpg", label: "Venue Lighting" },
+  { file: "v1795505060/_MG_6817.jpg", label: "Venue Exterior Night" },
+  { file: "v1795505060/081A5308.jpg", label: "Stage Design" },
+  { file: "v1795505058/081A5273.jpg", label: "Floral Decor" },
+  { file: "v1795505058/6M4A7192.jpg", label: "Venue Panorama" },
+  { file: "v1794158508/2B4A4625.jpg", label: "Wedding Venue" },
+  { file: "v1794158509/2B4A4630.jpg", label: "Reception Setup" },
+  { file: "v1794158510/2B4A4629.jpg", label: "Venue Ambiance" },
 ];
 
 export default function VenueGallery() {
@@ -220,10 +231,8 @@ export default function VenueGallery() {
                   style={{
                     width: "100%",
                     height: "100%",
-                    objectFit: "cover",
+                    objectFit: "contain",
                     display: "block",
-                    /* Ken Burns zoom on active slide handled via CSS class below */
-                    animation: "kenBurns 8s ease-in-out infinite alternate",
                   }}
                 />
                 {/* Bottom label */}
@@ -318,14 +327,6 @@ export default function VenueGallery() {
           ))}
         </Swiper>
       </motion.div>
-
-      {/* Ken Burns keyframe */}
-      <style>{`
-        @keyframes kenBurns {
-          from { transform: scale(1);    }
-          to   { transform: scale(1.06); }
-        }
-      `}</style>
     </section>
   );
 }

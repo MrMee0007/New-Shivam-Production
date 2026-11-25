@@ -3,25 +3,38 @@
  * 3 columns on desktop, 2 on tablet, 1 on mobile.
  * Mix of portrait and landscape images at different heights.
  */
-import { useRef } from "react";
+import { useRef, useState, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
+import ImageLightbox from "./ImageLightbox";
 
 const CLD = (file, w = 600) =>
   `https://res.cloudinary.com/wqhpwm9y/image/upload/w_${w},q_auto,f_auto/${file}`;
 
 const IMAGES = [
-  { src: CLD("v1794174536/6M4A7623.jpg"), h: "h-80",  alt: "Candid moment" },
-  { src: CLD("v1794174537/6M4A7892.jpg"), h: "h-56",  alt: "Celebration" },
-  { src: CLD("v1794174541/6M4A7644.jpg"), h: "h-72",  alt: "Wedding candid" },
-  { src: CLD("v1794174540/6M4A7629.jpg"), h: "h-64",  alt: "Event energy" },
-  { src: CLD("v1794174539/6M4A7621.jpg"), h: "h-80",  alt: "Joyful moment" },
-  { src: CLD("v1794174541/6M4A7637.jpg"), h: "h-52",  alt: "Candid portrait" },
-  { src: CLD("v1794174542/6M4A7645.jpg"), h: "h-72",  alt: "Live event" },
-  { src: CLD("v1794174543/6M4A7663.jpg"), h: "h-60",  alt: "Event candid" },
-  { src: CLD("v1794174544/6M4A7632.jpg"), h: "h-80",  alt: "Couple candid" },
-  { src: CLD("v1794174544/6M4A7674.jpg"), h: "h-52",  alt: "Wedding dance" },
-  { src: CLD("v1794174544/6M4A7648.jpg"), h: "h-68",  alt: "Golden moment" },
-  { src: CLD("v1794174546/6M4A7702.jpg"), h: "h-80",  alt: "Candid joy" },
+  { src: CLD("v1795497814/2B4A4787.jpg"), h: "h-80", alt: "Golden hour portrait" },
+  { src: CLD("v1795497813/081A0141.jpg"), h: "h-56", alt: "Joyful connections" },
+  { src: CLD("v1795497813/6M4A7818.jpg"), h: "h-96", alt: "Radiant bride portrait" },
+  { src: CLD("v1794770057/WhatsApp_Image_2026-11-15_at_11.25.48_PM.jpg"), h: "h-72", alt: "Bridal splendor" },
+  { src: CLD("v1794174548/6M4A7611.jpg"), h: "h-64", alt: "Family bonds" },
+  { src: CLD("v1795643194/WhatsApp_Image_2026-11-24_at_3.40.35_PM.jpg"), h: "h-80", alt: "Couple goals" },
+  { src: CLD("v1795497812/2B4A4767.jpg"), h: "h-68", alt: "Tender moments" },
+  { src: CLD("v1794769884/WhatsApp_Image_2026-11-15_at_11.29.51_PM_1.jpg"), h: "h-72", alt: "Expecting joy" },
+  { src: CLD("v1795497811/081A0175.jpg"), h: "h-96", alt: "Graceful poise" },
+  { src: CLD("v1795505066/081A9979.jpg"), h: "h-56", alt: "Venue grandeur" },
+  { src: CLD("v1794770057/WhatsApp_Image_2026-11-15_at_11.25.46_PM.jpg"), h: "h-80", alt: "Traditional elegance" },
+  { src: CLD("v1795506005/IMG_8369.jpg"), h: "h-60", alt: "Family bliss" },
+  { src: CLD("v1795497811/6M4A7808.jpg"), h: "h-72", alt: "Elegant frames" },
+  { src: CLD("v1795643193/12.jpg"), h: "h-64", alt: "Couple bliss" },
+  { src: CLD("v1795497810/081A0301.jpg"), h: "h-88", alt: "Regal charm" },
+  { src: CLD("v1794769882/WhatsApp_Image_2026-11-15_at_11.29.48_PM.jpg"), h: "h-72", alt: "Radiant mother" },
+  { src: CLD("v1795505063/081A5304.jpg"), h: "h-56", alt: "Venue details" },
+  { src: CLD("v1795506003/IMG_1252.jpg"), h: "h-68", alt: "Family magic" },
+  { src: CLD("v1795497808/6M4A7485.jpg"), h: "h-80", alt: "Timeless grace" },
+  { src: CLD("v1794770053/WhatsApp_Image_2026-11-15_at_11.22.35_PM.jpg"), h: "h-64", alt: "Bridal charm" },
+  { src: CLD("v1795643193/6.jpg"), h: "h-72", alt: "Love story" },
+  { src: CLD("v1795497807/6M4A8185.jpg"), h: "h-96", alt: "Classic beauty" },
+  { src: CLD("v1795506000/2B4A4976.jpg"), h: "h-60", alt: "Family delight" },
+  { src: CLD("v1795505058/081A5273.jpg"), h: "h-56", alt: "Venue ambiance" },
 ];
 
 // Split images into 3 columns
@@ -35,6 +48,11 @@ export default function MasonryGallery() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const cols = splitColumns(IMAGES, 3);
+  const [selectedIdx, setSelectedIdx] = useState(null);
+  const openLightbox = (globalIdx) => setSelectedIdx(globalIdx);
+  const closeLightbox = () => setSelectedIdx(null);
+  const nextImage = useCallback(() => setSelectedIdx((p) => (p + 1) % IMAGES.length), []);
+  const prevImage = useCallback(() => setSelectedIdx((p) => (p - 1 + IMAGES.length) % IMAGES.length), []);
 
   return (
     <section

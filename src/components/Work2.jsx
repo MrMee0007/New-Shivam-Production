@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo, useEffect, useCallback, memo } from "react";
+import { Play } from "lucide-react";
 
 /* ------------------ DATA ------------------ */
 
@@ -78,6 +79,24 @@ const works = [
     tools: ["Canva"],
     year: "2023",
   },
+  {
+    id: 9,
+    title: "Dandia Night",
+    category: "Event",
+    video: "https://res.cloudinary.com/wqhpwm9y/video/upload/v1795425801/JD-612_Dandia_Night_Video_Admin.mp4",
+    desc: "A lively event film capturing the color and energy of Dandia Night.",
+    tools: ["Event Film"],
+    year: "",
+  },
+  {
+    id: 10,
+    title: "Spandan 2024",
+    category: "Event",
+    video: "https://res.cloudinary.com/wqhpwm9y/video/upload/v1795425804/JD-549_Spandan_2024_Admin.mp4",
+    desc: "Event highlights from Spandan 2024.",
+    tools: ["Event Film"],
+    year: "2024",
+  },
 ];
 
 /* ------------------ COMPONENTS ------------------ */
@@ -121,15 +140,34 @@ ${isDimmed ? "opacity-40 scale-95" : ""}`}
   y: -10,
 }}
       >
-       <motion.img
-       whileHover={{ scale: 1.08 }}
-transition={{ duration: 0.5 }}
-          src={item.img}
-          alt={item.title}
-          loading="lazy"
-          decoding="async"
-          className="w-full h-56 sm:h-64 object-cover"
-        />
+        {item.video ? (
+          <>
+            <motion.video
+              whileHover={{ scale: 1.08 }}
+              transition={{ duration: 0.5 }}
+              src={item.video}
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label={`${item.title} video preview`}
+              className="w-full h-56 sm:h-64 object-cover"
+            />
+            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/30 bg-black/50 p-4 text-white">
+              <Play size={18} fill="currentColor" />
+            </span>
+          </>
+        ) : (
+          <motion.img
+            whileHover={{ scale: 1.08 }}
+            transition={{ duration: 0.5 }}
+            src={item.img}
+            alt={item.title}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-56 sm:h-64 object-cover"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
 
         {/* Overlay */}
@@ -194,11 +232,22 @@ const WorkModal = memo(({ work, onClose }) => {
         animate={{ scale: 1 }}
         exit={{ scale: 0.95 }}
       >
-        <img
-          src={work.img}
-          alt={work.title}
-          className="max-w-full max-h-full object-contain rounded-2xl border border-[#C9A14A]/20 shadow-[0_0_60px_rgba(201,161,74,0.15)]"
-        />
+        {work.video ? (
+          <video
+            src={work.video}
+            controls
+            playsInline
+            preload="metadata"
+            aria-label={work.title}
+            className="max-w-full max-h-full rounded-2xl border border-[#C9A14A]/20 shadow-[0_0_60px_rgba(201,161,74,0.15)]"
+          />
+        ) : (
+          <img
+            src={work.img}
+            alt={work.title}
+            className="max-w-full max-h-full object-contain rounded-2xl border border-[#C9A14A]/20 shadow-[0_0_60px_rgba(201,161,74,0.15)]"
+          />
+        )}
       </motion.div>
 
       {/* Info */}
@@ -207,9 +256,11 @@ const WorkModal = memo(({ work, onClose }) => {
   {work.title}
 </h2>
 
-<p className="text-neutral-400 mt-2">
-  {work.year}
-</p>
+{work.year && (
+  <p className="text-neutral-400 mt-2">
+    {work.year}
+  </p>
+)}
       </div>
     </motion.div>
   );

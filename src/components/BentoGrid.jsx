@@ -5,44 +5,46 @@
  */
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import productionPhoto from "../assets/production-collage.jpg";
+import creatorPhoto from "../assets/content.jpeg";
 
 const CLD = (file, w = 800) =>
   `https://res.cloudinary.com/wqhpwm9y/image/upload/w_${w},q_auto,f_auto/${file}`;
 
 const CELLS = [
   {
-    img: CLD("v1794158518/2B4A4671.jpg", 1200),
-    label: "Wedding Cinema",
+    img: CLD("v1795643194/WhatsApp_Image_2026-11-24_at_3.40.35_PM.jpg", 1200),
+    label: "Candid Couple Photography",
     span: "lg:col-span-2 lg:row-span-2",
     h: "h-72 lg:h-full",
   },
   {
-    img: CLD("v1794174531/6M4A7851.jpg"),
-    label: "Candid Moments",
+    img: CLD("v1795497813/6M4A7818.jpg"),
+    label: "Bridal Portraits",
     span: "lg:col-span-1 lg:row-span-1",
     h: "h-52",
   },
   {
-    img: CLD("v1794174532/6M4A7875.jpg"),
-    label: "Live Event Energy",
+    img: CLD("v1795505066/081A9979.jpg"),
+    label: "Venue & Event Coverage",
     span: "lg:col-span-1 lg:row-span-1",
     h: "h-52",
   },
   {
-    img: CLD("v1794174533/6M4A7858.jpg"),
-    label: "Golden Hour",
+    img: CLD("v1794769884/WhatsApp_Image_2026-11-15_at_11.29.51_PM_1.jpg"),
+    label: "Pre-Maternity Shoot",
     span: "lg:col-span-1 lg:row-span-1",
     h: "h-52",
   },
   {
-    img: CLD("v1794174534/6M4A7889.jpg"),
-    label: "Pure Emotion",
+    img: CLD("v1794770058/WhatsApp_Image_2026-11-15_at_11.25.49_PM.jpg"),
+    label: "Bridal Shoot",
     span: "lg:col-span-1 lg:row-span-1",
     h: "h-52",
   },
   {
-    img: CLD("v1794174536/6M4A7903.jpg"),
-    label: "Celebration",
+    img: CLD("v1795506005/IMG_8369.jpg"),
+    label: "Family Portraits",
     span: "lg:col-span-2 lg:row-span-1",
     h: "h-52",
   },

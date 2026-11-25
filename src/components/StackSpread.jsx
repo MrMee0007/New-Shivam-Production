@@ -27,7 +27,7 @@ const s = (i) => SCALE[i] ?? 1;
 
 const CARDS = [
   {
-    item: { src: CLD("v1794158518/2B4A4671.jpg"), alt: "Royal Wedding Ceremony" },
+    item: { src: CLD("v1795643194/WhatsApp_Image_2026-11-24_at_3.40.35_PM.jpg"), alt: "Candid Couple Moment" },
     stackOffset: { x: -8, y: -10 },
     stackRotate: -18,
     target: { x: -22, y: -34, rotate: -2, scale: s(8), w: 18, h: 24 },
@@ -35,7 +35,7 @@ const CARDS = [
     z: 2,
   },
   {
-    item: { src: CLD("v1794174541/6M4A7644.jpg"), alt: "Candid Bridal Smile" },
+    item: { src: CLD("v1795497813/6M4A7818.jpg"), alt: "Radiant Bridal Portrait" },
     stackOffset: { x: 14, y: -10 },
     stackRotate: 20,
     target: { x: 32, y: -30, rotate: 3, scale: s(7), w: 19, h: 32 },
@@ -43,7 +43,7 @@ const CARDS = [
     z: 3,
   },
   {
-    item: { src: CLD("v1794158516/2B4A4663.jpg"), alt: "Destination Udaipur Grandeur" },
+    item: { src: CLD("v1794770058/WhatsApp_Image_2026-11-15_at_11.25.49_PM.jpg"), alt: "Bridal Shoot Splendor" },
     stackOffset: { x: -16, y: 0 },
     stackRotate: -4,
     target: { x: -36, y: -2, rotate: -3, scale: s(6), w: 16, h: 32 },
@@ -51,7 +51,7 @@ const CARDS = [
     z: 4,
   },
   {
-    item: { src: CLD("v1794174546/6M4A7702.jpg"), alt: "Baraat Celebration & Energy" },
+    item: { src: CLD("v1794769884/WhatsApp_Image_2026-11-15_at_11.29.51_PM_1.jpg"), alt: "Pre-Maternity Grace" },
     stackOffset: { x: 1, y: -10 },
     stackRotate: -2,
     target: { x: 6, y: -32, rotate: 1, scale: s(5), w: 25, h: 28 },
@@ -59,7 +59,7 @@ const CARDS = [
     z: 5,
   },
   {
-    item: { src: CLD("v1794158515/2B4A4657.jpg"), alt: "Heritage Palace Moments" },
+    item: { src: CLD("v1795505066/081A9979.jpg"), alt: "Grand Venue Setup" },
     stackOffset: { x: 18, y: 1 },
     stackRotate: 6,
     target: { x: 37, y: 6, rotate: 2, scale: s(4), w: 18, h: 32 },
@@ -67,7 +67,7 @@ const CARDS = [
     z: 6,
   },
   {
-    item: { src: CLD("v1794174545/6M4A7758.jpg"), alt: "Sacred Pheras & Rituals" },
+    item: { src: CLD("v1795506005/IMG_8369.jpg"), alt: "Family Portrait Session" },
     stackOffset: { x: -6, y: 10 },
     stackRotate: 6,
     target: { x: -24, y: 34, rotate: -2, scale: s(3), w: 22, h: 26 },
@@ -75,7 +75,7 @@ const CARDS = [
     z: 7,
   },
   {
-    item: { src: CLD("v1794174533/6M4A7884.jpg"), alt: "Golden Hour Glow" },
+    item: { src: CLD("v1795497814/2B4A4787.jpg"), alt: "Golden Hour Portrait" },
     stackOffset: { x: 8, y: 7 },
     stackRotate: 3,
     target: { x: 2, y: 36, rotate: 1, scale: s(2), w: 20, h: 26 },
@@ -83,7 +83,7 @@ const CARDS = [
     z: 8,
   },
   {
-    item: { src: CLD("v1794174534/6M4A7615.jpg"), alt: "Unscripted Joy & Festivity" },
+    item: { src: CLD("v1795497808/6M4A7485.jpg"), alt: "Timeless Grace" },
     stackOffset: { x: 20, y: 12 },
     stackRotate: -7,
     target: { x: 30, y: 34, rotate: 3, scale: s(1), w: 17, h: 22 },

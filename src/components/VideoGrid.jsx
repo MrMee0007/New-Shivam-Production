@@ -24,9 +24,9 @@ const MEDIA = [
   },
   {
     type: "image",
-    src:   CLD("v1794174548/6M4A7611.jpg", 1200),
-    thumb: CLD("v1794174548/6M4A7611.jpg", 500),
-    label: "Joy & Emotion",
+    src:   CLD("v1794769884/WhatsApp_Image_2026-11-15_at_11.29.51_PM_1.jpg", 1200),
+    thumb: CLD("v1794769884/WhatsApp_Image_2026-11-15_at_11.29.51_PM_1.jpg", 500),
+    label: "A New Chapter",
   },
   {
     type: "image",
@@ -36,9 +36,9 @@ const MEDIA = [
   },
   {
     type: "image",
-    src:   CLD("v1794174534/6M4A7615.jpg", 1200),
-    thumb: CLD("v1794174534/6M4A7615.jpg", 500),
-    label: "Festive Spirit",
+    src:   CLD("v1794770057/WhatsApp_Image_2026-11-15_at_11.25.49_PM_1.jpg", 1200),
+    thumb: CLD("v1794770057/WhatsApp_Image_2026-11-15_at_11.25.49_PM_1.jpg", 500),
+    label: "Bridal Portrait",
   },
   {
     type: "image",

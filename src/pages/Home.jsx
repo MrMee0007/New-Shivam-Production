@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import creatorPhoto from "../assets/content.jpeg";
 
 /* ── New visual components ── */
 import CameraFilmStrip    from "../components/CameraFilmStrip";
@@ -17,6 +18,10 @@ import VenueGallery       from "../components/VenueGallery";
 import CelebrityShowcase  from "../components/CelebrityShowcase";
 import OurJourney         from "../components/OurJourney";
 import StackSpread        from "../components/StackSpread";
+import BridalShowcase     from "../components/BridalShowcase";
+import CandidCoupleGrid   from "../components/CandidCoupleGrid";
+import FamilyMarquee      from "../components/FamilyMarquee";
+import MaternityHighlight from "../components/MaternityHighlight";
 
 /* ── Helper: scroll-reveal ── */
 function Reveal({ children, className = "", delay = 0, y = 30 }) {
@@ -64,9 +69,9 @@ const CLD = (file, w = 900) =>
   `https://res.cloudinary.com/wqhpwm9y/image/upload/w_${w},q_auto,f_auto/${file}`;
 
 const WORKS = [
-  { category: "Wedding Film",    title: "Priya & Rohan",        location: "Leela Palace, Mathura",    img: CLD("v1794158518/2B4A4671.jpg") },
-  { category: "Candid Stories",  title: "Unscripted Emotions",  location: "Delhi NCR & Destinations", img: CLD("v1794174541/6M4A7644.jpg") },
-  { category: "Wedding Moments", title: "Rituals & Radiance",   location: "New Shivam Productions",   img: CLD("v1794174546/6M4A7702.jpg") },
+  { category: "Wedding Film",    title: "Priya & Rohan",          location: "Leela Palace, Mathura",       img: CLD("v1794158518/2B4A4671.jpg") },
+  { category: "Live Broadcast",  title: "Events in Every Frame",  location: "Corporate & Live Events",     img: CLD("v1794162627/6M4A7164.jpg") },
+  { category: "Creator Films",   title: "Stories on Camera",      location: "Studio & Brand Productions",   img: creatorPhoto },
 ];
 
 export default function Home() {
@@ -199,6 +204,9 @@ export default function Home() {
 
       <div className="divider" />
 
+      {/* ═══════════ CANDID COUPLE GRID — love stories ═══════════ */}
+      <CandidCoupleGrid />
+
       {/* ═══════════ STACK SPREAD — interactive scattering frames at showreel location ═══════════ */}
       <StackSpread />
 
@@ -238,10 +246,15 @@ export default function Home() {
         </div>
       </section>
 
+      <FamilyMarquee />
+
       <div className="divider" />
 
       {/* ═══════════ BENTO GRID — portfolio frames ═══════════ */}
       <BentoGrid />
+
+      {/* ═══════════ BRIDAL SHOWCASE — horizontal scroll portraits ═══════════ */}
+      <BridalShowcase />
 
       {/* ═══════════ PARALLAX BANNER 1 — Wedding quote ═══════════ */}
       <ParallaxBanner
@@ -255,13 +268,18 @@ export default function Home() {
 
       {/* ═══════════ PARALLAX BANNER 2 — Broadcast quote ═══════════ */}
       <ParallaxBanner
-        img="https://res.cloudinary.com/wqhpwm9y/image/upload/w_1800,q_auto,f_auto/v1794158510/2B4A4633.jpg"
+        img="https://res.cloudinary.com/wqhpwm9y/image/upload/w_1800,q_auto,f_auto/v1794162629/6M4A7171.jpg"
         quote="Live. Bold. Unforgettable. Every event deserves an audience."
         tag="Live Broadcasting · Multi-Camera Production"
       />
 
       {/* ═══════════ MASONRY GALLERY — behind the lens ═══════════ */}
       <MasonryGallery />
+
+      <div className="divider" />
+
+      {/* ═══════════ MATERNITY HIGHLIGHT — expecting stories ═══════════ */}
+      <MaternityHighlight />
 
       <div className="divider" />
 
@@ -323,6 +341,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <div className="divider" />
 
       <div className="divider" />
 
